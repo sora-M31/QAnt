@@ -1,5 +1,6 @@
-QT += opengl\
-    += gui
+QT += opengl \
+       gui \
+       core
 INCLUDEPATH += include/
         += ui
 OBJECTS_DIR = obj/
@@ -11,11 +12,13 @@ CONFIG -= app_bundle
 
 SOURCES += \
     src/main.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/GLWindow.cpp
 
 HEADERS += \
     include/mainwindow.h \
-    ui/ui_mainwindow.h
+    ui/ui_mainwindow.h \
+    include/GLWindow.h
 
 FORMS += \
     ui/mainwindow.ui
