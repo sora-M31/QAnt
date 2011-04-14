@@ -13,12 +13,24 @@ CONFIG -= app_bundle
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
-    src/GLWindow.cpp
+    src/GLWindow.cpp \
+    src/sceneNode.cpp \
+    src/sceneObject.cpp \
+    src/vector.cpp \
+    src/util.cpp \
+    src/transform.cpp \
+    src/matrix.cpp
 
 HEADERS += \
     include/mainwindow.h \
     ui/ui_mainwindow.h \
-    include/GLWindow.h
+    include/GLWindow.h \
+    include/sceneNode.h \
+    include/sceneObject.h \
+    include/vector.h \
+    include/util.h \
+    include/transform.h \
+    include/matrix.h
 
 FORMS += \
     ui/mainwindow.ui
