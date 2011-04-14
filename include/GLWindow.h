@@ -3,7 +3,9 @@
 
 #include <QtOpenGL>
 #include <stdint.h>
+#include "sceneManager.h"
 
+namespace QtGLWindow{
 class GLWindow : public QGLWidget
 {
     Q_OBJECT
@@ -20,6 +22,10 @@ class GLWindow : public QGLWidget
                      );
         void paintGL();
     private:
+        void RenderScene(const SceneManager& _scene);
+        void Draw();
+        SceneManager m_scene;
 
 };//end of class
+}//end of namespace
 #endif //end of define

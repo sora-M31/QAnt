@@ -19,7 +19,8 @@ SOURCES += \
     src/vector.cpp \
     src/util.cpp \
     src/transform.cpp \
-    src/matrix.cpp
+    src/matrix.cpp \
+    src/sceneManager.cpp
 
 HEADERS += \
     include/mainwindow.h \
@@ -30,7 +31,8 @@ HEADERS += \
     include/vector.h \
     include/util.h \
     include/transform.h \
-    include/matrix.h
+    include/matrix.h \
+    include/sceneManager.h
 
 FORMS += \
     ui/mainwindow.ui

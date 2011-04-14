@@ -18,7 +18,6 @@ public:
 
 private:
     Ui::MainWindow *m_ui;
-    GLWindow *m_gl;
+    QtGLWindow::GLWindow *m_gl;
 };
-
 #endif // MAINWINDOW_H
