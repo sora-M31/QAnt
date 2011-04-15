@@ -17,6 +17,9 @@ void GLWindow::initializeGL()
 {
     glClearColor(0,0,0,1);
     m_scene.InitScene();
+    m_obj.ParseFile("sphere.obj");
+    m_obj.Load();
+    m_obj.m_pMesh->CreateVBO();
 }
 //------------------------------------------------------------------------------
 void GLWindow::resizeGL(
@@ -36,7 +39,6 @@ void GLWindow::paintGL()
 void GLWindow::RenderScene(const SceneManager& _scene)
 {
     const SceneNode* thisnode = &(_scene.m_root);
-    std::cout<<thisnode->m_pNext<<" next of root\n";
 
     while( thisnode->m_pNext !=NULL )
     {
@@ -50,10 +52,6 @@ void GLWindow::RenderScene(const SceneManager& _scene)
 //------------------------------------------------------------------------------
 void GLWindow::Draw()
 {
-    glBegin(GL_LINES);
-        glColor3f(1,1,1);
-        glVertex3f(0,0,0);
-        glVertex3f(-1,-1,0);
-    glEnd();
+    m_obj.m_pMesh->DrawVBO();
 }
 }//end of namespace
