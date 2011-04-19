@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui->setupUi(this);
     m_gl = new QtGLWindow::GLWindow(this);
     m_ui->s_mainLayout->addWidget(m_gl,0,0,3,1);
+    connect( m_ui->m_wireframeCheck,SIGNAL(toggled(bool)), m_gl,SLOT(toggleWireframe(bool)) );
 }
 
 MainWindow::~MainWindow()

@@ -2,6 +2,7 @@
 #define _GLWINDOW_H_
 
 #include <QtOpenGL>
+#include <QTimer>
 #include <stdint.h>
 #include "sceneManager.h"
 #include "objLoader.h"
@@ -15,6 +16,8 @@ class GLWindow : public QGLWidget
                     QWidget *_parent
                 );
         ~GLWindow();
+    public slots:
+        void toggleWireframe(bool _mode);
     protected:
         void initializeGL();
         void resizeGL(
@@ -24,10 +27,12 @@ class GLWindow : public QGLWidget
         void paintGL();
     private:
         void RenderScene(const SceneManager& _scene);
-        void Draw();
+        void Draw(const SceneObject* _obj);
         SceneManager m_scene;
         ObjLoader m_obj;
-
+        uint32_t m_framerate;
+        QTimer* m_timer;
+        bool m_wireframe;
 };//end of class
 }//end of namespace
 #endif //end of define

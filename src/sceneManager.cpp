@@ -21,6 +21,9 @@ void SceneManager::InitScene()
 //------------------------------------------------------------------------------
 void SceneManager::UpdateScene()
 {
+    test->Move(Vector(0,0.1,0));
+    test->Rotate(10*3.1415926/180,Vector(0,0,1));
+    test->Update();
 }
 //------------------------------------------------------------------------------
 }//end of namespace

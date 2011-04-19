@@ -176,7 +176,7 @@
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="m_wireframeCheck">
          <property name="text">
           <string>Wireframe</string>
          </property>

@@ -13,7 +13,7 @@ class Transform
         ~Transform();
         void SetTranslate(Vector _pos);
         void SetRotation(float _theta, Vector _v);
-        void Update();
+        void ApplyTransform();
         Matrix m_translate;
         Matrix m_rotate;
         Matrix m_transform;

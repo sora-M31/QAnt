@@ -51,7 +51,6 @@ void Mesh::DrawVBO()
     glBindBuffer(GL_ARRAY_BUFFER,m_vboPointer);
 
     glVertexPointer(3,GL_FLOAT,0,0);
-    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 
     glDrawElements(m_mode, m_faceSize, GL_UNSIGNED_BYTE, m_face);
 

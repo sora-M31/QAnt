@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Apr 15 10:41:03 2011
+** Created: Tue Apr 19 10:16:22 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -63,7 +63,7 @@ public:
     QDoubleSpinBox *m_scaleZ;
     QGroupBox *s_optGB;
     QGridLayout *gridLayout_2;
-    QCheckBox *checkBox;
+    QCheckBox *m_wireframeCheck;
     QComboBox *comboBox;
     QLabel *label_4;
     QMenuBar *menubar;
@@ -219,10 +219,10 @@ public:
         s_optGB->setObjectName(QString::fromUtf8("s_optGB"));
         gridLayout_2 = new QGridLayout(s_optGB);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
-        checkBox = new QCheckBox(s_optGB);
-        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+        m_wireframeCheck = new QCheckBox(s_optGB);
+        m_wireframeCheck->setObjectName(QString::fromUtf8("m_wireframeCheck"));
 
-        gridLayout_2->addWidget(checkBox, 0, 0, 1, 1);
+        gridLayout_2->addWidget(m_wireframeCheck, 0, 0, 1, 1);
 
         comboBox = new QComboBox(s_optGB);
         comboBox->setObjectName(QString::fromUtf8("comboBox"));
@@ -263,7 +263,7 @@ public:
         label_2->setText(QApplication::translate("MainWindow", "Translate", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("MainWindow", "Scale", 0, QApplication::UnicodeUTF8));
         s_optGB->setTitle(QApplication::translate("MainWindow", "Options", 0, QApplication::UnicodeUTF8));
-        checkBox->setText(QApplication::translate("MainWindow", "Wireframe", 0, QApplication::UnicodeUTF8));
+        m_wireframeCheck->setText(QApplication::translate("MainWindow", "Wireframe", 0, QApplication::UnicodeUTF8));
         comboBox->clear();
         comboBox->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "Sphere", 0, QApplication::UnicodeUTF8)

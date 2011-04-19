@@ -47,7 +47,7 @@ void Transform::SetRotation(float _theta, Vector _v )
     m_rotate = quat * m_rotate;
 }
 //------------------------------------------------------------------------------
-void Transform::Update()
+void Transform::ApplyTransform()
 {
     m_transform = m_translate * m_rotate;
 }

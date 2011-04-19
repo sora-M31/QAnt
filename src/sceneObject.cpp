@@ -55,12 +55,20 @@ void SceneObject::GetColorId()
     }
 }
 //------------------------------------------------------------------------------
-void SceneObject::Rotate(const float _rot)
+void SceneObject::Rotate(const float _theta, const Vector& _axis)
 {
+    m_trans.SetRotation(_theta, _axis);
 }
 //------------------------------------------------------------------------------
 void SceneObject::Move(const Vector&  _dis)
 {
+    this->m_pos += _dis;
+    m_trans.SetTranslate(m_pos);
+}
+//------------------------------------------------------------------------------
+void SceneObject::Update()
+{
+    m_trans.ApplyTransform();
 }
 //------------------------------------------------------------------------------
 uint32_t SceneObject::GetType() const

@@ -18,8 +18,9 @@ class SceneObject
                      float _mass,
                      DrawType _type
                     );
-        virtual void Rotate(const float _rot);
+        virtual void Rotate(const float theta, const Vector& _axis);
         virtual void Move(const Vector& _dis);
+        virtual void Update();
         uint32_t GetType() const;
 
         Vector m_pos;
