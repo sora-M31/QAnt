@@ -19,10 +19,10 @@ void SceneManager::InitScene()
     m_root.AddNext(test->m_node);
 }
 //------------------------------------------------------------------------------
-void SceneManager::UpdateScene()
+void SceneManager::UpdateScene(Vector _pos, float _theta, Vector _axis)
 {
-    test->Move(Vector(0,0.1,0));
-    test->Rotate(10*3.1415926/180,Vector(0,0,1));
+    test->Move(_pos);
+    test->Rotate(_theta,_axis);
     test->Update();
 }
 //------------------------------------------------------------------------------

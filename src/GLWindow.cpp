@@ -1,5 +1,6 @@
 #include "GLWindow.h"
 namespace QtGLWindow{
+const static float PI  = 3.1415926;
 //------------------------------------------------------------------------------
 GLWindow::GLWindow(
                         QWidget *_parent
@@ -27,6 +28,7 @@ void GLWindow::initializeGL()
     glClearColor(0,0,0,1);
 
     m_scene.InitScene();
+    pSelected = m_scene.m_root.m_pNext->m_pObject;
 
     m_obj.ParseFile("arrow.obj");
     m_obj.Load();
@@ -52,7 +54,8 @@ void GLWindow::paintGL()
     {
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     }
-   // m_scene.UpdateScene();
+
+   // m_scene.UpdateScene(m_pos,m_rot,m_axis);
     RenderScene(m_scene);
 }
 //------------------------------------------------------------------------------
@@ -74,6 +77,7 @@ void GLWindow::Draw(const SceneObject* _obj)
 {
     glPushMatrix();
         glMultMatrixf( _obj->m_trans.m_transform.m_mat);
+        //glMultMatrixf(m_trans.m_transform.m_mat);
         m_obj.m_pMesh->DrawVBO();
     glPopMatrix();
 }
@@ -83,4 +87,29 @@ void GLWindow::toggleWireframe(bool _mode)
     m_wireframe = _mode;
     updateGL();
 }
+//------------------------------------------------------------------------------
+void GLWindow::setRotationX()
+{
+    pSelected->m_trans.SetRotation(1*PI/180, pSelected->m_axisX);
+    pSelected->RotateAxis();
+    pSelected->m_trans.ApplyTransform();
+    updateGL();
+}
+void GLWindow::setRotationY()
+{
+    pSelected->m_trans.SetRotation(1*PI/180, pSelected->m_axisY);
+    pSelected->RotateAxis();
+    pSelected->m_trans.ApplyTransform();
+    updateGL();
+}
+void GLWindow::setRotationZ()
+{
+    pSelected->m_trans.SetRotation(1*PI/180, pSelected->m_axisZ);
+    pSelected->RotateAxis();
+    pSelected->m_trans.ApplyTransform();
+    updateGL();
+}
+void GLWindow::setTranslationX(double _dis){}
+void GLWindow::setTranslationY(double _dis){}
+void GLWindow::setTranslationZ(double _dis){}
 }//end of namespace

@@ -20,6 +20,7 @@ class SceneObject
                     );
         virtual void Rotate(const float theta, const Vector& _axis);
         virtual void Move(const Vector& _dis);
+        void RotateAxis();
         virtual void Update();
         uint32_t GetType() const;
 
@@ -30,6 +31,9 @@ class SceneObject
         DrawType m_type;
         SceneNode m_node;
         Transform m_trans;
+        Vector m_axisX;
+        Vector m_axisY;
+        Vector m_axisZ;
     private:
         void GetColorId();
         uint16_t m_colorId[3];

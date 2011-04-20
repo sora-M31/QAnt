@@ -11,7 +11,10 @@ SceneObject::SceneObject()
       m_mass(1),
       m_bound(0.0),
       m_type(kObject),
-      m_node(this)
+      m_node(this),
+      m_axisX(Vector(1,0,0)),
+      m_axisY(Vector(0,1,0)),
+      m_axisZ(Vector(0,0,1))
 {
     GetColorId();
 }
@@ -27,7 +30,10 @@ SceneObject::SceneObject(
       m_mass(_mass),
       m_bound(_bound),
       m_type(_type),
-      m_node(this)
+      m_node(this),
+      m_axisX(Vector(1,0,0)),
+      m_axisY(Vector(0,1,0)),
+      m_axisZ(Vector(0,0,1))
 {
     GetColorId();
 }
@@ -57,13 +63,10 @@ void SceneObject::GetColorId()
 //------------------------------------------------------------------------------
 void SceneObject::Rotate(const float _theta, const Vector& _axis)
 {
-    m_trans.SetRotation(_theta, _axis);
 }
 //------------------------------------------------------------------------------
 void SceneObject::Move(const Vector&  _dis)
 {
-    this->m_pos += _dis;
-    m_trans.SetTranslate(m_pos);
 }
 //------------------------------------------------------------------------------
 void SceneObject::Update()
@@ -74,5 +77,11 @@ void SceneObject::Update()
 uint32_t SceneObject::GetType() const
 {
     return m_type;
+}
+void SceneObject::RotateAxis()
+{
+    m_axisX = m_trans.m_rotate * Vector(1,0,0);
+    m_axisY = m_trans.m_rotate * Vector(0,1,0);
+    m_axisZ = m_trans.m_rotate * Vector(0,0,1);
 }
 }//end of namespace

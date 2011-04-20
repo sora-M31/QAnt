@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <stdint.h>
 #include "sceneManager.h"
+#include "transform.h"
 #include "objLoader.h"
 
 namespace QtGLWindow{
@@ -18,6 +19,12 @@ class GLWindow : public QGLWidget
         ~GLWindow();
     public slots:
         void toggleWireframe(bool _mode);
+        void setRotationX();
+        void setRotationY();
+        void setRotationZ();
+        void setTranslationX(double _dis);
+        void setTranslationY(double _dis);
+        void setTranslationZ(double _dis);
     protected:
         void initializeGL();
         void resizeGL(
@@ -33,6 +40,8 @@ class GLWindow : public QGLWidget
         uint32_t m_framerate;
         QTimer* m_timer;
         bool m_wireframe;
+        Transform m_trans;
+        SceneObject* pSelected;
 };//end of class
 }//end of namespace
 #endif //end of define

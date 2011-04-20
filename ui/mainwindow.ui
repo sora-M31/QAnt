@@ -31,7 +31,7 @@
     <item row="1" column="1">
      <widget class="QGroupBox" name="s_camTransGB">
       <property name="title">
-       <string>Camera Transformation</string>
+       <string>Camera local Transformation</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
@@ -42,39 +42,11 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
-       </item>
-       <item row="1" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
-       </item>
-       <item row="1" column="2">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
-       </item>
-       <item row="2" column="0">
         <widget class="QLabel" name="label_6">
          <property name="text">
           <string>Translate</string>
          </property>
         </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_5"/>
-       </item>
-       <item row="3" column="2">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_6"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_7">
-         <property name="text">
-          <string>Zoom</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_7"/>
        </item>
       </layout>
      </widget>
@@ -82,7 +54,7 @@
     <item row="0" column="1">
      <widget class="QGroupBox" name="s_objTransGB">
       <property name="title">
-       <string>Object Transformation</string>
+       <string>Object Local Transformation</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
@@ -92,77 +64,52 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QDoubleSpinBox" name="m_rotX">
-         <property name="minimum">
-          <double>-360.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>360.000000000000000</double>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_2">
+        <widget class="QPushButton" name="m_rotX">
          <property name="text">
-          <string>Translate</string>
+          <string>RotateX</string>
          </property>
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QDoubleSpinBox" name="m_transX"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QDoubleSpinBox" name="m_transY"/>
-       </item>
-       <item row="3" column="2">
-        <widget class="QDoubleSpinBox" name="m_transZ"/>
-       </item>
-       <item row="1" column="1">
-        <widget class="QDoubleSpinBox" name="m_rotY">
-         <property name="minimum">
-          <double>-360.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>360.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QDoubleSpinBox" name="m_rotZ">
-         <property name="minimum">
-          <double>-360.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>360.000000000000000</double>
+        <widget class="QPushButton" name="m_rotY">
+         <property name="text">
+          <string>Rotate Y</string>
          </property>
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLabel" name="label_3">
+        <widget class="QPushButton" name="m_rotZ">
          <property name="text">
-          <string>Scale</string>
+          <string>Rotate Z</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="QDoubleSpinBox" name="m_scaleX">
-         <property name="value">
-          <double>1.000000000000000</double>
+       <item row="7" column="0">
+        <widget class="QPushButton" name="pushButton_4">
+         <property name="text">
+          <string>PushButton</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QDoubleSpinBox" name="m_scaleY">
-         <property name="value">
-          <double>1.000000000000000</double>
+       <item row="8" column="0">
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="text">
+          <string>PushButton</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="2">
-        <widget class="QDoubleSpinBox" name="m_scaleZ">
-         <property name="value">
-          <double>1.000000000000000</double>
+       <item row="9" column="0">
+        <widget class="QPushButton" name="pushButton_6">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Translate</string>
          </property>
         </widget>
        </item>

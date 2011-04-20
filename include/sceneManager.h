@@ -14,6 +14,7 @@ class SceneManager
 
         void InitScene();
         void UpdateScene();
+        void UpdateScene(Vector _pos, float _theta, Vector _axis);
 
         SceneNode m_root;
         SceneObject* test;
