@@ -86,23 +86,16 @@
         </widget>
        </item>
        <item row="7" column="0">
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="m_transX">
          <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QPushButton" name="pushButton_5">
-         <property name="text">
-          <string>PushButton</string>
+          <string>Translate X</string>
          </property>
         </widget>
        </item>
        <item row="9" column="0">
-        <widget class="QPushButton" name="pushButton_6">
+        <widget class="QPushButton" name="m_transY">
          <property name="text">
-          <string>PushButton</string>
+          <string>Translate Y</string>
          </property>
         </widget>
        </item>
@@ -110,6 +103,13 @@
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Translate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QPushButton" name="m_transZ">
+         <property name="text">
+          <string>Translate Z</string>
          </property>
         </widget>
        </item>

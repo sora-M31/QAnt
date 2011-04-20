@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Apr 20 16:41:25 2011
+** Created: Wed Apr 20 17:38:42 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -45,10 +45,10 @@ public:
     QPushButton *m_rotX;
     QPushButton *m_rotY;
     QPushButton *m_rotZ;
-    QPushButton *pushButton_4;
-    QPushButton *pushButton_5;
-    QPushButton *pushButton_6;
+    QPushButton *m_transX;
+    QPushButton *m_transY;
     QLabel *label_2;
+    QPushButton *m_transZ;
     QGroupBox *s_optGB;
     QGridLayout *gridLayout_2;
     QCheckBox *m_wireframeCheck;
@@ -111,25 +111,25 @@ public:
 
         gridLayout->addWidget(m_rotZ, 4, 0, 1, 1);
 
-        pushButton_4 = new QPushButton(s_objTransGB);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
+        m_transX = new QPushButton(s_objTransGB);
+        m_transX->setObjectName(QString::fromUtf8("m_transX"));
 
-        gridLayout->addWidget(pushButton_4, 7, 0, 1, 1);
+        gridLayout->addWidget(m_transX, 7, 0, 1, 1);
 
-        pushButton_5 = new QPushButton(s_objTransGB);
-        pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
+        m_transY = new QPushButton(s_objTransGB);
+        m_transY->setObjectName(QString::fromUtf8("m_transY"));
 
-        gridLayout->addWidget(pushButton_5, 8, 0, 1, 1);
-
-        pushButton_6 = new QPushButton(s_objTransGB);
-        pushButton_6->setObjectName(QString::fromUtf8("pushButton_6"));
-
-        gridLayout->addWidget(pushButton_6, 9, 0, 1, 1);
+        gridLayout->addWidget(m_transY, 9, 0, 1, 1);
 
         label_2 = new QLabel(s_objTransGB);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
         gridLayout->addWidget(label_2, 6, 0, 1, 1);
+
+        m_transZ = new QPushButton(s_objTransGB);
+        m_transZ->setObjectName(QString::fromUtf8("m_transZ"));
+
+        gridLayout->addWidget(m_transZ, 10, 0, 1, 1);
 
 
         s_mainLayout->addWidget(s_objTransGB, 0, 1, 1, 1);
@@ -181,10 +181,10 @@ public:
         m_rotX->setText(QApplication::translate("MainWindow", "RotateX", 0, QApplication::UnicodeUTF8));
         m_rotY->setText(QApplication::translate("MainWindow", "Rotate Y", 0, QApplication::UnicodeUTF8));
         m_rotZ->setText(QApplication::translate("MainWindow", "Rotate Z", 0, QApplication::UnicodeUTF8));
-        pushButton_4->setText(QApplication::translate("MainWindow", "PushButton", 0, QApplication::UnicodeUTF8));
-        pushButton_5->setText(QApplication::translate("MainWindow", "PushButton", 0, QApplication::UnicodeUTF8));
-        pushButton_6->setText(QApplication::translate("MainWindow", "PushButton", 0, QApplication::UnicodeUTF8));
+        m_transX->setText(QApplication::translate("MainWindow", "Translate X", 0, QApplication::UnicodeUTF8));
+        m_transY->setText(QApplication::translate("MainWindow", "Translate Y", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("MainWindow", "Translate", 0, QApplication::UnicodeUTF8));
+        m_transZ->setText(QApplication::translate("MainWindow", "Translate Z", 0, QApplication::UnicodeUTF8));
         s_optGB->setTitle(QApplication::translate("MainWindow", "Options", 0, QApplication::UnicodeUTF8));
         m_wireframeCheck->setText(QApplication::translate("MainWindow", "Wireframe", 0, QApplication::UnicodeUTF8));
         comboBox->clear();

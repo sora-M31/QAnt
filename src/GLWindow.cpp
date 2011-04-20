@@ -109,7 +109,25 @@ void GLWindow::setRotationZ()
     pSelected->m_trans.ApplyTransform();
     updateGL();
 }
-void GLWindow::setTranslationX(double _dis){}
-void GLWindow::setTranslationY(double _dis){}
-void GLWindow::setTranslationZ(double _dis){}
+void GLWindow::setTranslationX()
+{
+    pSelected->m_trans.SetTranslate( pSelected->m_axisX * 0.1 );
+    pSelected->m_trans.ApplyTransform();
+    updateGL();
+
+}
+void GLWindow::setTranslationY()
+{
+    pSelected->m_trans.SetTranslate( pSelected->m_axisY * 0.1 );
+    pSelected->m_trans.ApplyTransform();
+    updateGL();
+
+}
+void GLWindow::setTranslationZ()
+{
+    pSelected->m_trans.SetTranslate( pSelected->m_axisZ * 0.1 );
+    pSelected->m_trans.ApplyTransform();
+    updateGL();
+
+}
 }//end of namespace

@@ -12,9 +12,11 @@ Transform::~Transform()
 //------------------------------------------------------------------------------
 void Transform::SetTranslate(Vector _pos)
 {
-    m_translate.m_mat[12] = _pos.GetX();
-    m_translate.m_mat[13] = _pos.GetY();
-    m_translate.m_mat[14] = _pos.GetZ();
+    Matrix translate;
+    translate.m_mat[12] = _pos.GetX();
+    translate.m_mat[13] = _pos.GetY();
+    translate.m_mat[14] = _pos.GetZ();
+    m_translate = translate * m_translate;
 }
 //------------------------------------------------------------------------------
 void Transform::SetRotation(float _theta, Vector _v )

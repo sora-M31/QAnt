@@ -22,9 +22,9 @@ class GLWindow : public QGLWidget
         void setRotationX();
         void setRotationY();
         void setRotationZ();
-        void setTranslationX(double _dis);
-        void setTranslationY(double _dis);
-        void setTranslationZ(double _dis);
+        void setTranslationX();
+        void setTranslationY();
+        void setTranslationZ();
     protected:
         void initializeGL();
         void resizeGL(
