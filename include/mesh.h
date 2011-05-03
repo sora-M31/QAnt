@@ -2,6 +2,7 @@
 #define _MESH_H_
 #include <OpenGL/gl.h>
 #include <stdint.h>
+#include <vector>
 
 namespace QtGLWindow
 {
@@ -22,6 +23,7 @@ class Mesh
         // --------------------------------------------------------------------------
         /// \brief Destructor delete arrays allocated
         ~Mesh();
+        void CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vector<GLfloat>& _texture, const std::vector<GLubyte>& _face);
         // --------------------------------------------------------------------------
         /// \brief Bind a buffer the size of vertex array with vbo
         void CreateVBO();

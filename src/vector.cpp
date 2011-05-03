@@ -120,12 +120,20 @@ Vector Vector::operator = (const Vector& _paramVector)
     m_z = _paramVector.m_z;
     return *this;
 }
-//------------------------------------------------------------------------------
+///------------------------------------------------------------------------------
 Vector Vector::operator += (const Vector& _paramVector)
 {
     m_x += _paramVector.m_x;
     m_y += _paramVector.m_y;
     m_z += _paramVector.m_z;
+    return *this;
+}
+//------------------------------------------------------------------------------
+Vector Vector::operator -= (const Vector& _paramVector)
+{
+    m_x -= _paramVector.m_x;
+    m_y -= _paramVector.m_y;
+    m_z -= _paramVector.m_z;
     return *this;
 }
 //------------------------------------------------------------------------------

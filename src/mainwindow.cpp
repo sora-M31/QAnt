@@ -15,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( m_ui->m_transX,SIGNAL(pressed()),m_gl,SLOT(setTranslationX()) );
     connect( m_ui->m_transY,SIGNAL(pressed()),m_gl,SLOT(setTranslationY()) );
     connect( m_ui->m_transZ,SIGNAL(pressed()),m_gl,SLOT(setTranslationZ()) );
+    connect( m_ui->m_zoom,SIGNAL(pressed()),m_gl, SLOT(setZoom()) );
+    connect( m_ui->m_spin,SIGNAL(pressed()),m_gl, SLOT(setSpin()) );
+    connect( m_ui->m_model,SIGNAL(currentIndexChanged(int)),m_gl,SLOT(setModel(int)));
 }
 
 MainWindow::~MainWindow()

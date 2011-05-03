@@ -13,9 +13,7 @@ class SceneObject
         virtual ~SceneObject();
         SceneObject(
                      Vector _pos,
-                     Vector _dir,
                      float _bound,
-                     float _mass,
                      DrawType _type
                     );
         virtual void Rotate(const float theta, const Vector& _axis);
@@ -25,8 +23,6 @@ class SceneObject
         uint32_t GetType() const;
 
         Vector m_pos;
-        Vector m_dir;
-        float m_mass;
         float m_bound;
         DrawType m_type;
         SceneNode m_node;

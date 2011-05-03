@@ -7,6 +7,7 @@
 #include "sceneManager.h"
 #include "transform.h"
 #include "objLoader.h"
+#include "camera.h"
 
 namespace QtGLWindow{
 class GLWindow : public QGLWidget
@@ -25,6 +26,9 @@ class GLWindow : public QGLWidget
         void setTranslationX();
         void setTranslationY();
         void setTranslationZ();
+        void setZoom();
+        void setSpin();
+        void setModel(int _index);
     protected:
         void initializeGL();
         void resizeGL(
@@ -37,11 +41,13 @@ class GLWindow : public QGLWidget
         void Draw(const SceneObject* _obj);
         SceneManager m_scene;
         ObjLoader m_obj;
+        Camera* m_pCam;
         uint32_t m_framerate;
         QTimer* m_timer;
         bool m_wireframe;
         Transform m_trans;
         SceneObject* pSelected;
+        float m_spin;
 };//end of class
 }//end of namespace
 #endif //end of define

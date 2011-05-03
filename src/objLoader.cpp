@@ -142,28 +142,9 @@ void ObjLoader::Check()
 //------------------------------------------------------------------------------
 void ObjLoader::Load()
 {
-    //vertex
-    m_pMesh->m_verSize = m_vertexBuffer.size();
-    m_pMesh->m_vertex = new GLfloat[m_pMesh->m_verSize];
-    for (uint32_t i=0; i< m_pMesh->m_verSize; ++i)
-    {
-        m_pMesh->m_vertex[i] = m_vertexBuffer[i];
-    }
-    /*/texture
-    m_pMesh->m_uvSize = m_textureBuffer.size();
-    m_pMesh->m_texture = new GLfloat[m_uvSize];
-    for (uint32_t i=0; i< m_pMesh->m_uvSize; ++i)
-    {
-        m_pMesh->m_texture[i] = m_textureBuffer[i];
-    }
-    */
-    //face
-    m_pMesh->m_faceSize = m_faceBuffer.size();
-    m_pMesh->m_face = new GLubyte[m_pMesh->m_faceSize];
-    for (uint32_t i=0; i< m_pMesh->m_faceSize; ++i)
-    {
-        //in maya obj file, face start from 1 rather than 0!!!!!!!
-        m_pMesh->m_face[i] = m_faceBuffer[i]-1;
-    }
+    m_pMesh->CreateDataArray( m_vertexBuffer, m_textureBuffer, m_faceBuffer);
+    m_vertexBuffer.clear();
+    m_textureBuffer.clear();
+    m_faceBuffer.clear();
 }
 }//end of namespace

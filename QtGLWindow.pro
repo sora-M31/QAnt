@@ -22,7 +22,8 @@ SOURCES += \
     src/matrix.cpp \
     src/sceneManager.cpp \
     src/mesh.cpp \
-    src/objLoader.cpp
+    src/objLoader.cpp \
+    src/camera.cpp
 
 HEADERS += \
     include/mainwindow.h \
@@ -36,7 +37,8 @@ HEADERS += \
     include/matrix.h \
     include/sceneManager.h \
     include/mesh.h \
-    include/objLoader.h
+    include/objLoader.h \
+    include/camera.h
 
 FORMS += \
     ui/mainwindow.ui

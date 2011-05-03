@@ -13,6 +13,8 @@ GLWindow::GLWindow(
     m_framerate = 1000;
     m_wireframe = false;
     m_timer = new QTimer(this);
+    m_pCam = new Camera;
+    m_spin = 0.0;
     //connect( m_timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     //m_timer->start(m_framerate);
 }
@@ -30,9 +32,11 @@ void GLWindow::initializeGL()
     m_scene.InitScene();
     pSelected = m_scene.m_root.m_pNext->m_pObject;
 
-    m_obj.ParseFile("arrow.obj");
+    m_obj.ParseFile("sphere.obj");
     m_obj.Load();
     m_obj.m_pMesh->CreateVBO();
+    //setModel(0);
+    m_pCam->SetupCam();
 }
 //------------------------------------------------------------------------------
 void GLWindow::resizeGL(
@@ -76,9 +80,12 @@ void GLWindow::RenderScene(const SceneManager& _scene)
 void GLWindow::Draw(const SceneObject* _obj)
 {
     glPushMatrix();
+        glRotatef(m_spin, 0,1,0);
+    glPushMatrix();
         glMultMatrixf( _obj->m_trans.m_transform.m_mat);
         //glMultMatrixf(m_trans.m_transform.m_mat);
         m_obj.m_pMesh->DrawVBO();
+    glPopMatrix();
     glPopMatrix();
 }
 //------------------------------------------------------------------------------
@@ -95,6 +102,7 @@ void GLWindow::setRotationX()
     pSelected->m_trans.ApplyTransform();
     updateGL();
 }
+//------------------------------------------------------------------------------
 void GLWindow::setRotationY()
 {
     pSelected->m_trans.SetRotation(1*PI/180, pSelected->m_axisY);
@@ -102,6 +110,7 @@ void GLWindow::setRotationY()
     pSelected->m_trans.ApplyTransform();
     updateGL();
 }
+//------------------------------------------------------------------------------
 void GLWindow::setRotationZ()
 {
     pSelected->m_trans.SetRotation(1*PI/180, pSelected->m_axisZ);
@@ -109,25 +118,51 @@ void GLWindow::setRotationZ()
     pSelected->m_trans.ApplyTransform();
     updateGL();
 }
+//------------------------------------------------------------------------------
 void GLWindow::setTranslationX()
 {
     pSelected->m_trans.SetTranslate( pSelected->m_axisX * 0.1 );
     pSelected->m_trans.ApplyTransform();
     updateGL();
-
 }
+//------------------------------------------------------------------------------
 void GLWindow::setTranslationY()
 {
     pSelected->m_trans.SetTranslate( pSelected->m_axisY * 0.1 );
     pSelected->m_trans.ApplyTransform();
     updateGL();
-
 }
+//------------------------------------------------------------------------------
 void GLWindow::setTranslationZ()
 {
     pSelected->m_trans.SetTranslate( pSelected->m_axisZ * 0.1 );
     pSelected->m_trans.ApplyTransform();
     updateGL();
-
+}
+//------------------------------------------------------------------------------
+void GLWindow::setZoom()
+{
+    m_pCam->Zoom();
+    updateGL();
+}
+void GLWindow::setSpin()
+{
+    m_spin +=1;
+    updateGL();
+}
+void GLWindow::setModel(int _index)
+{
+    switch(_index)
+    {
+        case 0:
+            m_obj.ParseFile("sphere.obj");
+        case 1:
+            m_obj.ParseFile("arrow.obj");
+        case 2:
+            m_obj.ParseFile("fish.obj");
+    }
+    m_obj.Load();
+    m_obj.m_pMesh->CreateVBO();
+    updateGL();
 }
 }//end of namespace

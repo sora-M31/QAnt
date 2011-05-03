@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Apr 20 17:38:42 2011
+** Created: Tue May 3 13:55:47 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,20 +39,25 @@ public:
     QGridLayout *gridLayout_3;
     QLabel *label_5;
     QLabel *label_6;
+    QPushButton *m_pitch;
+    QPushButton *m_yaw;
+    QPushButton *m_zoom;
+    QPushButton *m_spin;
+    QPushButton *m_roll;
     QGroupBox *s_objTransGB;
     QGridLayout *gridLayout;
     QLabel *label;
     QPushButton *m_rotX;
     QPushButton *m_rotY;
-    QPushButton *m_rotZ;
     QPushButton *m_transX;
     QPushButton *m_transY;
     QLabel *label_2;
+    QPushButton *m_rotZ;
     QPushButton *m_transZ;
     QGroupBox *s_optGB;
     QGridLayout *gridLayout_2;
     QCheckBox *m_wireframeCheck;
-    QComboBox *comboBox;
+    QComboBox *m_model;
     QLabel *label_4;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -61,7 +66,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(797, 614);
+        MainWindow->resize(797, 734);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         s_mainLayout = new QGridLayout(centralwidget);
@@ -82,7 +87,32 @@ public:
         label_6 = new QLabel(s_camTransGB);
         label_6->setObjectName(QString::fromUtf8("label_6"));
 
-        gridLayout_3->addWidget(label_6, 1, 0, 1, 1);
+        gridLayout_3->addWidget(label_6, 5, 0, 1, 1);
+
+        m_pitch = new QPushButton(s_camTransGB);
+        m_pitch->setObjectName(QString::fromUtf8("m_pitch"));
+
+        gridLayout_3->addWidget(m_pitch, 2, 0, 1, 1);
+
+        m_yaw = new QPushButton(s_camTransGB);
+        m_yaw->setObjectName(QString::fromUtf8("m_yaw"));
+
+        gridLayout_3->addWidget(m_yaw, 4, 0, 1, 1);
+
+        m_zoom = new QPushButton(s_camTransGB);
+        m_zoom->setObjectName(QString::fromUtf8("m_zoom"));
+
+        gridLayout_3->addWidget(m_zoom, 6, 0, 1, 1);
+
+        m_spin = new QPushButton(s_camTransGB);
+        m_spin->setObjectName(QString::fromUtf8("m_spin"));
+
+        gridLayout_3->addWidget(m_spin, 7, 0, 1, 1);
+
+        m_roll = new QPushButton(s_camTransGB);
+        m_roll->setObjectName(QString::fromUtf8("m_roll"));
+
+        gridLayout_3->addWidget(m_roll, 3, 0, 1, 1);
 
 
         s_mainLayout->addWidget(s_camTransGB, 1, 1, 1, 1);
@@ -106,30 +136,30 @@ public:
 
         gridLayout->addWidget(m_rotY, 3, 0, 1, 1);
 
-        m_rotZ = new QPushButton(s_objTransGB);
-        m_rotZ->setObjectName(QString::fromUtf8("m_rotZ"));
-
-        gridLayout->addWidget(m_rotZ, 4, 0, 1, 1);
-
         m_transX = new QPushButton(s_objTransGB);
         m_transX->setObjectName(QString::fromUtf8("m_transX"));
 
-        gridLayout->addWidget(m_transX, 7, 0, 1, 1);
+        gridLayout->addWidget(m_transX, 8, 0, 1, 1);
 
         m_transY = new QPushButton(s_objTransGB);
         m_transY->setObjectName(QString::fromUtf8("m_transY"));
 
-        gridLayout->addWidget(m_transY, 9, 0, 1, 1);
+        gridLayout->addWidget(m_transY, 10, 0, 1, 1);
 
         label_2 = new QLabel(s_objTransGB);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
         gridLayout->addWidget(label_2, 6, 0, 1, 1);
 
+        m_rotZ = new QPushButton(s_objTransGB);
+        m_rotZ->setObjectName(QString::fromUtf8("m_rotZ"));
+
+        gridLayout->addWidget(m_rotZ, 4, 0, 1, 1);
+
         m_transZ = new QPushButton(s_objTransGB);
         m_transZ->setObjectName(QString::fromUtf8("m_transZ"));
 
-        gridLayout->addWidget(m_transZ, 10, 0, 1, 1);
+        gridLayout->addWidget(m_transZ, 11, 0, 1, 1);
 
 
         s_mainLayout->addWidget(s_objTransGB, 0, 1, 1, 1);
@@ -143,15 +173,15 @@ public:
 
         gridLayout_2->addWidget(m_wireframeCheck, 0, 0, 1, 1);
 
-        comboBox = new QComboBox(s_optGB);
-        comboBox->setObjectName(QString::fromUtf8("comboBox"));
+        m_model = new QComboBox(s_optGB);
+        m_model->setObjectName(QString::fromUtf8("m_model"));
 
-        gridLayout_2->addWidget(comboBox, 2, 0, 1, 1);
+        gridLayout_2->addWidget(m_model, 3, 0, 1, 1);
 
         label_4 = new QLabel(s_optGB);
         label_4->setObjectName(QString::fromUtf8("label_4"));
 
-        gridLayout_2->addWidget(label_4, 1, 0, 1, 1);
+        gridLayout_2->addWidget(label_4, 2, 0, 1, 1);
 
 
         s_mainLayout->addWidget(s_optGB, 2, 1, 1, 1);
@@ -176,20 +206,26 @@ public:
         s_camTransGB->setTitle(QApplication::translate("MainWindow", "Camera local Transformation", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("MainWindow", "Rotate", 0, QApplication::UnicodeUTF8));
         label_6->setText(QApplication::translate("MainWindow", "Translate", 0, QApplication::UnicodeUTF8));
+        m_pitch->setText(QApplication::translate("MainWindow", "Pitch", 0, QApplication::UnicodeUTF8));
+        m_yaw->setText(QApplication::translate("MainWindow", "Yaw", 0, QApplication::UnicodeUTF8));
+        m_zoom->setText(QApplication::translate("MainWindow", "Zoom in", 0, QApplication::UnicodeUTF8));
+        m_spin->setText(QApplication::translate("MainWindow", "Spin", 0, QApplication::UnicodeUTF8));
+        m_roll->setText(QApplication::translate("MainWindow", "Roll", 0, QApplication::UnicodeUTF8));
         s_objTransGB->setTitle(QApplication::translate("MainWindow", "Object Local Transformation", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("MainWindow", "Rotation", 0, QApplication::UnicodeUTF8));
         m_rotX->setText(QApplication::translate("MainWindow", "RotateX", 0, QApplication::UnicodeUTF8));
         m_rotY->setText(QApplication::translate("MainWindow", "Rotate Y", 0, QApplication::UnicodeUTF8));
-        m_rotZ->setText(QApplication::translate("MainWindow", "Rotate Z", 0, QApplication::UnicodeUTF8));
         m_transX->setText(QApplication::translate("MainWindow", "Translate X", 0, QApplication::UnicodeUTF8));
         m_transY->setText(QApplication::translate("MainWindow", "Translate Y", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("MainWindow", "Translate", 0, QApplication::UnicodeUTF8));
+        m_rotZ->setText(QApplication::translate("MainWindow", "Rotate Z", 0, QApplication::UnicodeUTF8));
         m_transZ->setText(QApplication::translate("MainWindow", "Translate Z", 0, QApplication::UnicodeUTF8));
         s_optGB->setTitle(QApplication::translate("MainWindow", "Options", 0, QApplication::UnicodeUTF8));
         m_wireframeCheck->setText(QApplication::translate("MainWindow", "Wireframe", 0, QApplication::UnicodeUTF8));
-        comboBox->clear();
-        comboBox->insertItems(0, QStringList()
+        m_model->clear();
+        m_model->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "Sphere", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "Arrow", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("MainWindow", "Fish", 0, QApplication::UnicodeUTF8)
         );
         label_4->setText(QApplication::translate("MainWindow", "Choose Model:", 0, QApplication::UnicodeUTF8));

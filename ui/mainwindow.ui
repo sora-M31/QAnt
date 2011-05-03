@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>797</width>
-    <height>614</height>
+    <height>734</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,10 +41,45 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="label_6">
          <property name="text">
           <string>Translate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="m_pitch">
+         <property name="text">
+          <string>Pitch</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="m_yaw">
+         <property name="text">
+          <string>Yaw</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QPushButton" name="m_zoom">
+         <property name="text">
+          <string>Zoom in</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QPushButton" name="m_spin">
+         <property name="text">
+          <string>Spin</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="m_roll">
+         <property name="text">
+          <string>Roll</string>
          </property>
         </widget>
        </item>
@@ -78,21 +113,14 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QPushButton" name="m_rotZ">
-         <property name="text">
-          <string>Rotate Z</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
+       <item row="8" column="0">
         <widget class="QPushButton" name="m_transX">
          <property name="text">
           <string>Translate X</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
+       <item row="10" column="0">
         <widget class="QPushButton" name="m_transY">
          <property name="text">
           <string>Translate Y</string>
@@ -106,7 +134,14 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="0">
+       <item row="4" column="0">
+        <widget class="QPushButton" name="m_rotZ">
+         <property name="text">
+          <string>Rotate Z</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
         <widget class="QPushButton" name="m_transZ">
          <property name="text">
           <string>Translate Z</string>
@@ -129,11 +164,16 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QComboBox" name="comboBox">
+       <item row="3" column="0">
+        <widget class="QComboBox" name="m_model">
          <item>
           <property name="text">
            <string>Sphere</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Arrow</string>
           </property>
          </item>
          <item>
@@ -143,7 +183,7 @@
          </item>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Choose Model:</string>
