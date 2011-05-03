@@ -156,13 +156,16 @@ void GLWindow::setModel(int _index)
     {
         case 0:
             m_obj.ParseFile("sphere.obj");
+            break;
         case 1:
             m_obj.ParseFile("arrow.obj");
+            break;
         case 2:
             m_obj.ParseFile("fish.obj");
+            break;
     }
     m_obj.Load();
-    m_obj.m_pMesh->CreateVBO();
+    m_obj.m_pMesh->UpdateVBO();
     updateGL();
 }
 }//end of namespace

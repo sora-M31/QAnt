@@ -27,6 +27,7 @@ class Mesh
         // --------------------------------------------------------------------------
         /// \brief Bind a buffer the size of vertex array with vbo
         void CreateVBO();
+        void UpdateVBO();
         // --------------------------------------------------------------------------
         /// \brief Draw the vbo using indices got from face information
         void DrawVBO();

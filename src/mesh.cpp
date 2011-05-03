@@ -67,8 +67,19 @@ void Mesh::CreateVBO()
     //target,buffer name
     glBindBuffer(GL_ARRAY_BUFFER,m_vboPointer);
     //specify buffer data
-    glBufferData( GL_ARRAY_BUFFER, m_verSize*sizeof(GL_FLOAT), m_vertex, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, m_verSize*sizeof(GL_FLOAT), 0, GL_STATIC_DRAW );
+    glBufferSubData(GL_ARRAY_BUFFER, 0, m_verSize*sizeof(GL_FLOAT)	, m_vertex);
     //clear the buffer
+    glBindBuffer(GL_ARRAY_BUFFER,0);
+}
+void Mesh::UpdateVBO()
+{
+    glBindBuffer(GL_ARRAY_BUFFER,m_vboPointer);
+    //specify buffer data
+    glBufferData( GL_ARRAY_BUFFER, m_verSize*sizeof(GL_FLOAT), 0, GL_STATIC_DRAW );
+    glBufferSubData(GL_ARRAY_BUFFER, 0, m_verSize*sizeof(GL_FLOAT)	, m_vertex);
+    //clear the buffer
+
     glBindBuffer(GL_ARRAY_BUFFER,0);
 }
 //------------------------------------------------------------------------------
