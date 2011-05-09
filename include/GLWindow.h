@@ -28,6 +28,9 @@ class GLWindow : public QGLWidget
         void setTranslationZ();
         void setZoom();
         void setSpin();
+        void setCamPitch();
+        void setCamYaw();
+        void setCamRoll();
         void setModel(int _index);
     protected:
         void initializeGL();

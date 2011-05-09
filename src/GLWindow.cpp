@@ -97,46 +97,55 @@ void GLWindow::toggleWireframe(bool _mode)
 //------------------------------------------------------------------------------
 void GLWindow::setRotationX()
 {
-    pSelected->m_trans.SetRotation(1*PI/180, pSelected->m_axisX);
-    pSelected->RotateAxis();
-    pSelected->m_trans.ApplyTransform();
+    pSelected->Rotate(1*PI/180,'X');
     updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setRotationY()
 {
-    pSelected->m_trans.SetRotation(1*PI/180, pSelected->m_axisY);
-    pSelected->RotateAxis();
-    pSelected->m_trans.ApplyTransform();
+    pSelected->Rotate(1*PI/180,'Y');
     updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setRotationZ()
 {
-    pSelected->m_trans.SetRotation(1*PI/180, pSelected->m_axisZ);
-    pSelected->RotateAxis();
-    pSelected->m_trans.ApplyTransform();
+    pSelected->Rotate(1*PI/180,'Z');
     updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setTranslationX()
 {
-    pSelected->m_trans.SetTranslate( pSelected->m_axisX * 0.1 );
-    pSelected->m_trans.ApplyTransform();
+    pSelected->Translate('X');
     updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setTranslationY()
 {
-    pSelected->m_trans.SetTranslate( pSelected->m_axisY * 0.1 );
-    pSelected->m_trans.ApplyTransform();
+    pSelected->Translate('Y');
     updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setTranslationZ()
 {
-    pSelected->m_trans.SetTranslate( pSelected->m_axisZ * 0.1 );
-    pSelected->m_trans.ApplyTransform();
+    pSelected->Translate('Z');
+    updateGL();
+}
+//------------------------------------------------------------------------------
+void GLWindow::setCamPitch()
+{
+    this->m_pCam->Pitch();
+    updateGL();
+}
+void GLWindow::setCamYaw()
+{
+    this->m_pCam->Yaw();
+    updateGL();
+}
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+void GLWindow::setCamRoll()
+{
+    this->m_pCam->Roll();
     updateGL();
 }
 //------------------------------------------------------------------------------

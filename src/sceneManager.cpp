@@ -21,9 +21,9 @@ void SceneManager::InitScene()
 //------------------------------------------------------------------------------
 void SceneManager::UpdateScene(Vector _pos, float _theta, Vector _axis)
 {
-    test->Move(_pos);
-    test->Rotate(_theta,_axis);
-    test->Update();
+//    test->Move(_pos);
+  //  test->Rotate(_theta,_axis);
+    //test->Update();
 }
 //------------------------------------------------------------------------------
 }//end of namespace

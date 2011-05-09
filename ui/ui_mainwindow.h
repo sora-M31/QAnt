@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue May 3 15:10:56 2011
+** Created: Mon May 9 11:39:09 2011
 **      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -40,10 +40,10 @@ public:
     QLabel *label_5;
     QLabel *label_6;
     QPushButton *m_pitch;
-    QPushButton *m_yaw;
     QPushButton *m_zoom;
     QPushButton *m_spin;
     QPushButton *m_roll;
+    QPushButton *m_yaw;
     QGroupBox *s_objTransGB;
     QGridLayout *gridLayout;
     QLabel *label;
@@ -87,32 +87,32 @@ public:
         label_6 = new QLabel(s_camTransGB);
         label_6->setObjectName(QString::fromUtf8("label_6"));
 
-        gridLayout_3->addWidget(label_6, 5, 0, 1, 1);
+        gridLayout_3->addWidget(label_6, 6, 0, 1, 1);
 
         m_pitch = new QPushButton(s_camTransGB);
         m_pitch->setObjectName(QString::fromUtf8("m_pitch"));
 
         gridLayout_3->addWidget(m_pitch, 2, 0, 1, 1);
 
-        m_yaw = new QPushButton(s_camTransGB);
-        m_yaw->setObjectName(QString::fromUtf8("m_yaw"));
-
-        gridLayout_3->addWidget(m_yaw, 4, 0, 1, 1);
-
         m_zoom = new QPushButton(s_camTransGB);
         m_zoom->setObjectName(QString::fromUtf8("m_zoom"));
 
-        gridLayout_3->addWidget(m_zoom, 6, 0, 1, 1);
+        gridLayout_3->addWidget(m_zoom, 7, 0, 1, 1);
 
         m_spin = new QPushButton(s_camTransGB);
         m_spin->setObjectName(QString::fromUtf8("m_spin"));
 
-        gridLayout_3->addWidget(m_spin, 7, 0, 1, 1);
+        gridLayout_3->addWidget(m_spin, 8, 0, 1, 1);
 
         m_roll = new QPushButton(s_camTransGB);
         m_roll->setObjectName(QString::fromUtf8("m_roll"));
 
-        gridLayout_3->addWidget(m_roll, 3, 0, 1, 1);
+        gridLayout_3->addWidget(m_roll, 4, 0, 1, 1);
+
+        m_yaw = new QPushButton(s_camTransGB);
+        m_yaw->setObjectName(QString::fromUtf8("m_yaw"));
+
+        gridLayout_3->addWidget(m_yaw, 3, 0, 1, 1);
 
 
         s_mainLayout->addWidget(s_camTransGB, 1, 1, 1, 1);
@@ -207,10 +207,10 @@ public:
         label_5->setText(QApplication::translate("MainWindow", "Rotate", 0, QApplication::UnicodeUTF8));
         label_6->setText(QApplication::translate("MainWindow", "Translate", 0, QApplication::UnicodeUTF8));
         m_pitch->setText(QApplication::translate("MainWindow", "Pitch", 0, QApplication::UnicodeUTF8));
-        m_yaw->setText(QApplication::translate("MainWindow", "Yaw", 0, QApplication::UnicodeUTF8));
         m_zoom->setText(QApplication::translate("MainWindow", "Zoom in", 0, QApplication::UnicodeUTF8));
         m_spin->setText(QApplication::translate("MainWindow", "Spin", 0, QApplication::UnicodeUTF8));
         m_roll->setText(QApplication::translate("MainWindow", "Roll", 0, QApplication::UnicodeUTF8));
+        m_yaw->setText(QApplication::translate("MainWindow", "Yaw", 0, QApplication::UnicodeUTF8));
         s_objTransGB->setTitle(QApplication::translate("MainWindow", "Object Local Transformation", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("MainWindow", "Rotation", 0, QApplication::UnicodeUTF8));
         m_rotX->setText(QApplication::translate("MainWindow", "RotateX", 0, QApplication::UnicodeUTF8));

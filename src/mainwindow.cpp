@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( m_ui->m_zoom,SIGNAL(pressed()),m_gl, SLOT(setZoom()) );
     connect( m_ui->m_spin,SIGNAL(pressed()),m_gl, SLOT(setSpin()) );
     connect( m_ui->m_model,SIGNAL(currentIndexChanged(int)),m_gl,SLOT(setModel(int)));
+    connect( m_ui->m_pitch,SIGNAL(pressed()),m_gl,SLOT(setCamPitch()));
+    connect( m_ui->m_yaw,SIGNAL(pressed()),m_gl,SLOT(setCamYaw()));
+    connect( m_ui->m_roll,SIGNAL(pressed()),m_gl,SLOT(setCamRoll()));
 }
 
 MainWindow::~MainWindow()

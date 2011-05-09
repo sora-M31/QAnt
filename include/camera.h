@@ -5,12 +5,13 @@
 #include <OpenGL/glu.h>
 #include <stdint.h>
 #include "vector.h"
+#include "sceneObject.h"
 
 namespace QtGLWindow
 {
 // --------------------------------------------------------------------------
 /// \brief class camera, manipulate viewing transformation and projection transformation
-class Camera
+class Camera: public SceneObject
 {
     public:
         // --------------------------------------------------------------------------
@@ -27,6 +28,9 @@ class Camera
         /// \param _zoomFactor how much to zoom/pan
         void Zoom();
         void ResetView();
+        void Pitch();
+        void Yaw();
+        void Roll();
 
         Vector m_eye;
         Vector m_centre;

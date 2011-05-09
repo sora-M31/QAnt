@@ -1,4 +1,5 @@
 #include "sceneObject.h"
+#define PI 3.1415926
 
 namespace QtGLWindow
 {
@@ -55,12 +56,37 @@ void SceneObject::GetColorId()
     }
 }
 //------------------------------------------------------------------------------
-void SceneObject::Rotate(const float _theta, const Vector& _axis)
+void SceneObject::Rotate(const float _theta, const char _axis)
 {
+    switch(_axis)
+    {
+        case 'X':
+            m_trans.SetRotation(1*PI/180, m_axisX);
+            break;
+        case 'Y':
+            m_trans.SetRotation(1*PI/180, m_axisY);
+            break;
+        case 'Z':
+            m_trans.SetRotation(1*PI/180, m_axisZ);
+            break;
+    }
+    RotateAxis();
+    m_trans.ApplyTransform();
+
 }
 //------------------------------------------------------------------------------
-void SceneObject::Move(const Vector&  _dis)
+void SceneObject::Translate(const char _axis)
 {
+    switch(_axis)
+    {
+        case 'X':
+            m_trans.SetTranslate( m_axisX * 0.1 );
+        case 'Y':
+            m_trans.SetTranslate( m_axisY * 0.1 );
+        case 'Z':
+            m_trans.SetTranslate( m_axisZ * 0.1 );
+    }
+        m_trans.ApplyTransform();
 }
 //------------------------------------------------------------------------------
 void SceneObject::Update()

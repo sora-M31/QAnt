@@ -4,10 +4,11 @@ namespace QtGLWindow
 {
 //------------------------------------------------------------------------------
 Camera::Camera()
-    :m_eye(20,0,20),
-     m_centre(0,0,0),
+    :m_centre(0,0,0),
      m_up(0,1,0)
 {
+    m_eye = m_centre - this->m_axisX*5;
+    m_pos = m_eye;
 }
 //------------------------------------------------------------------------------
 Camera::~Camera()
@@ -27,7 +28,7 @@ void Camera::SetupCam()
               m_up.GetX(), m_up.GetY(), m_up.GetZ());
 }
 //------------------------------------------------------------------------------
-void Camera::Zoom()//pan?
+void Camera::Zoom()//track
 { 	Vector direction = (m_centre-m_eye).Normalise();
     m_eye += direction*1;
     ResetView();
@@ -42,5 +43,29 @@ void Camera::ResetView()
                 m_centre.GetX(),m_centre.GetY(), m_centre.GetZ(),
                 m_up.GetX(), m_up.GetY(), m_up.GetZ()
              );
+}
+//------------------------------------------------------------------------------
+void Camera::Pitch()
+{
+    this->Rotate(0,'Z');
+    this->m_up = m_axisY;
+    m_centre = m_axisX*(m_centre - m_eye).Length();
+    ResetView();
+}
+//------------------------------------------------------------------------------
+void Camera::Yaw()
+{
+    this->Rotate(0,'Y');
+    this->m_up = m_axisY;
+    m_centre = m_axisX*(m_centre - m_eye).Length();
+    ResetView();
+}
+//------------------------------------------------------------------------------
+void Camera::Roll()
+{
+    this->Rotate(0,'X');
+    this->m_up = m_axisY;
+    m_centre = m_axisX*(m_centre - m_eye).Length();
+    ResetView();
 }
 }//end of namespace
