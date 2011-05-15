@@ -18,6 +18,7 @@ class SceneObject
                     );
         virtual void Rotate(const float theta, const char _axis);
         virtual void Translate(const char _axis);
+        void Translate(Vector _dis);
         void RotateAxis();
         virtual void Update();
         uint32_t GetType() const;
@@ -30,6 +31,10 @@ class SceneObject
         Vector m_axisX;
         Vector m_axisY;
         Vector m_axisZ;
+        Vector m_vel;
+        float m_mass;
+        Vector m_force;
+        Vector m_accel;
     private:
         void GetColorId();
         uint16_t m_colorId[3];

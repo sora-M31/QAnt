@@ -23,7 +23,10 @@ SOURCES += \
     src/sceneManager.cpp \
     src/mesh.cpp \
     src/objLoader.cpp \
-    src/camera.cpp
+    src/camera.cpp \
+    src/flock.cpp \
+    src/boid.cpp \
+    src/ant.cpp
 
 HEADERS += \
     include/mainwindow.h \
@@ -38,7 +41,10 @@ HEADERS += \
     include/sceneManager.h \
     include/mesh.h \
     include/objLoader.h \
-    include/camera.h
+    include/camera.h \
+    include/flock.h \
+    include/boid.h \
+    include/ant.h
 
 FORMS += \
     ui/mainwindow.ui

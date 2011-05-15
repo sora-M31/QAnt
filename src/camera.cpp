@@ -4,10 +4,11 @@ namespace QtGLWindow
 {
 //------------------------------------------------------------------------------
 Camera::Camera()
-    :m_centre(0,0,0),
-     m_up(0,1,0)
+    :m_centre(0,0,0)
 {
-    m_eye = m_centre - this->m_axisX*5;
+    this->Rotate(30,'Y');
+    m_eye = m_centre - this->m_axisX*10;
+    m_up = m_axisY;
     m_pos = m_eye;
 }
 //------------------------------------------------------------------------------

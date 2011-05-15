@@ -1,9 +1,10 @@
 #ifndef _SCENEMANAGER_H_
 #define _SCENEMANGER_H_
 
-
 #include "sceneNode.h"
 #include "sceneObject.h"
+#include "flock.h"
+#include "ant.h"
 namespace QtGLWindow
 {
 class SceneManager
@@ -14,10 +15,11 @@ class SceneManager
 
         void InitScene();
         void UpdateScene();
-        void UpdateScene(Vector _pos, float _theta, Vector _axis);
 
         SceneNode m_root;
         SceneObject* test;
+        Flock* m_pFlock;
+        Ant* m_pAnt;
 };//end of class
 }//end of namespace
 #endif //end of define

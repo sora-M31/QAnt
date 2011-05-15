@@ -10,13 +10,13 @@ GLWindow::GLWindow(
     setFocus();
     resize(_parent->size());
 
-    m_framerate = 1000;
+    m_framerate = 50;
     m_wireframe = false;
     m_timer = new QTimer(this);
     m_pCam = new Camera;
     m_spin = 0.0;
-    //connect( m_timer, SIGNAL(timeout()), this, SLOT(updateGL()));
-    //m_timer->start(m_framerate);
+    connect( m_timer, SIGNAL(timeout()), this, SLOT(updateGL()));
+    m_timer->start(m_framerate);
 }
 //------------------------------------------------------------------------------
 GLWindow::~GLWindow()
@@ -59,7 +59,7 @@ void GLWindow::paintGL()
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     }
 
-   // m_scene.UpdateScene(m_pos,m_rot,m_axis);
+    m_scene.UpdateScene();
     RenderScene(m_scene);
 }
 //------------------------------------------------------------------------------
@@ -81,11 +81,11 @@ void GLWindow::Draw(const SceneObject* _obj)
 {
     glPushMatrix();
         glRotatef(m_spin, 0,1,0);
-    glPushMatrix();
-        glMultMatrixf( _obj->m_trans.m_transform.m_mat);
-        //glMultMatrixf(m_trans.m_transform.m_mat);
-        m_obj.m_pMesh->DrawVBO();
-    glPopMatrix();
+        glPushMatrix();
+            glMultMatrixf( _obj->m_trans.m_transform.m_mat);
+            //glMultMatrixf(m_trans.m_transform.m_mat);
+            m_obj.m_pMesh->DrawVBO();
+        glPopMatrix();
     glPopMatrix();
 }
 //------------------------------------------------------------------------------

@@ -13,7 +13,11 @@ SceneObject::SceneObject()
       m_node(this),
       m_axisX(Vector(1,0,0)),
       m_axisY(Vector(0,1,0)),
-      m_axisZ(Vector(0,0,1))
+      m_axisZ(Vector(0,0,1)),
+      m_vel(0,0,0),
+      m_mass(0),
+      m_force(0,0,0),
+      m_accel(0,0,0)
 {
     GetColorId();
 }
@@ -61,13 +65,13 @@ void SceneObject::Rotate(const float _theta, const char _axis)
     switch(_axis)
     {
         case 'X':
-            m_trans.SetRotation(1*PI/180, m_axisX);
+            m_trans.SetRotation(_theta*PI/180, m_axisX);
             break;
         case 'Y':
-            m_trans.SetRotation(1*PI/180, m_axisY);
+            m_trans.SetRotation(_theta*PI/180, m_axisY);
             break;
         case 'Z':
-            m_trans.SetRotation(1*PI/180, m_axisZ);
+            m_trans.SetRotation(_theta*PI/180, m_axisZ);
             break;
     }
     RotateAxis();
@@ -87,6 +91,13 @@ void SceneObject::Translate(const char _axis)
             m_trans.SetTranslate( m_axisZ * 0.1 );
     }
         m_trans.ApplyTransform();
+}
+//------------------------------------------------------------------------------
+void SceneObject::Translate(Vector _dis)
+{
+    m_pos+=_dis;
+    m_trans.SetTranslate(_dis);
+    m_trans.ApplyTransform();
 }
 //------------------------------------------------------------------------------
 void SceneObject::Update()
