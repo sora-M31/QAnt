@@ -20,6 +20,7 @@ class SceneManager
         SceneObject* test;
         Flock* m_pFlock;
         Ant* m_pAnt;
+        SceneObject* m_pEnv;
 };//end of class
 }//end of namespace
 #endif //end of define

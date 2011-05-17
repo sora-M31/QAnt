@@ -10,6 +10,7 @@ SceneManager::SceneManager()
     //aggr,separ, align, wall
   //  m_pFlock = new Flock(500,0.2,0.3,0.3,0.2);
     m_pAnt = new Ant();
+    m_pEnv = new SceneObject;
 }
 //------------------------------------------------------------------------------
 SceneManager::~SceneManager()
@@ -26,6 +27,7 @@ void SceneManager::InitScene()
     }
 */
     m_root.AddNext(m_pAnt->m_node);
+    m_pAnt->m_node.AddNext(m_pEnv->m_node);
 }
 //------------------------------------------------------------------------------
 void SceneManager::UpdateScene()

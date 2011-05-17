@@ -6,7 +6,7 @@ namespace QtGLWindow
 Camera::Camera()
     :m_centre(0,0,0)
 {
-    this->Rotate(30,'Y');
+    this->Rotate(-10,'Z');
     m_eye = m_centre - this->m_axisX*10;
     m_up = m_axisY;
     m_pos = m_eye;
@@ -48,7 +48,7 @@ void Camera::ResetView()
 //------------------------------------------------------------------------------
 void Camera::Pitch()
 {
-    this->Rotate(0,'Z');
+    this->Rotate(10,'Z');
     this->m_up = m_axisY;
     m_centre = m_axisX*(m_centre - m_eye).Length();
     ResetView();
@@ -56,7 +56,7 @@ void Camera::Pitch()
 //------------------------------------------------------------------------------
 void Camera::Yaw()
 {
-    this->Rotate(0,'Y');
+    this->Rotate(10,'Y');
     this->m_up = m_axisY;
     m_centre = m_axisX*(m_centre - m_eye).Length();
     ResetView();
@@ -64,7 +64,7 @@ void Camera::Yaw()
 //------------------------------------------------------------------------------
 void Camera::Roll()
 {
-    this->Rotate(0,'X');
+    this->Rotate(10,'X');
     this->m_up = m_axisY;
     m_centre = m_axisX*(m_centre - m_eye).Length();
     ResetView();

@@ -26,7 +26,10 @@ SOURCES += \
     src/camera.cpp \
     src/flock.cpp \
     src/boid.cpp \
-    src/ant.cpp
+    src/ant.cpp \
+    src/pheromone.cpp \
+    src/trail.cpp \
+    src/colony.cpp
 
 HEADERS += \
     include/mainwindow.h \
@@ -44,7 +47,10 @@ HEADERS += \
     include/camera.h \
     include/flock.h \
     include/boid.h \
-    include/ant.h
+    include/ant.h \
+    include/pheromone.h \
+    include/trail.h \
+    include/colony.h
 
 FORMS += \
     ui/mainwindow.ui

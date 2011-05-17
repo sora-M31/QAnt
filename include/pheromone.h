@@ -1,0 +1,22 @@
+#ifndef __PHEROM_H__
+#define __PHEROM_H__
+#include "util.h"
+#include "sceneObject.h"
+
+namespace QtGLWindow
+{
+class Pheromone:public SceneObject
+{
+    public:
+      Pheromone(Vector _pos, PhrmType _type);
+      ///\brief default destructor
+      ~Pheromone();
+
+      void Evaporate();
+
+      PhrmType m_phrmType;
+      uint32_t m_age;
+      uint32_t m_maxAge;
+};
+}//end of namespace
+#endif

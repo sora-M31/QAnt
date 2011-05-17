@@ -29,12 +29,17 @@ void GLWindow::initializeGL()
 {
     glClearColor(0,0,0,1);
 
+    glEnable(GL_DEPTH_TEST);
     m_scene.InitScene();
-    pSelected = m_scene.m_root.m_pNext->m_pObject;
 
+    pSelected = m_scene.m_root.m_pNext->m_pObject;
     m_obj.ParseFile("sphere.obj");
     m_obj.Load();
     m_obj.m_pMesh->CreateVBO();
+
+    m_envObj.ParseFile("plane.obj");
+    m_envObj.Load();
+    m_envObj.m_pMesh->CreateVBO();
     //setModel(0);
     m_pCam->SetupCam();
 }
@@ -81,11 +86,23 @@ void GLWindow::Draw(const SceneObject* _obj)
 {
     glPushMatrix();
         glRotatef(m_spin, 0,1,0);
-        glPushMatrix();
-            glMultMatrixf( _obj->m_trans.m_transform.m_mat);
-            //glMultMatrixf(m_trans.m_transform.m_mat);
-            m_obj.m_pMesh->DrawVBO();
-        glPopMatrix();
+        if(_obj->m_type == kObject)
+        {
+            glPushMatrix();
+                glColor3f(1,1,1);
+                glScalef(60,1,60);
+                m_envObj.m_pMesh->DrawVBO();
+            glPopMatrix();
+        }
+        else if (_obj->m_type == kAnt)
+        {
+            glPushMatrix();
+                glColor3f(1,0,0);
+                glMultMatrixf( _obj->m_trans.m_transform.m_mat);
+                m_obj.m_pMesh->DrawVBO();
+            glPopMatrix();
+
+        }
     glPopMatrix();
 }
 //------------------------------------------------------------------------------

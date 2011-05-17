@@ -44,6 +44,7 @@ class GLWindow : public QGLWidget
         void Draw(const SceneObject* _obj);
         SceneManager m_scene;
         ObjLoader m_obj;
+        ObjLoader m_envObj;
         Camera* m_pCam;
         uint32_t m_framerate;
         QTimer* m_timer;
