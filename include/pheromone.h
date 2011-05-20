@@ -14,8 +14,8 @@ class Pheromone:public SceneObject
 
       void Evaporate();
 
-      PhrmType m_phrmType;
       uint32_t m_age;
+      PhrmType m_phrmType;
       uint32_t m_maxAge;
 };
 }//end of namespace
