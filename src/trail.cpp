@@ -10,9 +10,10 @@ Trail::~Trail()
 {
 }
 //------------------------------------------------------------------------------------
-void Trail::AddPherom(Pheromone _phe)
+void Trail::AddPherom(const Pheromone& _phe)
 {
   m_phrmTrail.push_back(_phe);
+  std::cout<<m_phrmTrail.size()<<"add pheromone size \n";
 }
 //------------------------------------------------------------------------------------
 void Trail::DeleteEveporatedPherom()
@@ -21,7 +22,7 @@ void Trail::DeleteEveporatedPherom()
     for (uint32_t i=0;i< num;i++)
     {
         m_phrmTrail[i].Evaporate();
-        if(!(m_phrmTrail[i].m_age > m_phrmTrail[i].m_maxAge))
+        if(m_phrmTrail[i].m_age > m_phrmTrail[i].m_maxAge)
         {
             m_phrmTrail.erase(m_phrmTrail.begin()+i);
         }

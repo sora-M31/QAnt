@@ -8,13 +8,45 @@ Ant::Ant()
      m_maxAccel(10),
      m_friction(5),
      m_foundPheromone(false),
-     m_hit(false),
-     m_maxAngle(10)
+     m_hit(false)
 {
     m_walkCounter = rand();
     m_mass =1;
     m_type = kAnt;
+    srand ( time(NULL) );
     m_pheromone = Vector(0,0,0);
+    m_pos = Vector(rand(),0,rand());
+    m_trans.SetTranslate(m_pos);
+    m_trans.ApplyTransform();
+}
+//------------------------------------------------------------------------------------
+Ant::Ant(const Ant& _ant):SceneObject()
+{
+    this->m_foundFood = _ant.m_foundFood;
+    this->m_maxAccel = _ant.m_maxAccel;
+    this->m_friction = _ant.m_friction;
+    this->m_foundPheromone = _ant.m_foundPheromone;
+    this->m_hit = _ant.m_hit;
+    this->m_walkCounter = _ant.m_walkCounter;
+    this->m_mass = _ant.m_mass;
+    this->m_type = _ant.m_type;
+    this->m_pheromone = _ant.m_pheromone;
+    this->m_node = _ant.m_node;
+}
+//------------------------------------------------------------------------------------
+Ant Ant::operator = (const Ant& _ant)
+{
+    this->m_foundFood = _ant.m_foundFood;
+    this->m_maxAccel = _ant.m_maxAccel;
+    this->m_friction = _ant.m_friction;
+    this->m_foundPheromone = _ant.m_foundPheromone;
+    this->m_hit = _ant.m_hit;
+    this->m_walkCounter = _ant.m_walkCounter;
+    this->m_mass = _ant.m_mass;
+    this->m_type = _ant.m_type;
+    this->m_pheromone = _ant.m_pheromone;
+    this->m_node = _ant.m_node;
+    return *this;
 }
 //------------------------------------------------------------------------------------
 Ant::~Ant()
@@ -39,6 +71,22 @@ void Ant::Translate(uint32_t _time)
     m_trans.ApplyTransform();
 }
 //------------------------------------------------------------------------------------
+bool Ant::CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad)
+{
+    //*
+    Vector relDis = _obj.m_pos - m_pos;
+    if (   (relDis.AngleBetween(this->m_axisX) < _angle)
+        && (relDis.Length() < _rad) )
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }//*/
+    //return true;
+}
+//------------------------------------------------------------------------------------
 void Ant::Rotate()
 {
     float theta = m_axisX.AngleBetween( m_force);
@@ -53,29 +101,51 @@ void Ant::Rotate()
     this->RotateAxis();
 }
 //------------------------------------------------------------------------------------
-void Ant::DetectPheromone()
-{}
+void Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
+{
+    Vector phrmCentre(0,0,0);
+    uint32_t phrmNum(0);
+    uint32_t num =_trail.m_phrmTrail.size();
+    for( uint32_t i=0; i< num; ++i)
+    {
+        Vector phrm;
+        if( CheckNeighbor(_trail.m_phrmTrail[i], 100, 3) && (_trail.m_phrmTrail[i].m_phrmType == _type) )
+        {
+            phrm = _trail.m_phrmTrail[i].m_pos * (_trail.m_phrmTrail[i].m_maxAge - _trail.m_phrmTrail[i]. m_age);
+            phrmNum++;
+        }
+        phrmCentre += phrm;
+        phrmCentre /= phrmNum;
+    }
+    Vector force = (phrmCentre - this->m_pos).Normalise();
+    m_force += force;
+}
 //------------------------------------------------------------------------------------
 void Ant::DetectObstacle()
-{}
+{
+}
 //------------------------------------------------------------------------------------
 void Ant::DetectFood()
-{}
+{
+
+}
 //------------------------------------------------------------------------------------
 void Ant::DetectHome()
-{}
+{
+
+}
 //------------------------------------------------------------------------------------
 void Ant::RandomWalk()
 {
     const uint32_t frequency = 100;
     if(m_walkCounter%frequency==0)
     {
-        m_force = Vector(rand(),rand(),rand());
+        m_force += Vector(rand(), 0, rand());
         m_walkCounter++;
     }
     else
     {
-        m_force = m_axisX*m_maxAccel*m_mass;
+        m_force += m_axisX*m_maxAccel*m_mass;
         m_walkCounter++;
     }
 }
@@ -122,22 +192,23 @@ void Ant::Wall()
         m_wall += Vector( 0, 0, forceScalar);
 
     m_wall = m_wall.Normalise();
+    m_force += m_wall;
 }
 //------------------------------------------------------------------------------------
-void Ant::Update(uint32_t _time)
+void Ant::Update(uint32_t _time, const Trail& _trail)
 {
-    Think();
+    Think(_trail);
     Transform(_time);
 }
 //------------------------------------------------------------------------------------
-void Ant::Think()
+void Ant::Think(const Trail& _trail)
 {
     if(m_foundFood)
     {
         DetectHome();
         if(!m_foundHome)
         {
-            DetectPheromone();
+            DetectPheromone(ToHome,_trail);
         }
     }
     else
@@ -146,7 +217,7 @@ void Ant::Think()
         DetectFood();
         if(!m_foundFood)
         {
-            DetectPheromone();
+            DetectPheromone(ToFood,_trail);
             if(!m_foundPheromone)
             {
                 RandomWalk();

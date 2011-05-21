@@ -11,6 +11,8 @@ class Pheromone:public SceneObject
       Pheromone(Vector _pos, PhrmType _type);
       ///\brief default destructor
       ~Pheromone();
+      Pheromone(const Pheromone& _phe);
+      Pheromone operator = (const Pheromone& _phe);
 
       void Evaporate();
 

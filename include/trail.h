@@ -18,7 +18,7 @@ class Trail
       ~Trail();
       ///\brief push the given pheromone in to the array.
       ///@param[in] _phe pheromone to be added to the trail
-      void AddPherom(Pheromone _phe);
+      void AddPherom(const Pheromone& _phe);
       ///\brief go through the trail and evaporate pheromone, if any pheromone's lifespam is not positive any morje ,it is deleted from the array.
       void DeleteEveporatedPherom();
 };

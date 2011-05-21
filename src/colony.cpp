@@ -5,6 +5,7 @@ namespace QtGLWindow
 //----------------------------------------------------------------------------------------------------------------------
 Colony::Colony()
 {
+    m_num=4;
     for(uint32_t i=0;i<m_num; ++i)
     {
         m_antList.push_back(Ant());
@@ -20,22 +21,22 @@ void Colony::UpdateTrail()
     {
         if (m_antList[i].m_foundFood)
         {
-            m_pheromTrail.AddPherom( Pheromone( m_antList[i].m_pos, ToFood ) );
+            m_trail.AddPherom( Pheromone( m_antList[i].m_pos, ToFood ) );
         }
         else
         {
-            m_pheromTrail.AddPherom( Pheromone( m_antList[i].m_pos, ToHome ) );
+            m_trail.AddPherom( Pheromone( m_antList[i].m_pos, ToHome ) );
         }
     }
-    m_pheromTrail.DeleteEveporatedPherom();
+    m_trail.DeleteEveporatedPherom();
 }
 //-----------------------------------------------------------------------------
 void Colony::Update()
 {
-    UpdateTrail();
     for( uint32_t i=0; i<m_num; ++i)
     {
-        m_antList[i].Update(50);
+        m_antList[i].Update(50,m_trail);
     }
+    UpdateTrail();
 }
 }//end of namespace

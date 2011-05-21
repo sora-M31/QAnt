@@ -84,6 +84,7 @@ void GLWindow::RenderScene(const SceneManager& _scene)
 //------------------------------------------------------------------------------
 void GLWindow::Draw(const SceneObject* _obj)
 {
+    std::cout<<_obj->m_type<<"   type\n";
     glPushMatrix();
         glRotatef(m_spin, 0,1,0);
         if(_obj->m_type == kObject)
@@ -94,14 +95,22 @@ void GLWindow::Draw(const SceneObject* _obj)
                 m_envObj.m_pMesh->DrawVBO();
             glPopMatrix();
         }
-        else if (_obj->m_type == kAnt)
+        else if ( _obj->m_type == kAnt)
         {
             glPushMatrix();
                 glColor3f(1,0,0);
                 glMultMatrixf( _obj->m_trans.m_transform.m_mat);
                 m_obj.m_pMesh->DrawVBO();
             glPopMatrix();
-
+        }
+        else if( _obj->m_type == kPhe)
+        {
+            glPushMatrix();
+                glColor3f(0,0,1);
+                glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
+                glScalef(0.1,0.1,0.1);
+                m_obj.m_pMesh->DrawVBO();
+            glPopMatrix();
         }
     glPopMatrix();
 }

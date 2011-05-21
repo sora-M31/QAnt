@@ -4,7 +4,7 @@
 #include "sceneNode.h"
 #include "sceneObject.h"
 #include "flock.h"
-#include "ant.h"
+#include "colony.h"
 namespace QtGLWindow
 {
 class SceneManager
@@ -19,8 +19,9 @@ class SceneManager
         SceneNode m_root;
         SceneObject* test;
         Flock* m_pFlock;
-        Ant* m_pAnt;
+        Colony* m_pColony;
         SceneObject* m_pEnv;
+        Pheromone* ptest;
 };//end of class
 }//end of namespace
 #endif //end of define

@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "sceneObject.h"
+#include "trail.h"
 
 namespace QtGLWindow
 {
@@ -13,20 +14,23 @@ class Ant:public SceneObject
         ///\brief default constructor
         Ant();
         ~Ant();
+        Ant(const Ant& _ant);
+        Ant operator = (const Ant& _ant);
 
-        void Update(uint32_t _time);
-        void Think();
+        void Update(uint32_t _time, const Trail& _trail);
+        void Think(const Trail& _trail);
         void Transform(uint32_t _time);
 
         bool m_foundFood;
 
     protected:
+        bool CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad);
         void Translate(uint32_t _time);
         void Rotate();
         void Reset();
         double SetHeight();
         void Wall();
-        void DetectPheromone();
+        void DetectPheromone(PhrmType _type, const Trail& _trail);
         void DetectObstacle();
         void DetectFood();
         void DetectHome();

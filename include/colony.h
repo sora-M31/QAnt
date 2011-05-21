@@ -23,7 +23,7 @@ class Colony
         /// the list to store ants
         std::vector<Ant> m_antList;
         /// trail create by ants in the list
-        Trail m_pheromTrail;
+        Trail m_trail;
 };//end of class
 }//end of namespace
 #endif//
