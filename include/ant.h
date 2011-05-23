@@ -19,7 +19,7 @@ class Ant:public SceneObject
 
         void Update(uint32_t _time, const Trail& _trail);
         void Think(const Trail& _trail);
-        void Transform(uint32_t _time);
+        void Move(uint32_t _time);
 
         bool m_foundFood;
 

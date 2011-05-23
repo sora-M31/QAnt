@@ -84,7 +84,6 @@ void GLWindow::RenderScene(const SceneManager& _scene)
 //------------------------------------------------------------------------------
 void GLWindow::Draw(const SceneObject* _obj)
 {
-    std::cout<<_obj->m_type<<"   type\n";
     glPushMatrix();
         glRotatef(m_spin, 0,1,0);
         if(_obj->m_type == kObject)

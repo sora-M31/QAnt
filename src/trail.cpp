@@ -13,7 +13,6 @@ Trail::~Trail()
 void Trail::AddPherom(const Pheromone& _phe)
 {
   m_phrmTrail.push_back(_phe);
-  std::cout<<m_phrmTrail.size()<<"add pheromone size \n";
 }
 //------------------------------------------------------------------------------------
 void Trail::DeleteEveporatedPherom()

@@ -33,7 +33,6 @@ void SceneManager::InitScene()
 
 
     uint32_t num = m_pColony->m_antList.size()-1;
-std::cout<<num<<"number of ant\n";
     for( uint32_t i=0; i<num; ++i)
     {
         m_pColony->m_antList[i].m_node.AddNext(m_pColony->m_antList[i+1].m_node);
@@ -47,8 +46,7 @@ void SceneManager::UpdateScene()
     m_pColony->Update();
 #if 1
     uint32_t num = m_pColony->m_antList.size()-1;
-    int32_t count = m_pColony->m_trail.m_phrmTrail.size();
-        std::cout<<count<<"called, size\n";
+    size_t count = m_pColony->m_trail.m_phrmTrail.size();
     if(count>0)
     {
         m_pColony->m_antList[num].m_node.AddNext(m_pColony->m_trail.m_phrmTrail[0].m_node);

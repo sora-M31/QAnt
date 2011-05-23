@@ -5,14 +5,16 @@ namespace QtGLWindow
 //------------------------------------------------------------------------------------
 Ant::Ant()
     :m_foundFood(false),
-     m_maxAccel(10),
+     m_maxAccel(5),
      m_friction(5),
      m_foundPheromone(false),
      m_hit(false)
 {
+    m_maxAngle = 10*3.14/180;
     m_walkCounter = rand();
     m_mass =1;
     m_type = kAnt;
+    m_force = Vector(0,0,0);
     srand ( time(NULL) );
     m_pheromone = Vector(0,0,0);
     m_pos = Vector(rand(),0,rand());
@@ -24,6 +26,7 @@ Ant::Ant(const Ant& _ant):SceneObject()
 {
     this->m_foundFood = _ant.m_foundFood;
     this->m_maxAccel = _ant.m_maxAccel;
+    this->m_maxAngle = _ant.m_maxAngle;
     this->m_friction = _ant.m_friction;
     this->m_foundPheromone = _ant.m_foundPheromone;
     this->m_hit = _ant.m_hit;
@@ -38,6 +41,7 @@ Ant Ant::operator = (const Ant& _ant)
 {
     this->m_foundFood = _ant.m_foundFood;
     this->m_maxAccel = _ant.m_maxAccel;
+    this->m_maxAngle = _ant.m_maxAngle;
     this->m_friction = _ant.m_friction;
     this->m_foundPheromone = _ant.m_foundPheromone;
     this->m_hit = _ant.m_hit;
@@ -90,6 +94,8 @@ bool Ant::CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad)
 void Ant::Rotate()
 {
     float theta = m_axisX.AngleBetween( m_force);
+
+
     Vector vector = (m_axisX.Cross( m_force)).Normalise();
 
     if (theta > m_maxAngle)
@@ -98,7 +104,10 @@ void Ant::Rotate()
     }
     m_trans.SetRotation( theta, vector);
     m_trans.ApplyTransform();
-    this->RotateAxis();
+    std::cout<<m_axisX<<"before axis\n";
+    std::cout<<theta<<"theta\n";
+    SceneObject::RotateAxis();
+    std::cout<<m_axisX<<"after axis\n";
 }
 //------------------------------------------------------------------------------------
 void Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
@@ -138,14 +147,18 @@ void Ant::DetectHome()
 void Ant::RandomWalk()
 {
     const uint32_t frequency = 100;
+
+    std::cout<<m_walkCounter<<" counter\n";
     if(m_walkCounter%frequency==0)
     {
-        m_force += Vector(rand(), 0, rand());
+        m_force = Vector((float)rand()/(float)RAND_MAX * 10, 0, (float)rand()/(float)RAND_MAX * 10);
+        std::cout<<m_force<<" calling randomwalk\n";
         m_walkCounter++;
     }
     else
     {
-        m_force += m_axisX*m_maxAccel*m_mass;
+        m_force = m_axisX*m_maxAccel*m_mass;
+        std::cout<<m_force<<" randomwalk\n";
         m_walkCounter++;
     }
 }
@@ -192,17 +205,19 @@ void Ant::Wall()
         m_wall += Vector( 0, 0, forceScalar);
 
     m_wall = m_wall.Normalise();
-    m_force += m_wall;
+    m_force += m_wall*10;
+    std::cout<<m_wall<<"  wall\n";
 }
 //------------------------------------------------------------------------------------
 void Ant::Update(uint32_t _time, const Trail& _trail)
 {
     Think(_trail);
-    Transform(_time);
+    Move(_time);
 }
 //------------------------------------------------------------------------------------
 void Ant::Think(const Trail& _trail)
 {
+    #if 0
     if(m_foundFood)
     {
         DetectHome();
@@ -224,14 +239,28 @@ void Ant::Think(const Trail& _trail)
             }
         }
     }
+    #endif
+    RandomWalk();
     DetectObstacle();
     Wall();
 }
 //------------------------------------------------------------------------------------
-void Ant::Transform(uint32_t _time)
+void Ant::Move(uint32_t _time)
 {
+    std::cout<<m_force<<"    raw force\n";
     Rotate();
-    m_accel = (m_axisX*m_maxAccel*m_mass - m_vel * m_friction)/m_mass;
+
+    float scalar = m_force.Length();
+
+    if (scalar > m_maxAccel)
+    {
+        scalar = m_maxAccel;
+    }
+    m_force =m_axisX * scalar;
+
+    std::cout<<m_force<<"    rotated force\n";
+
+    m_accel = (m_force -m_vel*m_friction) / m_mass;
     Translate(_time);
 }
 }//end of namespace
