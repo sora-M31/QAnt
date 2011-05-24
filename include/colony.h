@@ -21,7 +21,7 @@ class Colony
         /// number of ant in a colony
         uint32_t m_num;
         /// the list to store ants
-        std::vector<Ant> m_antList;
+        std::vector<Ant*> m_antList;
         /// trail create by ants in the list
         Trail m_trail;
 };//end of class

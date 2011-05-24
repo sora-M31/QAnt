@@ -28,14 +28,14 @@ void SceneManager::InitScene()
     }
 */
     m_root.AddNext(m_pEnv->m_node);
-    m_pEnv->m_node.AddNext(m_pColony->m_antList[0].m_node);
+    m_pEnv->m_node.AddNext(m_pColony->m_antList[0]->m_node);
 
 
 
     uint32_t num = m_pColony->m_antList.size()-1;
     for( uint32_t i=0; i<num; ++i)
     {
-        m_pColony->m_antList[i].m_node.AddNext(m_pColony->m_antList[i+1].m_node);
+        m_pColony->m_antList[i]->m_node.AddNext(m_pColony->m_antList[i+1]->m_node);
     }
     //m_pColony->m_antList[num].m_node.AddNext(ptest->m_node);
 
@@ -49,13 +49,13 @@ void SceneManager::UpdateScene()
     size_t count = m_pColony->m_trail.m_phrmTrail.size();
     if(count>0)
     {
-        m_pColony->m_antList[num].m_node.AddNext(m_pColony->m_trail.m_phrmTrail[0].m_node);
+        m_pColony->m_antList[num]->m_node.AddNext(m_pColony->m_trail.m_phrmTrail[0]->m_node);
         #if 1
         if(count>1)
         {
             for( uint32_t i=0; i<count-1; ++i)
             {
-                m_pColony->m_trail.m_phrmTrail[i].m_node.AddNext(m_pColony->m_trail.m_phrmTrail[i+1].m_node);
+                m_pColony->m_trail.m_phrmTrail[i]->m_node.AddNext(m_pColony->m_trail.m_phrmTrail[i+1]->m_node);
             }
         }
         #endif

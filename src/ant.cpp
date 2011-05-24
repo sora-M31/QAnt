@@ -17,7 +17,6 @@ Ant::Ant()
     m_force = Vector(0,0,0);
     srand ( time(NULL) );
     m_pheromone = Vector(0,0,0);
-    m_pos = Vector(rand(),0,rand());
     m_trans.SetTranslate(m_pos);
     m_trans.ApplyTransform();
 }
