@@ -17,8 +17,8 @@ class Ant:public SceneObject
         Ant(const Ant& _ant);
         Ant operator = (const Ant& _ant);
 
-        void Update(uint32_t _time, const Trail& _trail);
-        void Think(const Trail& _trail);
+        void Update(uint32_t _time, const Trail& _trail,const std::vector<Ant*>& _antList);
+        void Think(const Trail& _trail, const std::vector<Ant*>& _antList);
         void Move(uint32_t _time);
 
         bool m_foundFood;
@@ -31,7 +31,7 @@ class Ant:public SceneObject
         double SetHeight();
         void Wall();
         void DetectPheromone(PhrmType _type, const Trail& _trail);
-        void DetectObstacle();
+        void DetectObstacle(const std::vector<Ant*>& _antList);
         void DetectFood();
         void DetectHome();
         void RandomWalk();

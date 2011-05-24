@@ -5,7 +5,7 @@ namespace QtGLWindow
 //----------------------------------------------------------------------------------------------------------------------
 Colony::Colony()
 {
-    m_num=4;
+    m_num=10;
     for(uint32_t i=0;i<m_num; ++i)
     {
         m_antList.push_back(new Ant());
@@ -35,7 +35,7 @@ void Colony::Update()
 {
     for( uint32_t i=0; i<m_num; ++i)
     {
-        m_antList[i]->Update(50,m_trail);
+        m_antList[i]->Update(50,m_trail,m_antList);
     }
     UpdateTrail();
 }

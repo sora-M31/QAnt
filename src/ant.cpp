@@ -117,9 +117,9 @@ void Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
     for( uint32_t i=0; i< num; ++i)
     {
         Vector phrm;
-        if( CheckNeighbor(_trail.m_phrmTrail[i], 100, 3) && (_trail.m_phrmTrail[i].m_phrmType == _type) )
+        if( CheckNeighbor(*_trail.m_phrmTrail[i], 100, 3) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
         {
-            phrm = _trail.m_phrmTrail[i].m_pos * (_trail.m_phrmTrail[i].m_maxAge - _trail.m_phrmTrail[i]. m_age);
+            phrm = _trail.m_phrmTrail[i]->m_pos * (_trail.m_phrmTrail[i]->m_maxAge - _trail.m_phrmTrail[i]->m_age);
             phrmNum++;
         }
         phrmCentre += phrm;
@@ -129,8 +129,23 @@ void Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
     m_force += force;
 }
 //------------------------------------------------------------------------------------
-void Ant::DetectObstacle()
+void Ant::DetectObstacle(const std::vector<Ant*>& _antList)
 {
+    size_t num = _antList.size();
+    Vector repulsion(0,0,0);
+    for( uint32_t i=0; i<num; ++i )
+    {
+        if( (_antList[i]!=this) && (CheckNeighbor(*_antList[i],60,3)) )
+        {
+            Vector dis = m_pos - _antList[i]->m_pos;
+            float disquare = dis.LengthSquare();
+            if (disquare !=0)
+            {
+                repulsion +=  dis/disquare;
+            }
+        }
+    }
+    m_force += repulsion;
 }
 //------------------------------------------------------------------------------------
 void Ant::DetectFood()
@@ -208,13 +223,13 @@ void Ant::Wall()
     std::cout<<m_wall<<"  wall\n";
 }
 //------------------------------------------------------------------------------------
-void Ant::Update(uint32_t _time, const Trail& _trail)
+void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _antList)
 {
-    Think(_trail);
+    Think(_trail,_antList);
     Move(_time);
 }
 //------------------------------------------------------------------------------------
-void Ant::Think(const Trail& _trail)
+void Ant::Think(const Trail& _trail, const std::vector<Ant*>& _antList)
 {
     #if 0
     if(m_foundFood)
@@ -240,7 +255,7 @@ void Ant::Think(const Trail& _trail)
     }
     #endif
     RandomWalk();
-    DetectObstacle();
+    DetectObstacle(_antList);
     Wall();
 }
 //------------------------------------------------------------------------------------
