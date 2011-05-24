@@ -32,8 +32,8 @@ class Ant:public SceneObject
         void Wall();
         void DetectPheromone(PhrmType _type, const Trail& _trail);
         void DetectObstacle(const std::vector<Ant*>& _antList);
-        void DetectFood();
-        void DetectHome();
+        void DetectFood(const SceneObject& _food);
+        void DetectHome(const SceneObject& _home);
         void RandomWalk();
         
         uint32_t m_maxAccel;

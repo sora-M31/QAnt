@@ -148,14 +148,25 @@ void Ant::DetectObstacle(const std::vector<Ant*>& _antList)
     m_force += repulsion;
 }
 //------------------------------------------------------------------------------------
-void Ant::DetectFood()
+void Ant::DetectFood(const SceneObject& _food)
 {
+    Vector attraction(0,0,0);
+    if( CheckNeighbor( _food, 90,3) )
+    {
+        Vector dis = _food.m_pos - m_pos;
+        attraction +=  dis;
+    }
 
 }
 //------------------------------------------------------------------------------------
-void Ant::DetectHome()
+void Ant::DetectHome(const SceneObject& _home)
 {
-
+    Vector attraction(0,0,0);
+    if( CheckNeighbor( _home, 90,3) )
+    {
+        Vector dis = _home.m_pos - m_pos;
+        attraction +=  dis;
+    }
 }
 //------------------------------------------------------------------------------------
 void Ant::RandomWalk()
