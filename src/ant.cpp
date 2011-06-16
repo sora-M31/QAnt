@@ -4,13 +4,12 @@ namespace QtGLWindow
 {
 //------------------------------------------------------------------------------------
 Ant::Ant()
-    :m_foundFood(false),
-     m_maxAccel(5),
-     m_friction(5),
-     m_foundPheromone(false),
-     m_hit(false)
+     :m_hit(false)
 {
-    m_maxAngle = 10*3.14/180;
+    m_maxAngle =5*3.14/180;
+    m_maxAccel = 0.8;
+    m_vel = m_axisX * 1;
+    m_friction = 7;
     m_walkCounter = rand();
     m_mass =1;
     m_type = kAnt;
@@ -19,15 +18,15 @@ Ant::Ant()
     m_pheromone = Vector(0,0,0);
     m_trans.SetTranslate(m_pos);
     m_trans.ApplyTransform();
+    m_bound = 0.5;
+    m_state = HomeToFood;
 }
 //------------------------------------------------------------------------------------
 Ant::Ant(const Ant& _ant):SceneObject()
 {
-    this->m_foundFood = _ant.m_foundFood;
     this->m_maxAccel = _ant.m_maxAccel;
     this->m_maxAngle = _ant.m_maxAngle;
     this->m_friction = _ant.m_friction;
-    this->m_foundPheromone = _ant.m_foundPheromone;
     this->m_hit = _ant.m_hit;
     this->m_walkCounter = _ant.m_walkCounter;
     this->m_mass = _ant.m_mass;
@@ -38,11 +37,9 @@ Ant::Ant(const Ant& _ant):SceneObject()
 //------------------------------------------------------------------------------------
 Ant Ant::operator = (const Ant& _ant)
 {
-    this->m_foundFood = _ant.m_foundFood;
     this->m_maxAccel = _ant.m_maxAccel;
     this->m_maxAngle = _ant.m_maxAngle;
     this->m_friction = _ant.m_friction;
-    this->m_foundPheromone = _ant.m_foundPheromone;
     this->m_hit = _ant.m_hit;
     this->m_walkCounter = _ant.m_walkCounter;
     this->m_mass = _ant.m_mass;
@@ -56,60 +53,17 @@ Ant::~Ant()
 {
 }
 //------------------------------------------------------------------------------------
-void Ant::Reset()
+bool Ant::Arrive(const SceneObject& _obj)
 {
-  m_foundPheromone=false;
-  m_foundFood=false;
-  m_hit=false;
-}
-//------------------------------------------------------------------------------------
-void Ant::Translate(uint32_t _time)
-{
-    float delta_t = _time*0.001 ;
-    Vector pos = (m_vel*delta_t + m_accel * delta_t * delta_t /2);
-    m_vel += ( m_accel * delta_t );
-
-    m_pos +=pos;
-    m_trans.SetTranslate(pos);
-    m_trans.ApplyTransform();
-}
-//------------------------------------------------------------------------------------
-bool Ant::CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad)
-{
-    //*
-    Vector relDis = _obj.m_pos - m_pos;
-    if (   (relDis.AngleBetween(this->m_axisX) < _angle)
-        && (relDis.Length() < _rad) )
+    float dis = (m_pos-_obj.m_pos).Length();
+    if ( dis < (m_bound+_obj.m_bound) )
     {
         return true;
     }
-    else
-    {
-        return false;
-    }//*/
-    //return true;
+    else return false;
 }
 //------------------------------------------------------------------------------------
-void Ant::Rotate()
-{
-    float theta = m_axisX.AngleBetween( m_force);
-
-
-    Vector vector = (m_axisX.Cross( m_force)).Normalise();
-
-    if (theta > m_maxAngle)
-    {
-        theta = m_maxAngle;
-    }
-    m_trans.SetRotation( theta, vector);
-    m_trans.ApplyTransform();
-    std::cout<<m_axisX<<"before axis\n";
-    std::cout<<theta<<"theta\n";
-    SceneObject::RotateAxis();
-    std::cout<<m_axisX<<"after axis\n";
-}
-//------------------------------------------------------------------------------------
-void Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
+bool Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
 {
     Vector phrmCentre(0,0,0);
     uint32_t phrmNum(0);
@@ -117,55 +71,55 @@ void Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
     for( uint32_t i=0; i< num; ++i)
     {
         Vector phrm;
-        if( CheckNeighbor(*_trail.m_phrmTrail[i], 100, 3) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
+        if( CheckNeighbor(*_trail.m_phrmTrail[i], 180*3.1415/180, 2) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
         {
-            phrm = _trail.m_phrmTrail[i]->m_pos * (_trail.m_phrmTrail[i]->m_maxAge - _trail.m_phrmTrail[i]->m_age);
+            phrm = _trail.m_phrmTrail[i]->m_pos;// * ( _trail.m_phrmTrail[i]->m_maxAge - _trail.m_phrmTrail[i]->m_age );
             phrmNum++;
         }
         phrmCentre += phrm;
-        phrmCentre /= phrmNum;
     }
-    Vector force = (phrmCentre - this->m_pos).Normalise();
-    m_force += force;
+
+    if( phrmNum == 0)
+    {
+        return false;
+    }
+    else
+    {
+        phrmCentre /= phrmNum;
+        m_pheromone = ( phrmCentre - m_pos).Normalise();
+        return true;
+    }
 }
 //------------------------------------------------------------------------------------
 void Ant::DetectObstacle(const std::vector<Ant*>& _antList)
 {
     size_t num = _antList.size();
-    Vector repulsion(0,0,0);
+    m_obstacles = Vector(0,0,0);
     for( uint32_t i=0; i<num; ++i )
     {
-        if( (_antList[i]!=this) && (CheckNeighbor(*_antList[i],60,3)) )
+        if( (_antList[i]!=this) && (CheckNeighbor(*_antList[i],60*3.14/180,3)))//&& ( m_vel.AngleBetween(_antList[i]->m_vel) <0) )
         {
             Vector dis = m_pos - _antList[i]->m_pos;
             float disquare = dis.LengthSquare();
             if (disquare !=0)
             {
-                repulsion +=  dis/disquare;
+                m_obstacles +=  dis/disquare;
             }
         }
     }
-    m_force += repulsion;
+    m_obstacles = m_obstacles.Normalise();
 }
 //------------------------------------------------------------------------------------
-void Ant::DetectFood(const SceneObject& _food)
+bool Ant::Near(const SceneObject& _obj)
 {
-    Vector attraction(0,0,0);
-    if( CheckNeighbor( _food, 90,3) )
+    if( CheckNeighbor( _obj, 90,10) )
     {
-        Vector dis = _food.m_pos - m_pos;
-        attraction +=  dis;
+        m_attraction = (_obj.m_pos - m_pos).Normalise();
+        return true;
     }
-
-}
-//------------------------------------------------------------------------------------
-void Ant::DetectHome(const SceneObject& _home)
-{
-    Vector attraction(0,0,0);
-    if( CheckNeighbor( _home, 90,3) )
+    else
     {
-        Vector dis = _home.m_pos - m_pos;
-        attraction +=  dis;
+        return false;
     }
 }
 //------------------------------------------------------------------------------------
@@ -173,24 +127,20 @@ void Ant::RandomWalk()
 {
     const uint32_t frequency = 100;
 
-    std::cout<<m_walkCounter<<" counter\n";
     if(m_walkCounter%frequency==0)
     {
-        m_force = Vector((float)rand()/(float)RAND_MAX * 10, 0, (float)rand()/(float)RAND_MAX * 10);
-        std::cout<<m_force<<" calling randomwalk\n";
+        m_rand = Vector( ((float)rand() / (float)RAND_MAX -0.5)*30,  0, ((float)rand() / (float)RAND_MAX-0.5)*30 );
         m_walkCounter++;
     }
     else
     {
-        m_force = m_axisX*m_maxAccel*m_mass;
-        std::cout<<m_force<<" randomwalk\n";
+        m_rand = m_axisX*m_maxAccel*m_mass;
         m_walkCounter++;
     }
 }
 //------------------------------------------------------------------------------------
-double Ant::SetHeight()
+void Ant::SetHeight()
 {
-    return 0;
 }
 //------------------------------------------------------------------------------------
 void Ant::Wall()
@@ -206,7 +156,7 @@ void Ant::Wall()
       |  |                |  |
     */
     const float forceScalar = 1;
-    const float blank = 6;
+    const float blank = 10;
     float wall =30;
     wall = wall -blank;
 
@@ -230,62 +180,128 @@ void Ant::Wall()
         m_wall += Vector( 0, 0, forceScalar);
 
     m_wall = m_wall.Normalise();
-    m_force += m_wall*10;
-    std::cout<<m_wall<<"  wall\n";
 }
 //------------------------------------------------------------------------------------
-void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _antList)
+void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _antList,const SceneObject& _home, const SceneObject& _food)
 {
-    Think(_trail,_antList);
-    Move(_time);
-}
-//------------------------------------------------------------------------------------
-void Ant::Think(const Trail& _trail, const std::vector<Ant*>& _antList)
-{
-    #if 0
-    if(m_foundFood)
-    {
-        DetectHome();
-        if(!m_foundHome)
-        {
-            DetectPheromone(ToHome,_trail);
-        }
-    }
-    else
-    {
-
-        DetectFood();
-        if(!m_foundFood)
-        {
-            DetectPheromone(ToFood,_trail);
-            if(!m_foundPheromone)
-            {
-                RandomWalk();
-            }
-        }
-    }
-    #endif
-    RandomWalk();
+    m_force = Vector(0,0,0);
     DetectObstacle(_antList);
     Wall();
-}
-//------------------------------------------------------------------------------------
-void Ant::Move(uint32_t _time)
-{
-    std::cout<<m_force<<"    raw force\n";
-    Rotate();
+    #if 0
+    RandomWalk();
+    m_force = m_rand + m_wall;
+    Move(_time);
+    #endif
+    #if 1
 
-    float scalar = m_force.Length();
-
-    if (scalar > m_maxAccel)
+    switch(m_state)
     {
-        scalar = m_maxAccel;
+        case HomeToFood:
+            {
+                if( Near(_food) )
+                {
+                    m_state = NearFood;
+                }
+                else
+                {
+                    m_state = FollowFoodPheromone;
+                }
+                std::cout<<"Home to Food\n";
+            }
+            break;
+        case FollowFoodPheromone:
+            {
+                if( DetectPheromone(ToFood, _trail))
+                {
+                    m_force = m_pheromone + m_obstacles + m_wall;
+                    Move(_time);
+                }
+                else
+                {
+                     #if 1
+                    RandomWalk();
+                    if( m_wall == Vector(0,0,0) )
+                    {
+                        m_force = m_rand + m_obstacles;
+                    }
+                    else
+                    {
+                        m_force = m_wall + m_obstacles;
+                    }
+                    Move(_time);
+                    #endif
+                }
+                m_state = HomeToFood;
+                std::cout<<"Follow Food Pheromone \n";
+            }
+            break;
+        case NearFood:
+            {
+
+                if( Arrive(_food) )
+                {
+                     m_force = Vector(0,0,0)-m_vel*m_friction*20;
+                    Move(_time);
+                    m_state = FoodToHome;
+                }
+                else
+                {
+                    m_force = m_attraction*3 + m_obstacles *0.1+ m_wall*3;
+                    Move(_time);
+                    m_state = NearFood;
+                }
+                std::cout<<"Near Food\n";
+            }
+            break;
+        case FoodToHome:
+            {
+                if( Near(_home) )
+                {
+                    m_state = NearHome;
+                }
+                else
+                {
+                    m_state = FollowHomePheromone;
+
+                }
+                std::cout<<"FoodToHome!!!!!!!!!!!!!!!!!!!!\n";
+            }
+            break;
+        case FollowHomePheromone:
+            {
+                if(DetectPheromone(ToHome, _trail))
+                {
+                    m_force = m_pheromone + m_wall +m_obstacles;
+                    Move(_time);
+                }
+                else
+                {
+                    RandomWalk();
+                    m_force = m_rand + m_wall + m_obstacles;
+                }
+                m_state = FoodToHome;
+
+                std::cout<<"Follow home pheromone\n";
+            }
+            break;
+        case NearHome:
+            {
+                m_force = m_attraction * 0.1 + m_obstacles + m_wall;
+                Move(_time);
+                if( Arrive(_home) )
+                {
+                    m_state = HomeToFood;
+                }
+                else
+                {
+                    m_state = NearHome;
+                }
+                std::cout<<"NearHome\n";
+            }
+            break;
+        default:
+            std::cout<<"no such state\n";
     }
-    m_force =m_axisX * scalar;
-
-    std::cout<<m_force<<"    rotated force\n";
-
-    m_accel = (m_force -m_vel*m_friction) / m_mass;
-    Translate(_time);
+    #endif
 }
 }//end of namespace

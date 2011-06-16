@@ -42,10 +42,11 @@ void Flock::Update( uint32_t _time )
 {
     for(uint32_t i=0; i<m_num; ++i)
     {
-        Boid* list = &m_boidList[i];
+        Boid* list = &( m_boidList[i] );
+        //Boid* list = m_boidList + i;
         for (uint32_t j=0;j< m_num; ++j )
         {
-            if( (i!=j) && ( m_boidList[i].CheckNeighbor(m_boidList[j]) ) )
+            if( (i!=j) && ( m_boidList[i].CheckNeighbor( m_boidList[j], 60 *3.14, 3 ) ) )
             {
                 while(list->next !=0)
                 {

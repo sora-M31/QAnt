@@ -10,8 +10,9 @@ namespace QtGLWindow
 enum SimState{ OFF=0, ON };
 // --------------------------------------------------------------------------
 /// \brief drawing type
-enum DrawType{ kObject, kTest, kAnt, kPhe, kBoid, kFlock };
+enum DrawType{ kObject, kGround, kFood, kHome, kAnt, kPhe, kBoid, kFlock };
 enum PhrmType{ ToFood, ToHome };
+enum AntState{HomeToFood, FollowFoodPheromone, FollowHomePheromone, FoodToHome, NearFood, NearHome};
 // --------------------------------------------------------------------------
 /// \brief Tokenizer, split a string into tokens by delimiters 
 /// \param str string to tokenized

@@ -6,6 +6,7 @@ namespace QtGLWindow
 Colony::Colony()
 {
     m_num=10;
+    m_counter =0;
     for(uint32_t i=0;i<m_num; ++i)
     {
         m_antList.push_back(new Ant());
@@ -17,25 +18,29 @@ Colony::~Colony()
 //----------------------------------------------------------------------------------------------------------------------
 void Colony::UpdateTrail()
 {
-    for( uint32_t i=0;i<m_num;++i )
+    if( m_counter%5 == 0)
     {
-        if (m_antList[i]->m_foundFood)
+        for( uint32_t i=0;i<m_num;++i )
         {
-            m_trail.AddPherom( new Pheromone( m_antList[i]->m_pos, ToFood ) );
-        }
-        else
-        {
-            m_trail.AddPherom( new Pheromone( m_antList[i]->m_pos, ToHome ) );
+            if ( m_antList[i]->m_state == FoodToHome )
+            {
+                m_trail.AddPherom( new Pheromone( m_antList[i]->m_pos, ToFood ) );
+            }
+            else if( m_antList[i]->m_state == HomeToFood )
+            {
+                m_trail.AddPherom( new Pheromone( m_antList[i]->m_pos, ToHome ) );
+            }
         }
     }
+    m_counter++;
     m_trail.DeleteEveporatedPherom();
 }
 //-----------------------------------------------------------------------------
-void Colony::Update()
+void Colony::Update(const SceneObject& _home, const SceneObject& _food)
 {
     for( uint32_t i=0; i<m_num; ++i)
     {
-        m_antList[i]->Update(50,m_trail,m_antList);
+        m_antList[i]->Update(50,m_trail,m_antList,_home, _food);
     }
     UpdateTrail();
 }

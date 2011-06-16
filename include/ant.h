@@ -17,39 +17,31 @@ class Ant:public SceneObject
         Ant(const Ant& _ant);
         Ant operator = (const Ant& _ant);
 
-        void Update(uint32_t _time, const Trail& _trail,const std::vector<Ant*>& _antList);
-        void Think(const Trail& _trail, const std::vector<Ant*>& _antList);
-        void Move(uint32_t _time);
+        void Update(uint32_t _time, const Trail& _trail,const std::vector<Ant*>& _antList,const SceneObject& _home, const SceneObject& _food);
 
-        bool m_foundFood;
+        AntState m_state;
 
     protected:
-        bool CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad);
-        void Translate(uint32_t _time);
-        void Rotate();
-        void Reset();
-        double SetHeight();
-        void Wall();
-        void DetectPheromone(PhrmType _type, const Trail& _trail);
+        void SetHeight();
+        bool Arrive(const SceneObject& _obj);
+        bool Near(const SceneObject& _obj);
+        bool DetectPheromone(PhrmType _type, const Trail& _trail);
+
         void DetectObstacle(const std::vector<Ant*>& _antList);
-        void DetectFood(const SceneObject& _food);
-        void DetectHome(const SceneObject& _home);
         void RandomWalk();
+        void Wall();
         
-        uint32_t m_maxAccel;
+
         float m_friction;
-        bool m_foundHome;
-        bool m_foundPheromone;
         bool m_hit;
         int m_score;
         ///\counter for ant to walk and stop
-        uint32_t m_walkCounter;
         Vector m_pheromone;
         Vector m_wall;
-        Vector m_food;
-        Vector m_home;
+        Vector m_attraction;
         Vector m_obstacles;
-        float m_maxAngle;
+        ///\force when random walking
+        Vector m_rand;
 };
 #endif
 }//end of namespace

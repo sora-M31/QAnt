@@ -144,7 +144,6 @@ void ObjLoader::Load()
 {
     m_pMesh->CreateDataArray( m_vertexBuffer, m_textureBuffer, m_faceBuffer);
     m_vertexBuffer.erase(m_vertexBuffer.begin(),m_vertexBuffer.end());
-    std::cout<<m_vertexBuffer.empty()<<" check empty\n";
     m_textureBuffer.erase(m_textureBuffer.begin(),m_textureBuffer.end());
     m_faceBuffer.erase(m_faceBuffer.begin(),m_faceBuffer.end());
 }

@@ -16,10 +16,14 @@ SceneObject::SceneObject()
       m_axisZ(Vector(0,0,1)),
       m_vel(0,0,0),
       m_mass(0),
+      m_friction(0),
       m_force(0,0,0),
-      m_accel(0,0,0)
+      m_accel(0,0,0),
+      m_maxAccel(0),
+      m_maxAngle(0)
 {
     GetColorId();
+    m_walkCounter=0;
 }
 //------------------------------------------------------------------------------
 SceneObject::SceneObject(
@@ -60,25 +64,6 @@ void SceneObject::GetColorId()
     }
 }
 //------------------------------------------------------------------------------
-void SceneObject::Rotate(const float _theta, const char _axis)
-{
-    switch(_axis)
-    {
-        case 'X':
-            m_trans.SetRotation(_theta*PI/180, m_axisX);
-            break;
-        case 'Y':
-            m_trans.SetRotation(_theta*PI/180, m_axisY);
-            break;
-        case 'Z':
-            m_trans.SetRotation(_theta*PI/180, m_axisZ);
-            break;
-    }
-    RotateAxis();
-    m_trans.ApplyTransform();
-
-}
-//------------------------------------------------------------------------------
 void SceneObject::Translate(const char _axis)
 {
     switch(_axis)
@@ -99,10 +84,85 @@ void SceneObject::Translate(Vector _dis)
     m_trans.SetTranslate(_dis);
     m_trans.ApplyTransform();
 }
+//------------------------------------------------------------------------------------
+void SceneObject::Translate(uint32_t _time)
+{
+    float delta_t = _time*0.001 ;
+    Vector pos = (m_vel*delta_t + m_accel * delta_t * delta_t /2);
+    m_vel += ( m_accel * delta_t );
+
+    m_pos +=pos;
+    m_trans.SetTranslate(pos);
+    m_trans.ApplyTransform();
+}
+//------------------------------------------------------------------------------
+void SceneObject::Rotate(const float _theta, const char _axis)
+{
+    switch(_axis)
+    {
+        case 'X':
+            m_trans.SetRotation(_theta*PI/180, m_axisX);
+            break;
+        case 'Y':
+            m_trans.SetRotation(_theta*PI/180, m_axisY);
+            break;
+        case 'Z':
+            m_trans.SetRotation(_theta*PI/180, m_axisZ);
+            break;
+    }
+    RotateAxis();
+    m_trans.ApplyTransform();
+}
+//------------------------------------------------------------------------------------
+void SceneObject::Rotate()
+{
+    float theta = m_axisX.AngleBetween( m_force);
+
+    Vector vector = (m_axisX.Cross( m_force)).Normalise();
+
+    if (theta > m_maxAngle)
+    {
+        theta = m_maxAngle;
+    }
+    m_trans.SetRotation( theta, vector);
+    m_trans.ApplyTransform();
+    RotateAxis();
+}
+//------------------------------------------------------------------------------------
+bool SceneObject::CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad)
+{
+    //*
+    Vector relDis = _obj.m_pos - m_pos;
+   // if (   (relDis.AngleBetween(this->m_axisX) < _angle)
+     //   &&
+        if (relDis.Length() < _rad) //)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }//*/
+    //return true;
+}
 //------------------------------------------------------------------------------
 void SceneObject::Update()
 {
     m_trans.ApplyTransform();
+}
+//------------------------------------------------------------------------------------
+void SceneObject::Move(uint32_t _time)
+{
+    Rotate();
+    float scalar = m_force.Length();
+
+    if (scalar > m_maxAccel)
+    {
+        scalar = m_maxAccel;
+    }
+    m_force =m_axisX * scalar * m_mass;
+    m_accel = (m_force -m_vel*m_friction) / m_mass;
+    Translate(_time);
 }
 //------------------------------------------------------------------------------
 uint32_t SceneObject::GetType() const

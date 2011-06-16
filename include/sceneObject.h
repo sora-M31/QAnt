@@ -18,11 +18,16 @@ class SceneObject
                     );
         virtual void Rotate(const float theta, const char _axis);
         virtual void Translate(const char _axis);
+        bool CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad);
+        void Rotate();
+        void Translate(uint32_t _time);
         void Translate(Vector _dis);
         void RotateAxis();
         virtual void Update();
+        void Move(uint32_t _time);
         uint32_t GetType() const;
 
+        uint32_t m_walkCounter;
         Vector m_pos;
         float m_bound;
         DrawType m_type;
@@ -33,8 +38,11 @@ class SceneObject
         Vector m_axisZ;
         Vector m_vel;
         float m_mass;
+        float m_friction;
         Vector m_force;
         Vector m_accel;
+        uint32_t m_maxAccel;
+        float m_maxAngle;
     private:
         void GetColorId();
         uint16_t m_colorId[3];

@@ -7,7 +7,7 @@ Camera::Camera()
     :m_centre(0,0,0)
 {
     this->Rotate(-30,'Z');
-    m_eye = m_centre - this->m_axisX*100;
+    m_eye = m_centre - this->m_axisX*60;
     m_up = m_axisY;
     m_pos = m_eye;
 }

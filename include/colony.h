@@ -11,7 +11,7 @@ class Colony
     public:
         Colony();
         ~Colony();
-        void Update();
+        void Update(const SceneObject& _home, const SceneObject& _food);
         void ApplyRule();
 
         void UpdateTrail();
@@ -24,6 +24,7 @@ class Colony
         std::vector<Ant*> m_antList;
         /// trail create by ants in the list
         Trail m_trail;
+        uint32_t m_counter;
 };//end of class
 }//end of namespace
 #endif//

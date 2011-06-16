@@ -41,7 +41,7 @@ class GLWindow : public QGLWidget
         void paintGL();
     private:
         void RenderScene(const SceneManager& _scene);
-        void Draw(const SceneObject* _obj);
+        void Draw(SceneObject* _obj);
         SceneManager m_scene;
         ObjLoader m_obj;
         ObjLoader m_envObj;

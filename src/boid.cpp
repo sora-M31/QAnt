@@ -27,47 +27,6 @@ Boid::~Boid()
 {
 }
 //------------------------------------------------------------------------------
-bool Boid::CheckNeighbor(const Boid& _boid)
-{
-    //*
-    Vector relDis = _boid.m_pos - m_pos;
-    if (   (relDis.AngleBetween(this->m_axisX) < m_viewAngle)
-        && (relDis.Length() < m_senseRad) )
-    {
-        return true;
-    }
-    else 
-    {
-        return false;
-    }//*/
-    //return true;
-}
-//------------------------------------------------------------------------------
-void Boid::Translate(uint32_t _time)
-{
-    float delta_t = _time*0.001 ;
-    Vector pos = (m_vel*delta_t + m_accel * delta_t * delta_t /2);
-    m_vel += ( m_accel * delta_t );
-
-    m_pos +=pos;
-    m_trans.SetTranslate(pos);
-    m_trans.ApplyTransform();
-}
-//------------------------------------------------------------------------------
-void Boid::Rotate()
-{
-    float theta = m_axisX.AngleBetween( m_tforce);
-    Vector vector = (m_axisX.Cross( m_tforce)).Normalise();
-    
-    if (theta > m_maxAngle)
-    {
-        theta = m_maxAngle;
-    }
-    m_trans.SetRotation( theta, vector);
-    m_trans.ApplyTransform();
-    this->RotateAxis();
-}
-//------------------------------------------------------------------------------
 void Boid::Wall()
 {
     /*

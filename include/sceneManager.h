@@ -21,6 +21,8 @@ class SceneManager
         Flock* m_pFlock;
         Colony* m_pColony;
         SceneObject* m_pEnv;
+        SceneObject* m_pFood;
+        SceneObject* m_pHome;
         Pheromone* ptest;
 };//end of class
 }//end of namespace

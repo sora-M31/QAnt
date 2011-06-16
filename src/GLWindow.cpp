@@ -82,35 +82,71 @@ void GLWindow::RenderScene(const SceneManager& _scene)
     }
 }
 //------------------------------------------------------------------------------
-void GLWindow::Draw(const SceneObject* _obj)
+void GLWindow::Draw(SceneObject* _obj)
 {
     glPushMatrix();
         glRotatef(m_spin, 0,1,0);
         if(_obj->m_type == kObject)
         {
             glPushMatrix();
+                glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
                 glColor3f(1,1,1);
                 glScalef(60,1,60);
+                glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
                 m_envObj.m_pMesh->DrawVBO();
+                glPopAttrib();
             glPopMatrix();
         }
         else if ( _obj->m_type == kAnt)
         {
             glPushMatrix();
+                glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
                 glColor3f(1,0,0);
                 glMultMatrixf( _obj->m_trans.m_transform.m_mat);
                 m_obj.m_pMesh->DrawVBO();
+                glPopAttrib();
             glPopMatrix();
         }
         else if( _obj->m_type == kPhe)
         {
             glPushMatrix();
-                glColor3f(0,0,1);
+                glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
+                if ( (static_cast<Pheromone*>(_obj))->m_phrmType == ToHome)
+                {
+                    glColor3f(0,0,1);
+                }
+                else
+                {
+                    glColor3f(0,1,0);
+                }
                 glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
                 glScalef(0.1,0.1,0.1);
                 m_obj.m_pMesh->DrawVBO();
+                glPopAttrib();
             glPopMatrix();
         }
+        else if( _obj->m_type == kHome)
+        {
+            glPushMatrix();
+                glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
+                glColor3f(1,0,0);
+                glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
+                m_obj.m_pMesh->DrawVBO();
+                glPopAttrib();
+            glPopMatrix();
+        }
+        else if( _obj->m_type == kFood)
+        {
+            glPushMatrix();
+                glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
+                glColor3f(0,1,0);
+                glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
+                m_obj.m_pMesh->DrawVBO();
+                glPopAttrib();
+            glPopMatrix();
+        }
+
+
     glPopMatrix();
 }
 //------------------------------------------------------------------------------

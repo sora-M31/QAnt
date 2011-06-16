@@ -13,9 +13,6 @@ class Boid: public SceneObject
     public:
         Boid();
         ~Boid();
-        bool CheckNeighbor(const Boid& _boid);
-        void Translate(uint32_t _time);
-        void Rotate();
 
         void Wall();
         void Separate();
