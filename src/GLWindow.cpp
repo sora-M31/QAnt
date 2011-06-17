@@ -86,7 +86,7 @@ void GLWindow::Draw(SceneObject* _obj)
 {
     glPushMatrix();
         glRotatef(m_spin, 0,1,0);
-        if(_obj->m_type == kObject)
+        if(_obj->GetType() == kObject)
         {
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
@@ -97,7 +97,7 @@ void GLWindow::Draw(SceneObject* _obj)
                 glPopAttrib();
             glPopMatrix();
         }
-        else if ( _obj->m_type == kAnt)
+        else if ( _obj->GetType() == kAnt)
         {
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
@@ -107,7 +107,7 @@ void GLWindow::Draw(SceneObject* _obj)
                 glPopAttrib();
             glPopMatrix();
         }
-        else if( _obj->m_type == kPhe)
+        else if( _obj->GetType() == kPhe)
         {
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
@@ -125,7 +125,7 @@ void GLWindow::Draw(SceneObject* _obj)
                 glPopAttrib();
             glPopMatrix();
         }
-        else if( _obj->m_type == kHome)
+        else if( _obj->GetType() == kHome)
         {
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
@@ -135,7 +135,7 @@ void GLWindow::Draw(SceneObject* _obj)
                 glPopAttrib();
             glPopMatrix();
         }
-        else if( _obj->m_type == kFood)
+        else if( _obj->GetType() == kFood)
         {
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);

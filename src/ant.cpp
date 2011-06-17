@@ -56,7 +56,7 @@ Ant::~Ant()
 bool Ant::Arrive(const SceneObject& _obj)
 {
     float dis = (m_pos-_obj.m_pos).Length();
-    if ( dis < (m_bound+_obj.m_bound) )
+    if ( dis < (m_bound+_obj.GetBound()) )
     {
         return true;
     }

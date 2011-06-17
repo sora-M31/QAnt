@@ -11,9 +11,8 @@ SceneManager::SceneManager()
   //  m_pFlock = new Flock(500,0.2,0.3,0.3,0.2);
     m_pColony = new Colony;
     m_pEnv = new SceneObject;
-    m_pFood = new SceneObject;
-    m_pHome = new SceneObject;
-    m_pHome->m_bound = 1;
+    m_pFood = new SceneObject(Vector(10,0,10),0.5,kFood);
+    m_pHome = new SceneObject(Vector(0,0,0),0.5,kHome);
     ptest = new Pheromone(Vector(0,0,0),ToHome);
 }
 //------------------------------------------------------------------------------
@@ -30,12 +29,6 @@ void SceneManager::InitScene()
         m_pFlock->m_boidList[i].m_node.AddNext(m_pFlock->m_boidList[i+1].m_node);
     }
 */
-//hacky bits
-m_pFood->m_type = kFood;
-m_pFood->m_pos = Vector(10,0,10);
-m_pHome->m_type = kHome;
-m_pHome->m_pos = Vector(0,0,0);
-/////////////////////////////////////////////
     m_root.AddNext(m_pEnv->m_node);
     m_pEnv->m_node.AddNext(m_pFood->m_node);
     m_pFood->m_node.AddNext(m_pHome->m_node);

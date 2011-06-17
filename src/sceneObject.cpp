@@ -8,9 +8,9 @@ uint16_t SceneObject::uniqueColorId[3] = {0,0,0};
 //------------------------------------------------------------------------------
 SceneObject::SceneObject()
     : m_pos(0,0,0),
+      m_node(this),
       m_bound(0.0),
       m_type(kObject),
-      m_node(this),
       m_axisX(Vector(1,0,0)),
       m_axisY(Vector(0,1,0)),
       m_axisZ(Vector(0,0,1)),
@@ -29,14 +29,23 @@ SceneObject::SceneObject()
 SceneObject::SceneObject(
                             Vector _pos, 
                             float _bound, 
-                            DrawType _type)
+                            DrawType _type
+                        )
     : m_pos(_pos),
+      m_node(this),
       m_bound(_bound),
       m_type(_type),
-      m_node(this),
       m_axisX(Vector(1,0,0)),
       m_axisY(Vector(0,1,0)),
-      m_axisZ(Vector(0,0,1))
+      m_axisZ(Vector(0,0,1)),
+      m_vel(0,0,0),
+      m_mass(0),
+      m_friction(0),
+      m_force(0,0,0),
+      m_accel(0,0,0),
+      m_maxAccel(0),
+      m_maxAngle(0)
+
 {
     GetColorId();
 }
@@ -78,14 +87,14 @@ void SceneObject::Translate(const char _axis)
         m_trans.ApplyTransform();
 }
 //------------------------------------------------------------------------------
-void SceneObject::Translate(Vector _dis)
+void SceneObject::Translate(const Vector& _dis)
 {
     m_pos+=_dis;
     m_trans.SetTranslate(_dis);
     m_trans.ApplyTransform();
 }
 //------------------------------------------------------------------------------------
-void SceneObject::Translate(uint32_t _time)
+void SceneObject::Translate(const uint32_t _time)
 {
     float delta_t = _time*0.001 ;
     Vector pos = (m_vel*delta_t + m_accel * delta_t * delta_t /2);
@@ -131,19 +140,16 @@ void SceneObject::Rotate()
 //------------------------------------------------------------------------------------
 bool SceneObject::CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad)
 {
-    //*
     Vector relDis = _obj.m_pos - m_pos;
-   // if (   (relDis.AngleBetween(this->m_axisX) < _angle)
-     //   &&
-        if (relDis.Length() < _rad) //)
+    if ( (relDis.AngleBetween(this->m_axisX) < _angle) &&
+          (relDis.Length() < _rad) )
     {
         return true;
     }
     else
     {
         return false;
-    }//*/
-    //return true;
+    }
 }
 //------------------------------------------------------------------------------
 void SceneObject::Update()
@@ -151,7 +157,7 @@ void SceneObject::Update()
     m_trans.ApplyTransform();
 }
 //------------------------------------------------------------------------------------
-void SceneObject::Move(uint32_t _time)
+void SceneObject::Move(const uint32_t _time)
 {
     Rotate();
     float scalar = m_force.Length();
@@ -169,6 +175,32 @@ uint32_t SceneObject::GetType() const
 {
     return m_type;
 }
+//------------------------------------------------------------------------------
+float SceneObject::GetBound() const
+{
+    return m_bound;
+}
+//------------------------------------------------------------------------------
+void SceneObject::SetMaxRotAngle(const float _angle)
+{
+    m_maxAngle = _angle;
+}
+//------------------------------------------------------------------------------
+void SceneObject::SetMaxAccel(const float _accel)
+{
+    m_maxAccel = _accel;
+}
+//------------------------------------------------------------------------------
+void SceneObject::SetFriction(const float _friction)
+{
+    m_friction = _friction;
+}
+//------------------------------------------------------------------------------
+void SceneObject::SetBound(const float _bound)
+{
+    m_bound = _bound;
+}
+//------------------------------------------------------------------------------
 void SceneObject::RotateAxis()
 {
     m_axisX = m_trans.m_rotate * Vector(1,0,0);
