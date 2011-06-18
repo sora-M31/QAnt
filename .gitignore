@@ -1,6 +1,10 @@
- obj/*.o
- Makefile
- moc/*
- 
- 
- 
+obj
+bin
+Makefile
+moc
+*.swp
+todo
+*.tmp
+*.pro.user
+ui/*.h
+
