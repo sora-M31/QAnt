@@ -9,7 +9,6 @@ UI_HEADERS_DIR = ui/
 TARGET = bin/test
 CONFIG += console
 CONFIG -= app_bundle
-
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \

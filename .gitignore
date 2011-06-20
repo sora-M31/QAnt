@@ -7,4 +7,6 @@ todo
 *.tmp
 *.pro.user
 ui/*.h
+include/template.h
+src/template.cpp
 

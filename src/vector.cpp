@@ -73,7 +73,7 @@ float Vector::AngleBetween(const Vector& _paramVector) const
     float paramlength = _paramVector.Length();
     
     float angle=0;
-    if(length ==0 | paramlength ==0)
+    if(length ==0 || paramlength ==0)
     {
         angle =0;
     }
