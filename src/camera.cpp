@@ -29,9 +29,9 @@ void Camera::SetupCam()
               m_up.GetX(), m_up.GetY(), m_up.GetZ());
 }
 //------------------------------------------------------------------------------
-void Camera::Zoom()//track
+void Camera::Zoom(const float _length)//track
 { 	Vector direction = (m_centre-m_eye).Normalise();
-    m_eye += direction*1;
+    m_eye += direction*_length;
     ResetView();
 }
 //------------------------------------------------------------------------------
@@ -46,25 +46,25 @@ void Camera::ResetView()
              );
 }
 //------------------------------------------------------------------------------
-void Camera::Pitch()
+void Camera::Pitch(const float _theta)
 {
-    this->Rotate(10,'Z');
+    this->Rotate(_theta,'Z');
     this->m_up = m_axisY;
     m_centre = m_axisX*(m_centre - m_eye).Length();
     ResetView();
 }
 //------------------------------------------------------------------------------
-void Camera::Yaw()
+void Camera::Yaw(const float _theta)
 {
-    this->Rotate(10,'Y');
+    this->Rotate(_theta,'Y');
     this->m_up = m_axisY;
     m_centre = m_axisX*(m_centre - m_eye).Length();
     ResetView();
 }
 //------------------------------------------------------------------------------
-void Camera::Roll()
+void Camera::Roll(const float _theta)
 {
-    this->Rotate(10,'X');
+    this->Rotate(_theta,'X');
     this->m_up = m_axisY;
     m_centre = m_axisX*(m_centre - m_eye).Length();
     ResetView();

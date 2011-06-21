@@ -73,16 +73,16 @@ void SceneObject::GetColorId()
     }
 }
 //------------------------------------------------------------------------------
-void SceneObject::Translate(const char _axis)
+void SceneObject::Translate( const float _theta, const char _axis )
 {
     switch(_axis)
     {
         case 'X':
-            m_trans.SetTranslate( m_axisX * 0.1 );
+            m_trans.SetTranslate( m_axisX * _theta );
         case 'Y':
-            m_trans.SetTranslate( m_axisY * 0.1 );
+            m_trans.SetTranslate( m_axisY * _theta );
         case 'Z':
-            m_trans.SetTranslate( m_axisZ * 0.1 );
+            m_trans.SetTranslate( m_axisZ * _theta );
     }
         m_trans.ApplyTransform();
 }

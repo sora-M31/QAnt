@@ -25,7 +25,8 @@ class SceneObject
         void SetBound(const float _bound);
         void SetFriction(const float _friction);
         virtual void Rotate(const float theta, const char _axis);
-        virtual void Translate(const char _axis);
+        virtual void Translate(const float theta, const char _axis);
+        void Translate(const uint32_t _time);
         Vector m_pos;
         Transform m_trans;
         SceneNode m_node;
@@ -33,7 +34,6 @@ class SceneObject
     protected:
         bool CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad);
         void Rotate();
-        void Translate(const uint32_t _time);
         void Translate(const Vector& _dis);
         void RotateAxis();
         void Move(const uint32_t _time);
