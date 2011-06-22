@@ -26,11 +26,11 @@ class GLWindow : public QGLWidget
         void setTranslationX();
         void setTranslationY();
         void setTranslationZ();
-        void setZoom();
-        void setSpin();
+        void setCamZoom(const int _dis);
+        void setCamSpin(const int _angle);
         void setCamPitch(const int _theta);
-        void setCamYaw();
-        void setCamRoll();
+        void setCamYaw(const int _theta);
+        void setCamRoll(const int _theta);
         void setModel(int _index);
     protected:
         void initializeGL();
@@ -52,7 +52,11 @@ class GLWindow : public QGLWidget
         Transform m_trans;
         SceneObject* pSelected;
         float m_spin;
+        float m_zoom;
         float m_pitch;
+        float m_yaw;
+        float m_roll;
+
 };//end of class
 }//end of namespace
 #endif //end of define

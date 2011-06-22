@@ -15,7 +15,10 @@ GLWindow::GLWindow(
     m_timer = new QTimer(this);
     m_pCam = new Camera;
     m_spin = 0.0;
+    m_zoom =0;
     m_pitch = 0;
+    m_yaw = 0;
+    m_roll = 0;
     connect( m_timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     m_timer->start(m_framerate);
 }
@@ -199,27 +202,30 @@ void GLWindow::setCamPitch(const int _theta)
     m_pitch = _theta;
     updateGL();
 }
-void GLWindow::setCamYaw()
+void GLWindow::setCamYaw(const int _theta)
 {
-    this->m_pCam->Yaw(10);
+    this->m_pCam->Yaw(_theta - m_yaw);
+    m_yaw = _theta;
     updateGL();
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-void GLWindow::setCamRoll()
+void GLWindow::setCamRoll(const int _theta)
 {
-    this->m_pCam->Roll(10);
+    this->m_pCam->Roll(_theta - m_roll);
+    m_roll = _theta;
     updateGL();
 }
 //------------------------------------------------------------------------------
-void GLWindow::setZoom()
+void GLWindow::setCamZoom(const int _dis)
 {
-    m_pCam->Zoom(0.1);
+    m_pCam->Zoom(_dis-m_zoom);
+    m_zoom = _dis;
     updateGL();
 }
-void GLWindow::setSpin()
+void GLWindow::setCamSpin(const int _angle)
 {
-    m_spin +=1;
+    m_spin = _angle;
     updateGL();
 }
 void GLWindow::setModel(int _index)

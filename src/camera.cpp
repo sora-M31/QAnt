@@ -7,7 +7,7 @@ Camera::Camera()
     :m_centre(0,0,0)
 {
     this->Rotate(-30,'Z');
-    m_eye = m_centre - this->m_axisX*60;
+    m_eye = m_centre - m_axisX * 30;
     m_up = m_axisY;
     m_pos = m_eye;
 }
@@ -30,7 +30,7 @@ void Camera::SetupCam()
 }
 //------------------------------------------------------------------------------
 void Camera::Zoom(const float _length)//track
-{ 	Vector direction = (m_centre-m_eye).Normalise();
+{ 	Vector direction = (m_eye-m_centre).Normalise();
     m_eye += direction*_length;
     ResetView();
 }
