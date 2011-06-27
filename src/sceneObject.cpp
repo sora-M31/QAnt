@@ -1,6 +1,6 @@
 #include "sceneObject.h"
 #define PI 3.1415926
-
+#define GRAVITY 9.18
 namespace QtGLWindow
 {
 //------------------------------------------------------------------------------
@@ -110,13 +110,13 @@ void SceneObject::Rotate(const float _theta, const char _axis)
     switch(_axis)
     {
         case 'X':
-            m_trans.SetRotation(_theta*PI/180, m_axisX);
+            m_trans.SetRotation(_theta*PI/180.0, m_axisX);
             break;
         case 'Y':
-            m_trans.SetRotation(_theta*PI/180, m_axisY);
+            m_trans.SetRotation(_theta*PI/180.0, m_axisY);
             break;
         case 'Z':
-            m_trans.SetRotation(_theta*PI/180, m_axisZ);
+            m_trans.SetRotation(_theta*PI/180.0, m_axisZ);
             break;
     }
     RotateAxis();
@@ -173,7 +173,8 @@ void SceneObject::Move(const uint32_t _time)
     {
         friction =Vector(0,0,0);
     }
-    m_accel = (m_force - friction) / m_mass;
+    //m_accel = (m_force - friction) / m_mass;
+    m_accel = (m_force - m_vel.Normalise()*m_friction*GRAVITY*m_mass)/m_mass;
     std::cout<<m_vel*m_friction<<"value\n";
     Translate(_time);
 }

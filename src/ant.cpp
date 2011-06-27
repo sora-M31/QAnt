@@ -7,11 +7,11 @@ Ant::Ant()
      :m_hit(false)
 {
     m_maxAngle =5*3.14/180;
-    m_maxAccel = 0.8;
-    m_vel = m_axisX * 1;
-    m_friction = 0;
+    m_maxAccel = 8;
+    m_vel = Vector (0,0,0);
+    m_friction = 0.09;
     m_walkCounter = rand();
-    m_mass =1;
+    m_mass =0.1;
     m_type = kAnt;
     m_force = Vector(0,0,0);
     srand ( time(NULL) );
@@ -129,7 +129,7 @@ void Ant::RandomWalk()
 
     if(m_walkCounter%frequency==0)
     {
-        m_rand = Vector( ((float)rand() / (float)RAND_MAX -0.5)*30,  0, ((float)rand() / (float)RAND_MAX-0.5)*30 );
+        m_rand = Vector( ((float)rand() / (float)RAND_MAX -0.5),  0, ((float)rand() / (float)RAND_MAX-0.5) ) *10;
         m_walkCounter++;
     }
     else
@@ -156,7 +156,7 @@ void Ant::Wall()
       |  |                |  |
     */
     const float forceScalar = 1;
-    const float blank = 10;
+    const float blank = 5;
     float wall =30;
     wall = wall -blank;
 
@@ -189,7 +189,7 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
     Wall();
     #if 1
     RandomWalk();
-    m_force = m_rand + m_wall;
+    m_force = m_rand + m_wall*0.08;
     Move(_time);
     std::cout<<m_friction<<"@@@@@@@friction\n";
 
