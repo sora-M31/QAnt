@@ -16,6 +16,15 @@ Camera::~Camera()
 {
 }
 //------------------------------------------------------------------------------
+void Camera::Reset()
+{
+    m_centre = Vector(0,0,0);
+    m_eye = m_centre - m_axisX * 30;
+    m_up = Vector(0,1,0);
+    m_pos = m_eye;
+    ResetView();
+}
+//------------------------------------------------------------------------------
 void Camera::SetupCam()
 {
     glMatrixMode(GL_PROJECTION);//switch to projection matrix stack

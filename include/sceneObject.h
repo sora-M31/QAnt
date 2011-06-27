@@ -27,8 +27,8 @@ class SceneObject
         virtual void Rotate(const float theta, const char _axis);
         virtual void Translate(const float theta, const char _axis);
         void Translate(const uint32_t _time);
+        Transform GetTransformation() const;
         Vector m_pos;
-        Transform m_trans;
         SceneNode m_node;
 
     protected:
@@ -38,6 +38,7 @@ class SceneObject
         void RotateAxis();
         void Move(const uint32_t _time);
 
+        Transform m_trans;
         uint32_t m_walkCounter;
         float m_bound;
         DrawType m_type;

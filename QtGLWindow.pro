@@ -1,6 +1,7 @@
 QT += opengl \
        gui \
        core
+QMAKE_CXX_FLAGS_WARN_ON += -Wextra
 INCLUDEPATH += include/
         += ui
 OBJECTS_DIR = obj/

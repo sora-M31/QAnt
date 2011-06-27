@@ -30,7 +30,26 @@ MainWindow::MainWindow(QWidget *parent)
     connect( m_ui->m_zoomSlider, SIGNAL(valueChanged(int)),m_ui->m_zoomBox,SLOT(setValue(int)));
     connect( m_ui->m_zoomBox, SIGNAL(valueChanged(int)),m_ui->m_zoomSlider,SLOT(setValue(int)));
     connect( m_ui->m_zoomSlider, SIGNAL(valueChanged(int)),m_gl,SLOT(setCamZoom(int)));
+
+    connect( m_ui->m_numSlider, SIGNAL(valueChanged(int)),m_ui->m_numBox,SLOT(setValue(int)));
+    connect( m_ui->m_numBox, SIGNAL(valueChanged(int)),m_ui->m_numSlider,SLOT(setValue(int)));
+    //connect( m_ui->m_zoomSlider, SIGNAL(valueChanged(int)),m_gl,SLOT(setCamZoom(int)));
+
+    connect( m_ui->m_angleSlider, SIGNAL(valueChanged(int)),m_ui->m_angleBox,SLOT(setValue(int)));
+    connect( m_ui->m_angleBox, SIGNAL(valueChanged(int)),m_ui->m_angleSlider,SLOT(setValue(int)));
+    connect( m_ui->m_angleSlider, SIGNAL(valueChanged(int)),m_gl,SLOT(setAngle(int)));
+
+    connect( m_ui->m_accelSlider, SIGNAL(valueChanged(int)),m_ui->m_accelBox,SLOT(setValue(int)));
+    connect( m_ui->m_accelBox, SIGNAL(valueChanged(int)),m_ui->m_accelSlider,SLOT(setValue(int)));
+    //connect( m_ui->m_zoomSlider, SIGNAL(valueChanged(int)),m_gl,SLOT(setCamZoom(int)));
+
+    connect( m_ui->m_frictionSlider, SIGNAL(valueChanged(int)),m_ui->m_frictionBox,SLOT(setValue(int)));
+    connect( m_ui->m_frictionBox, SIGNAL(valueChanged(int)),m_ui->m_frictionSlider,SLOT(setValue(int)));
+    connect( m_ui->m_frictionSlider, SIGNAL(valueChanged(int)),m_gl,SLOT(setFriction(int)));
+
+    connect( m_ui->m_startButton, SIGNAL( released()), m_gl, SLOT(start()) );
 #if 0
+
     connect( m_ui->m_rotX,SIGNAL(pressed()),m_gl, SLOT(setRotationX()) );
     connect( m_ui->m_rotY,SIGNAL(pressed()),m_gl, SLOT(setRotationY()) );
     connect( m_ui->m_rotZ,SIGNAL(pressed()),m_gl, SLOT(setRotationZ()) );

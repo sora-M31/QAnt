@@ -5,13 +5,14 @@ const static float PI  = 3.1415926;
 GLWindow::GLWindow(
                         QWidget *_parent
                   )
-                   :QGLWidget( _parent )
+                   :QGLWidget( _parent ),
+                     m_pBotObj(0)
 {
     setFocus();
     resize(_parent->size());
 
     m_framerate = 50;
-    m_wireframe = false;
+    m_wireframe = true;
     m_timer = new QTimer(this);
     m_pCam = new Camera;
     m_spin = 0.0;
@@ -20,7 +21,6 @@ GLWindow::GLWindow(
     m_yaw = 0;
     m_roll = 0;
     connect( m_timer, SIGNAL(timeout()), this, SLOT(updateGL()));
-    m_timer->start(m_framerate);
 }
 //------------------------------------------------------------------------------
 GLWindow::~GLWindow()
@@ -35,17 +35,27 @@ void GLWindow::initializeGL()
 
     glEnable(GL_DEPTH_TEST);
     m_scene.InitScene();
+    m_pCam->SetupCam();
 
-    pSelected = m_scene.m_root.m_pNext->m_pObject;
-    m_obj.ParseFile("sphere.obj");
-    m_obj.Load();
-    m_obj.m_pMesh->CreateVBO();
+    pSelected = m_scene.m_root.m_pNext->m_pNext->m_pNext->m_pNext->m_pObject;
+
+    m_sphereObj.ParseFile("sphere.obj");
+    m_sphereObj.Load();
+    m_sphereObj.m_pMesh->CreateVBO();
 
     m_envObj.ParseFile("plane.obj");
     m_envObj.Load();
     m_envObj.m_pMesh->CreateVBO();
-    //setModel(0);
-    m_pCam->SetupCam();
+
+    m_arrowObj.ParseFile("arrow.obj");
+    m_arrowObj.Load();
+    m_arrowObj.m_pMesh->CreateVBO();
+
+    m_fishObj.ParseFile("fish.obj");
+    m_fishObj.Load();
+    m_fishObj.m_pMesh->CreateVBO();
+
+    m_pBotObj = & m_fishObj;
 }
 //------------------------------------------------------------------------------
 void GLWindow::resizeGL(
@@ -106,8 +116,8 @@ void GLWindow::Draw(SceneObject* _obj)
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
                 glColor3f(1,0,0);
-                glMultMatrixf( _obj->m_trans.m_transform.m_mat);
-                m_obj.m_pMesh->DrawVBO();
+                glMultMatrixf( _obj->GetTransformation().m_transform.m_mat);
+                m_pBotObj->m_pMesh->DrawVBO();
                 glPopAttrib();
             glPopMatrix();
         }
@@ -125,7 +135,7 @@ void GLWindow::Draw(SceneObject* _obj)
                 }
                 glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
                 glScalef(0.1,0.1,0.1);
-                m_obj.m_pMesh->DrawVBO();
+                m_pBotObj->m_pMesh->DrawVBO();
                 glPopAttrib();
             glPopMatrix();
         }
@@ -135,7 +145,7 @@ void GLWindow::Draw(SceneObject* _obj)
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
                 glColor3f(1,0,0);
                 glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
-                m_obj.m_pMesh->DrawVBO();
+                m_sphereObj.m_pMesh->DrawVBO();
                 glPopAttrib();
             glPopMatrix();
         }
@@ -145,11 +155,10 @@ void GLWindow::Draw(SceneObject* _obj)
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
                 glColor3f(0,1,0);
                 glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
-                m_obj.m_pMesh->DrawVBO();
+                m_sphereObj.m_pMesh->DrawVBO();
                 glPopAttrib();
             glPopMatrix();
         }
-
 
     glPopMatrix();
 }
@@ -223,27 +232,68 @@ void GLWindow::setCamZoom(const int _dis)
     m_zoom = _dis;
     updateGL();
 }
+//------------------------------------------------------------------------------
 void GLWindow::setCamSpin(const int _angle)
 {
     m_spin = _angle;
     updateGL();
 }
+//------------------------------------------------------------------------------
 void GLWindow::setModel(int _index)
 {
+    #if 0
+    //load slow but less memory
     switch(_index)
     {
         case 0:
-            m_obj.ParseFile("sphere.obj");
+            m_botObj.ParseFile("sphere.obj");
             break;
         case 1:
-            m_obj.ParseFile("arrow.obj");
+            m_botObj.ParseFile("arrow.obj");
             break;
         case 2:
-            m_obj.ParseFile("fish.obj");
+            m_botObj.ParseFile("fish.obj");
             break;
     }
-    m_obj.Load();
-    m_obj.m_pMesh->UpdateVBO();
+    m_botObj.Load();
+    m_botObj.m_pMesh->UpdateVBO();
+    #endif
+    switch(_index)
+    {
+        case 0:
+            m_pBotObj = &m_fishObj;
+            break;
+        case 1:
+            m_pBotObj = &m_arrowObj;
+            break;
+        case 2:
+            m_pBotObj = &m_sphereObj;
+            break;
+    }
     updateGL();
 }
+//------------------------------------------------------------------------------
+void  GLWindow::start()
+{
+    m_timer->start(m_framerate);
+}
+//------------------------------------------------------------------------------
+void GLWindow::restart()
+{}
+//------------------------------------------------------------------------------
+void GLWindow::setAngle(const int _angle)
+{
+    pSelected->SetMaxRotAngle(_angle);
+}
+//------------------------------------------------------------------------------
+void GLWindow::setAccel(const int _accel)
+{
+    pSelected->SetMaxAccel(_accel);
+}
+//------------------------------------------------------------------------------
+void GLWindow::setFriction(const int _friction)
+{
+    pSelected->SetFriction(_friction);
+}
+//------------------------------------------------------------------------------
 }//end of namespace

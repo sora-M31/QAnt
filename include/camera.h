@@ -20,12 +20,10 @@ class Camera: public SceneObject
         // --------------------------------------------------------------------------
         /// \brief Destructor
         ~Camera();
+        void Reset();
         // --------------------------------------------------------------------------
         /// \brief Set up viewing matrix and projection matrix
         void SetupCam();
-        // --------------------------------------------------------------------------
-        /// \brief Reset the eye position of the glulookat to modify th model view matrix
-        /// \param _zoomFactor how much to zoom/pan
         void Zoom(const float _length);
         void Pitch(const float _theta);
         void Yaw(const float _theta);

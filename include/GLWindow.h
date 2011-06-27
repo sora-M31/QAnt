@@ -32,6 +32,11 @@ class GLWindow : public QGLWidget
         void setCamYaw(const int _theta);
         void setCamRoll(const int _theta);
         void setModel(int _index);
+        void start();
+        void restart();
+        void setAngle(const int _angle);
+        void setAccel(const int _accel);
+        void setFriction(const int _friction);
     protected:
         void initializeGL();
         void resizeGL(
@@ -43,8 +48,11 @@ class GLWindow : public QGLWidget
         void RenderScene(const SceneManager& _scene);
         void Draw(SceneObject* _obj);
         SceneManager m_scene;
-        ObjLoader m_obj;
+        ObjLoader* m_pBotObj;
+        ObjLoader m_sphereObj;
         ObjLoader m_envObj;
+        ObjLoader m_fishObj;
+        ObjLoader m_arrowObj;
         Camera* m_pCam;
         uint32_t m_framerate;
         QTimer* m_timer;

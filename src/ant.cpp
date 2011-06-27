@@ -9,7 +9,7 @@ Ant::Ant()
     m_maxAngle =5*3.14/180;
     m_maxAccel = 0.8;
     m_vel = m_axisX * 1;
-    m_friction = 7;
+    m_friction = 0;
     m_walkCounter = rand();
     m_mass =1;
     m_type = kAnt;
@@ -187,12 +187,14 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
     m_force = Vector(0,0,0);
     DetectObstacle(_antList);
     Wall();
-    #if 0
+    #if 1
     RandomWalk();
     m_force = m_rand + m_wall;
     Move(_time);
+    std::cout<<m_friction<<"@@@@@@@friction\n";
+
     #endif
-    #if 1
+    #if 0
 
     switch(m_state)
     {

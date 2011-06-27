@@ -147,7 +147,9 @@ Vector Vector::operator /= (const float _param)
 //------------------------------------------------------------------------------
 bool Vector::operator == (const Vector& _paramVector) const
 {
-    if ( RealCompare( m_x, _paramVector.m_x) && RealCompare( m_y, _paramVector.m_y) )
+    if ( RealCompare( m_x, _paramVector.m_x)
+         && RealCompare( m_y, _paramVector.m_y)
+         && RealCompare( m_z, _paramVector.m_z) )
         return true;
     else return false;
 }

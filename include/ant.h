@@ -31,8 +31,6 @@ class Ant:public SceneObject
         void RandomWalk();
         void Wall();
         
-
-        float m_friction;
         bool m_hit;
         int m_score;
         ///\counter for ant to walk and stop

@@ -18,6 +18,11 @@ SceneManager::SceneManager()
 //------------------------------------------------------------------------------
 SceneManager::~SceneManager()
 {
+    delete m_pColony;
+    delete m_pEnv;
+    delete m_pFood;
+    delete m_pHome;
+    delete ptest;
 }
 //------------------------------------------------------------------------------
 void SceneManager::InitScene()

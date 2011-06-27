@@ -167,7 +167,14 @@ void SceneObject::Move(const uint32_t _time)
         scalar = m_maxAccel;
     }
     m_force =m_axisX * scalar * m_mass;
-    m_accel = (m_force -m_vel*m_friction) / m_mass;
+    Vector friction = m_vel * m_friction;
+    //get rid of inacurate when friction becomes large
+    if( m_vel== Vector(0,0,0) )
+    {
+        friction =Vector(0,0,0);
+    }
+    m_accel = (m_force - friction) / m_mass;
+    std::cout<<m_vel*m_friction<<"value\n";
     Translate(_time);
 }
 //------------------------------------------------------------------------------
@@ -194,11 +201,17 @@ void SceneObject::SetMaxAccel(const float _accel)
 void SceneObject::SetFriction(const float _friction)
 {
     m_friction = _friction;
+    std::cout<<m_friction<<".....friction\n";
 }
 //------------------------------------------------------------------------------
 void SceneObject::SetBound(const float _bound)
 {
     m_bound = _bound;
+}
+//------------------------------------------------------------------------------
+Transform SceneObject::GetTransformation() const
+{
+   return m_trans;
 }
 //------------------------------------------------------------------------------
 void SceneObject::RotateAxis()
