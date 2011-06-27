@@ -6,7 +6,8 @@ GLWindow::GLWindow(
                         QWidget *_parent
                   )
                    :QGLWidget( _parent ),
-                     m_pBotObj(0)
+                     m_pBotObj(0),
+                     pSelected(0)
 {
     setFocus();
     resize(_parent->size());
@@ -171,38 +172,26 @@ void GLWindow::toggleWireframe(bool _mode)
 //------------------------------------------------------------------------------
 void GLWindow::setRotationX()
 {
-    pSelected->Rotate(1*PI/180,'X');
-    updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setRotationY()
 {
-    pSelected->Rotate(1*PI/180,'Y');
-    updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setRotationZ()
 {
-    pSelected->Rotate(1*PI/180,'Z');
-    updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setTranslationX()
 {
-    pSelected->Translate('X');
-    updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setTranslationY()
 {
-    pSelected->Translate('Y');
-    updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setTranslationZ()
 {
-    pSelected->Translate('Z');
-    updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::setCamPitch(const int _theta)
@@ -211,13 +200,13 @@ void GLWindow::setCamPitch(const int _theta)
     m_pitch = _theta;
     updateGL();
 }
+//------------------------------------------------------------------------------
 void GLWindow::setCamYaw(const int _theta)
 {
     this->m_pCam->Yaw(_theta - m_yaw);
     m_yaw = _theta;
     updateGL();
 }
-//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 void GLWindow::setCamRoll(const int _theta)
 {
