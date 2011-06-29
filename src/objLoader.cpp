@@ -111,7 +111,6 @@ void ObjLoader::ParseFace(std::vector<std::string>::iterator _begin, uint32_t _v
         for( uint32_t i=0; i<4; ++i)
         {
             std::vector<std::string> r;
-            //std::cout<<*_begin<<std::endl;
             std::string str(*_begin);
             Tokenize(str, r, "/");
             temp.push_back(atof(r[0].c_str()));

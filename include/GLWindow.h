@@ -14,12 +14,10 @@ class GLWindow : public QGLWidget
 {
     Q_OBJECT
     public:
-        GLWindow(
-                    QWidget *_parent
-                );
+        GLWindow( QWidget *_parent );
         ~GLWindow();
     public slots:
-        void toggleWireframe(bool _mode);
+        void toggleWireframe( bool _mode );
         void setRotationX();
         void setRotationY();
         void setRotationZ();
@@ -45,7 +43,7 @@ class GLWindow : public QGLWidget
                      );
         void paintGL();
     private:
-        void RenderScene(const SceneManager& _scene);
+        void RenderScene( const SceneManager& _scene );
         void Draw(SceneObject* _obj);
         SceneManager m_scene;
         ObjLoader* m_pBotObj;

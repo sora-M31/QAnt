@@ -7,9 +7,9 @@ Ant::Ant()
      :m_hit(false)
 {
     m_maxAngle =5*3.14/180;
-    m_maxAccel = 8;
-    m_vel = Vector (0,0,0);
-    m_friction = 0.09;
+    m_maxAccel = 9;
+    m_vel = m_axisX * 0.7;
+    m_friction = 0.08;
     m_walkCounter = rand();
     m_mass =0.1;
     m_type = kAnt;
@@ -18,7 +18,7 @@ Ant::Ant()
     m_pheromone = Vector(0,0,0);
     m_trans.SetTranslate(m_pos);
     m_trans.ApplyTransform();
-    m_bound = 0.5;
+    m_bound = 1;
     m_state = HomeToFood;
 }
 //------------------------------------------------------------------------------------
@@ -71,11 +71,12 @@ bool Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
     for( uint32_t i=0; i< num; ++i)
     {
         Vector phrm;
-        if( CheckNeighbor(*_trail.m_phrmTrail[i], 180*3.1415/180, 2) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
+        if( CheckNeighbor(*_trail.m_phrmTrail[i], 3.0, 7) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
         {
             phrm = _trail.m_phrmTrail[i]->m_pos;// * ( _trail.m_phrmTrail[i]->m_maxAge - _trail.m_phrmTrail[i]->m_age );
             phrmNum++;
         }
+        std::cout<<phrmNum<<"phrm number\n";
         phrmCentre += phrm;
     }
 
@@ -86,7 +87,7 @@ bool Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
     else
     {
         phrmCentre /= phrmNum;
-        m_pheromone = ( phrmCentre - m_pos).Normalise();
+        m_pheromone = ( phrmCentre - m_pos);
         return true;
     }
 }
@@ -114,7 +115,7 @@ bool Ant::Near(const SceneObject& _obj)
 {
     if( CheckNeighbor( _obj, 90,10) )
     {
-        m_attraction = (_obj.m_pos - m_pos).Normalise();
+        m_attraction = (_obj.m_pos - m_pos);
         return true;
     }
     else
@@ -129,7 +130,7 @@ void Ant::RandomWalk()
 
     if(m_walkCounter%frequency==0)
     {
-        m_rand = Vector( ((float)rand() / (float)RAND_MAX -0.5),  0, ((float)rand() / (float)RAND_MAX-0.5) ) *10;
+        m_rand = Vector( ((float)rand() / (float)RAND_MAX -0.5),  0, ((float)rand() / (float)RAND_MAX-0.5) ) *20;
         m_walkCounter++;
     }
     else
@@ -187,14 +188,14 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
     m_force = Vector(0,0,0);
     DetectObstacle(_antList);
     Wall();
-    #if 1
+    #if 0
     RandomWalk();
     m_force = m_rand + m_wall*0.08;
     Move(_time);
     std::cout<<m_friction<<"@@@@@@@friction\n";
 
     #endif
-    #if 0
+    #if 1
 
     switch(m_state)
     {
@@ -213,9 +214,11 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
             break;
         case FollowFoodPheromone:
             {
+
+                std::cout<<"Follow Food Pheromone \n";
                 if( DetectPheromone(ToFood, _trail))
                 {
-                    m_force = m_pheromone + m_obstacles + m_wall;
+                    m_force = m_pheromone*2 + m_obstacles + m_wall*0.08;
                     Move(_time);
                 }
                 else
@@ -234,25 +237,26 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                     #endif
                 }
                 m_state = HomeToFood;
-                std::cout<<"Follow Food Pheromone \n";
             }
             break;
         case NearFood:
             {
-
+                std::cout<<"Near Food\n";
                 if( Arrive(_food) )
                 {
-                     m_force = Vector(0,0,0)-m_vel*m_friction*20;
+                    m_force = Vector(0,0,0)-m_vel.Normalise();
                     Move(_time);
                     m_state = FoodToHome;
+                    std::cout<<"using arrive\n";
                 }
                 else
                 {
-                    m_force = m_attraction*3 + m_obstacles *0.1+ m_wall*3;
+                    Near(_food);
+                    m_force = m_attraction *0.2+ m_obstacles *0.1+ m_wall*0.08;
                     Move(_time);
                     m_state = NearFood;
+                    std::cout<<"using attraction\n";
                 }
-                std::cout<<"Near Food\n";
             }
             break;
         case FoodToHome:
@@ -271,32 +275,37 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
             break;
         case FollowHomePheromone:
             {
+                std::cout<<"Follow home pheromone\n";
                 if(DetectPheromone(ToHome, _trail))
                 {
                     m_force = m_pheromone + m_wall +m_obstacles;
+                    std::cout<<m_pheromone<<"pheromone!!!!\n";
                     Move(_time);
+                    std::cout<<"detected pheromone\n";
                 }
                 else
                 {
                     RandomWalk();
                     m_force = m_rand + m_wall + m_obstacles;
+                    std::cout<<m_rand<<"random\n";
+                    std::cout<<m_force<<"random\n";
                 }
                 m_state = FoodToHome;
-
-                std::cout<<"Follow home pheromone\n";
             }
             break;
         case NearHome:
             {
-                m_force = m_attraction * 0.1 + m_obstacles + m_wall;
-                Move(_time);
                 if( Arrive(_home) )
                 {
+                    m_force = Vector(0,0,0)-m_vel*m_friction*30;
+                    Move(_time);
                     m_state = HomeToFood;
                 }
                 else
                 {
                     m_state = NearHome;
+                    Near(_home);
+                    m_force = m_attraction*0.5 + m_obstacles + m_wall;
                 }
                 std::cout<<"NearHome\n";
             }

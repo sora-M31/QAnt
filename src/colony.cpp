@@ -5,7 +5,7 @@ namespace QtGLWindow
 //----------------------------------------------------------------------------------------------------------------------
 Colony::Colony()
 {
-    m_num=1;
+    m_num=3;
     m_counter =0;
     for(uint32_t i=0;i<m_num; ++i)
     {
@@ -22,11 +22,11 @@ void Colony::UpdateTrail()
     {
         for( uint32_t i=0;i<m_num;++i )
         {
-            if ( m_antList[i]->m_state == FoodToHome )
+            if ( (m_antList[i]->m_state == FoodToHome) || (m_antList[i]->m_state == NearHome) )
             {
                 m_trail.AddPherom( new Pheromone( m_antList[i]->m_pos, ToFood ) );
             }
-            else if( m_antList[i]->m_state == HomeToFood )
+            else if( (m_antList[i]->m_state == HomeToFood) || m_antList[i]->m_state == NearFood)
             {
                 m_trail.AddPherom( new Pheromone( m_antList[i]->m_pos, ToHome ) );
             }

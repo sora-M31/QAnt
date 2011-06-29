@@ -28,327 +28,397 @@
       </property>
      </spacer>
     </item>
-    <item row="0" column="2">
-     <widget class="QTabWidget" name="tabWidget">
+    <item row="0" column="1">
+     <widget class="QScrollArea" name="scrollArea">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="acceptDrops">
-       <bool>false</bool>
+      <property name="widgetResizable">
+       <bool>true</bool>
       </property>
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="tab_13">
-       <attribute name="title">
-        <string>Control</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_4">
-        <item row="1" column="0">
-         <widget class="QGroupBox" name="s_optGB">
-          <property name="title">
-           <string>Other options</string>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>275</width>
+         <height>716</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="0" column="0">
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="enabled">
+           <bool>true</bool>
           </property>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <item row="3" column="0">
-            <widget class="QComboBox" name="m_model">
-             <property name="currentIndex">
-              <number>0</number>
-             </property>
-             <property name="maxVisibleItems">
-              <number>10</number>
-             </property>
-             <property name="maxCount">
-              <number>10</number>
-             </property>
-             <item>
-              <property name="text">
-               <string>Fish</string>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="acceptDrops">
+           <bool>false</bool>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab_13">
+           <attribute name="title">
+            <string>Control</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="1" column="0">
+             <widget class="QGroupBox" name="s_optGB">
+              <property name="title">
+               <string>Other options</string>
               </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Arrow</string>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="3" column="0">
+                <widget class="QComboBox" name="m_model">
+                 <property name="currentIndex">
+                  <number>0</number>
+                 </property>
+                 <property name="maxVisibleItems">
+                  <number>10</number>
+                 </property>
+                 <property name="maxCount">
+                  <number>10</number>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Fish</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Arrow</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Sphere</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Choose Model:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="m_wireframeCheck">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="text">
+                  <string>Wireframe</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QGroupBox" name="s_camTransGB">
+              <property name="title">
+               <string>Camera</string>
               </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Sphere</string>
+              <layout class="QGridLayout" name="gridLayout_3">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Pitch</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>Yaw</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_5">
+                 <property name="text">
+                  <string>Roll</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_6">
+                 <property name="text">
+                  <string>Zoom</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_10">
+                 <property name="text">
+                  <string>Spin</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QSlider" name="m_yawSlider">
+                 <property name="minimum">
+                  <number>-99</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="3">
+                <widget class="QSlider" name="m_rollSlider">
+                 <property name="minimum">
+                  <number>-99</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="3">
+                <widget class="QSlider" name="m_zoomSlider">
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>99</number>
+                 </property>
+                 <property name="pageStep">
+                  <number>1</number>
+                 </property>
+                 <property name="value">
+                  <number>0</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="3">
+                <widget class="QSlider" name="m_spinSlider">
+                 <property name="minimum">
+                  <number>-180</number>
+                 </property>
+                 <property name="maximum">
+                  <number>180</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QSlider" name="m_pitchSlider">
+                 <property name="minimum">
+                  <number>-99</number>
+                 </property>
+                 <property name="maximum">
+                  <number>99</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>1</number>
+                 </property>
+                 <property name="value">
+                  <number>0</number>
+                 </property>
+                 <property name="sliderPosition">
+                  <number>0</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QSpinBox" name="m_pitchBox">
+                 <property name="minimum">
+                  <number>-99</number>
+                 </property>
+                 <property name="maximum">
+                  <number>99</number>
+                 </property>
+                 <property name="value">
+                  <number>0</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QSpinBox" name="m_yawBox">
+                 <property name="minimum">
+                  <number>-99</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QSpinBox" name="m_rollBox">
+                 <property name="minimum">
+                  <number>-99</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="2">
+                <widget class="QSpinBox" name="m_zoomBox">
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>99</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>1</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="2">
+                <widget class="QSpinBox" name="m_spinBox">
+                 <property name="minimum">
+                  <number>-180</number>
+                 </property>
+                 <property name="maximum">
+                  <number>180</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_14">
+           <attribute name="title">
+            <string>Configuration</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="2">
+             <widget class="QSlider" name="m_numSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
-             </item>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Choose Model:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="m_wireframeCheck">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="text">
-              <string>Wireframe</string>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Numbers</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>Max Angle</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QSlider" name="m_angleSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string>Friction</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QSlider" name="m_frictionSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>Max Accel</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QSlider" name="m_accelSlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="m_numBox"/>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="m_angleBox"/>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="m_accelBox"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QSpinBox" name="m_frictionBox"/>
+            </item>
+            <item row="6" column="0" colspan="3">
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QGroupBox" name="s_camTransGB">
+        <item row="1" column="0">
+         <widget class="QGroupBox" name="groupBox">
           <property name="title">
-           <string>Camera</string>
+           <string/>
           </property>
-          <layout class="QGridLayout" name="gridLayout_3">
+          <layout class="QGridLayout" name="gridLayout">
            <item row="0" column="0">
-            <widget class="QLabel" name="label">
+            <widget class="QPushButton" name="m_startButton">
              <property name="text">
-              <string>Pitch</string>
+              <string>Start</string>
              </property>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="label_2">
+            <widget class="QPushButton" name="m_restartButton">
              <property name="text">
-              <string>Yaw</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_5">
-             <property name="text">
-              <string>Roll</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="text">
-              <string>Zoom</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_10">
-             <property name="text">
-              <string>Spin</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="QSlider" name="m_yawSlider">
-             <property name="minimum">
-              <number>-99</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QSlider" name="m_rollSlider">
-             <property name="minimum">
-              <number>-99</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="3">
-            <widget class="QSlider" name="m_zoomSlider">
-             <property name="minimum">
-              <number>0</number>
-             </property>
-             <property name="maximum">
-              <number>99</number>
-             </property>
-             <property name="pageStep">
-              <number>1</number>
-             </property>
-             <property name="value">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="3">
-            <widget class="QSlider" name="m_spinSlider">
-             <property name="minimum">
-              <number>-99</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QSlider" name="m_pitchSlider">
-             <property name="minimum">
-              <number>-99</number>
-             </property>
-             <property name="maximum">
-              <number>99</number>
-             </property>
-             <property name="singleStep">
-              <number>1</number>
-             </property>
-             <property name="value">
-              <number>0</number>
-             </property>
-             <property name="sliderPosition">
-              <number>0</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QSpinBox" name="m_pitchBox">
-             <property name="minimum">
-              <number>-99</number>
-             </property>
-             <property name="maximum">
-              <number>99</number>
-             </property>
-             <property name="value">
-              <number>0</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QSpinBox" name="m_yawBox">
-             <property name="minimum">
-              <number>-99</number>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QSpinBox" name="m_rollBox">
-             <property name="minimum">
-              <number>-99</number>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="2">
-            <widget class="QSpinBox" name="m_zoomBox">
-             <property name="minimum">
-              <number>0</number>
-             </property>
-             <property name="maximum">
-              <number>99</number>
-             </property>
-             <property name="singleStep">
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="2">
-            <widget class="QSpinBox" name="m_spinBox">
-             <property name="minimum">
-              <number>-99</number>
+              <string>Restart</string>
              </property>
             </widget>
            </item>
           </layout>
          </widget>
         </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_14">
-       <attribute name="title">
-        <string>Configuration</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="2">
-         <widget class="QSlider" name="m_numSlider">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Numbers</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Max Angle</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QSlider" name="m_angleSlider">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Friction</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QSlider" name="m_frictionSlider">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="0">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Max Accel</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="2">
-         <widget class="QSlider" name="m_accelSlider">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QSpinBox" name="m_numBox"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="m_angleBox"/>
-        </item>
-        <item row="2" column="1">
-         <widget class="QSpinBox" name="m_accelBox"/>
-        </item>
-        <item row="3" column="1">
-         <widget class="QSpinBox" name="m_frictionBox"/>
-        </item>
-        <item row="6" column="0" colspan="3">
-         <spacer name="verticalSpacer">
+         <spacer name="verticalSpacer_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
@@ -363,42 +433,6 @@
        </layout>
       </widget>
      </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="title">
-       <string/>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="m_startButton">
-         <property name="text">
-          <string>Start</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="m_restartButton">
-         <property name="text">
-          <string>Restart</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <spacer name="verticalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
     </item>
    </layout>
   </widget>
