@@ -138,12 +138,17 @@ void SceneObject::Rotate()
     RotateAxis();
 }
 //------------------------------------------------------------------------------------
-bool SceneObject::CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad)
+bool SceneObject::CheckNeighbor(const SceneObject& _obj, float _angle, float _rad)
 {
     Vector relDis = _obj.m_pos - m_pos;
-    if ( (relDis.AngleBetween(this->m_axisX) < _angle) &&
-          (relDis.Length() < _rad) )
+
+    std::cout<<relDis.AngleBetween(m_axisX)<<" "<<_angle<<"angle\n";
+    std::cout<<relDis.Length()<<" "<<_rad<<"lenght\n";
+    if ( ( fabs( relDis.AngleBetween( this->m_axisX ) ) < _angle)
+         &&(relDis.Length() < _rad) )
     {
+
+        std::cout<<"true!!!!!!!\n";
         return true;
     }
     else
@@ -202,7 +207,6 @@ void SceneObject::SetMaxAccel(const float _accel)
 void SceneObject::SetFriction(const float _friction)
 {
     m_friction = _friction;
-    std::cout<<m_friction<<".....friction\n";
 }
 //------------------------------------------------------------------------------
 void SceneObject::SetBound(const float _bound)

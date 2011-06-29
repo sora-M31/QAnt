@@ -9,6 +9,7 @@ namespace QtGLWindow
 class SceneObject
 {
     public:
+
         SceneObject();
         virtual ~SceneObject();
         SceneObject(
@@ -32,7 +33,7 @@ class SceneObject
         SceneNode m_node;
 
     protected:
-        bool CheckNeighbor(const SceneObject& _obj, uint32_t _angle, uint32_t _rad);
+        bool CheckNeighbor(const SceneObject& _obj, float _angle, float _rad);
         void Rotate();
         void Translate(const Vector& _dis);
         void RotateAxis();
