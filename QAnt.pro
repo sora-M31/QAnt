@@ -10,6 +10,11 @@ UI_HEADERS_DIR = ui/
 TARGET = bin/app
 CONFIG += console
 CONFIG -= app_bundle
+
+#CONFIG(debug, debug|release) {
+#    DEFINES += _DEBUG
+#}
+
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
