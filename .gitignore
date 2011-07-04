@@ -2,6 +2,7 @@ obj
 bin
 Makefile
 moc
+*.mb
 *.swp
 todo
 *.tmp
