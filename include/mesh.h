@@ -15,12 +15,6 @@ class Mesh
         /// \brief Constructor
         Mesh();
         // --------------------------------------------------------------------------
-        /// \brief Constructor
-        /// \param _vertex vertex array of the mesh
-        /// \param _texture uv array of the mesh
-        /// \param _face face array used as indice in drawelement
-        Mesh(GLfloat* _vertex, GLfloat* _texture, GLubyte* _face);
-        // --------------------------------------------------------------------------
         /// \brief Destructor delete arrays allocated
         ~Mesh();
         void CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vector<GLfloat>& _texture, const std::vector<GLubyte>& _face);

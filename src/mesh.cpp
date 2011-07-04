@@ -8,30 +8,27 @@ Mesh::Mesh()
     m_texture(NULL),
     m_face(NULL),
     m_vboPointer(NULL),
-    m_mode(GL_TRIANGLES)
-{
-}
-//------------------------------------------------------------------------------
-Mesh::Mesh(
-            GLfloat* _vertex,
-            GLfloat* _texture,
-            GLubyte* _face):
-            m_vertex( _vertex),
-            m_texture( _texture),
-            m_face(_face),
-            m_vboPointer(0),
-            m_mode(GL_TRIANGLES)
+    m_mode(GL_TRIANGLES),
+    m_verSize(0),
+    m_uvSize(0),
+    m_faceSize(0)
 {
 }
 //------------------------------------------------------------------------------
 Mesh::~Mesh()
 {
     if (m_verSize!=0)
-    delete [] m_vertex;
+    {
+        delete [] m_vertex;
+    }
     if (m_uvSize!=0)
-    delete [] m_texture;
+    {
+        delete [] m_texture;
+    }
     if (m_faceSize!=0)
-    delete [] m_face;
+    {
+        delete [] m_face;
+    }
 }
 
 void Mesh::CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vector<GLfloat>& _texture, const std::vector<GLubyte>& _face)
@@ -87,19 +84,19 @@ void Mesh::DrawVBO()
 {
     if(m_vboPointer!=0)
     {
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glBindBuffer(GL_ARRAY_BUFFER,m_vboPointer);
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glBindBuffer(GL_ARRAY_BUFFER,m_vboPointer);
 
-    glVertexPointer(3,GL_FLOAT,0,0);
+        glVertexPointer(3,GL_FLOAT,0,0);
 
-    glDrawElements(m_mode, m_faceSize, GL_UNSIGNED_BYTE, m_face);
+        glDrawElements(m_mode, m_faceSize, GL_UNSIGNED_BYTE, m_face);
 
-    glBindBuffer(GL_ARRAY_BUFFER,0);
-    glDisableClientState(GL_VERTEX_ARRAY);
+        glBindBuffer(GL_ARRAY_BUFFER,0);
+        glDisableClientState(GL_VERTEX_ARRAY);
     }
     else
     {
-    std::cout<<"create vbo first please!!!"<<std::endl;
+        std::cout<<"create vbo first please!!!"<<std::endl;
     }
 }
 }//end of namespace
