@@ -6,7 +6,7 @@ namespace QtGLWindow
 //------------------------------------------------------------------------------
 Matrix::Matrix()
 {
-    memset( m_mat, 0.0f, 16*sizeof(float));
+    memset( m_mat, 0.0f, 16.0*sizeof(float));
     m00 = m11 = m22 = m33 = 1.0f;
 }
 //------------------------------------------------------------------------------
@@ -20,6 +20,11 @@ void Matrix::operator = ( const Matrix& _param )
     {
         m_mat[i] = _param.m_mat[i];
     }
+}
+void Matrix::AsIdentity()
+{
+    memset( m_mat, 0.0f, 16.0*sizeof(float));
+    m00 = m11 = m22 = m33 = 1.0f;
 }
 //------------------------------------------------------------------------------
 Vector Matrix::operator * ( const Vector& _param ) const
