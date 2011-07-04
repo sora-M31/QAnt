@@ -55,7 +55,6 @@ void SceneManager::InitScene()
 void SceneManager::ResetScene()
 {
     m_pColony->Reset();
-    std::cout<<"reset scene called!!!!!!!!!!\n";
 }
 //------------------------------------------------------------------------------
 void SceneManager::UpdateScene()

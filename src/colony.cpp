@@ -24,7 +24,6 @@ void Colony::Reset()
         m_antList[i]->Reset();
     }
     m_trail.Reset();
-    std::cout<<"called at colony@@@@@@@@@@@@@@@@@@@@@@@\n";
 }
 //----------------------------------------------------------------------------------------------------------------------
 void Colony::UpdateTrail()
