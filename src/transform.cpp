@@ -10,6 +10,12 @@ Transform::Transform()
 Transform::~Transform()
 {}
 //------------------------------------------------------------------------------
+void Transform::Reset()
+{
+    m_rotate.AsIdentity();
+    m_translate.AsIdentity();
+}
+//------------------------------------------------------------------------------
 void Transform::SetTranslate(Vector _pos)
 {
     Matrix translate;

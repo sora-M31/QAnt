@@ -11,6 +11,7 @@ class Transform
     public:
         Transform();
         ~Transform();
+        void Reset();
         void SetTranslate(Vector _pos);
         void SetRotation(float _theta, Vector _v);
         void ApplyTransform();
