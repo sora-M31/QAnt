@@ -10,9 +10,14 @@ Trail::~Trail()
 {
 }
 //------------------------------------------------------------------------------------
+void Trail::Reset()
+{
+   m_phrmTrail.clear();
+}
+//------------------------------------------------------------------------------------
 void Trail::AddPherom(Pheromone* _phe)
 {
-  m_phrmTrail.push_back(_phe);
+    m_phrmTrail.push_back(_phe);
 }
 //------------------------------------------------------------------------------------
 void Trail::DeleteEveporatedPherom()

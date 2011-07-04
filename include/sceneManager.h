@@ -14,6 +14,7 @@ class SceneManager
         ~SceneManager();
 
         void InitScene();
+        void ResetScene();
         void UpdateScene();
 
         SceneNode m_root;

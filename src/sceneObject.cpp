@@ -142,13 +142,10 @@ bool SceneObject::CheckNeighbor(const SceneObject& _obj, float _angle, float _ra
 {
     Vector relDis = _obj.m_pos - m_pos;
 
-    std::cout<<relDis.AngleBetween(m_axisX)<<" "<<_angle<<"angle\n";
-    std::cout<<relDis.Length()<<" "<<_rad<<"lenght\n";
     if ( ( fabs( relDis.AngleBetween( this->m_axisX ) ) < _angle)
          &&(relDis.Length() < _rad) )
     {
 
-        std::cout<<"true!!!!!!!\n";
         return true;
     }
     else
@@ -180,7 +177,9 @@ void SceneObject::Move(const uint32_t _time)
     }
     //m_accel = (m_force - friction) / m_mass;
     m_accel = (m_force - m_vel.Normalise()*m_friction*GRAVITY*m_mass)/m_mass;
+#ifdef _DEBUG
     std::cout<<m_vel*m_friction<<"value\n";
+#endif
     Translate(_time);
 }
 //------------------------------------------------------------------------------

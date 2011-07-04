@@ -6,7 +6,9 @@ SceneManager::SceneManager()
     :m_root(0),
      test(0)
 {
+#ifdef _DEBUG
     std::cout<<"initializing sceneManager\n";
+#endif
     //aggr,separ, align, wall
   //  m_pFlock = new Flock(500,0.2,0.3,0.3,0.2);
     m_pColony = new Colony;
@@ -48,6 +50,12 @@ void SceneManager::InitScene()
     }
     //m_pColony->m_antList[num].m_node.AddNext(ptest->m_node);
 
+}
+//------------------------------------------------------------------------------
+void SceneManager::ResetScene()
+{
+    m_pColony->Reset();
+    std::cout<<"reset scene called!!!!!!!!!!\n";
 }
 //------------------------------------------------------------------------------
 void SceneManager::UpdateScene()

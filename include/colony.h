@@ -11,6 +11,7 @@ class Colony
     public:
         Colony();
         ~Colony();
+        void Reset();
         void Update(const SceneObject& _home, const SceneObject& _food);
         void ApplyRule();
 

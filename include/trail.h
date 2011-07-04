@@ -16,6 +16,7 @@ class Trail
       Trail();
       ///\brief default destructor
       ~Trail();
+      void Reset();
       ///\brief push the given pheromone in to the array.
       ///@param[in] _phe pheromone to be added to the trail
       void AddPherom(Pheromone* _phe);

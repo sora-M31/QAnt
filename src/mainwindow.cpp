@@ -48,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect( m_ui->m_frictionSlider, SIGNAL(valueChanged(int)),m_gl,SLOT(setFriction(int)));
 
     connect( m_ui->m_startButton, SIGNAL( released()), m_gl, SLOT(start()) );
+    connect( m_ui->m_restartButton, SIGNAL( pressed()), m_gl, SLOT(restart()) );
 #if 0
 
     connect( m_ui->m_rotX,SIGNAL(pressed()),m_gl, SLOT(setRotationX()) );

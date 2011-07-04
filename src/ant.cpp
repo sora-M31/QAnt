@@ -53,6 +53,19 @@ Ant::~Ant()
 {
 }
 //------------------------------------------------------------------------------------
+void Ant::Reset()
+{
+#ifdef _DEBUG
+    std::cout<<"reset called...................\n";
+#endif
+    m_pos = Vector(0,0,0);
+    m_vel = m_axisX * 0.7;
+    m_force = Vector(0,0,0);
+    m_trans.Reset();
+    m_trans.ApplyTransform();
+    m_state = HomeToFood;
+}
+//------------------------------------------------------------------------------------
 bool Ant::Arrive(const SceneObject& _obj)
 {
     float dis = (m_pos-_obj.m_pos).Length();
@@ -76,7 +89,9 @@ bool Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
             phrm = _trail.m_phrmTrail[i]->m_pos;// * ( _trail.m_phrmTrail[i]->m_maxAge - _trail.m_phrmTrail[i]->m_age );
             phrmNum++;
         }
+        #ifdef _DEBUG
         std::cout<<phrmNum<<"phrm number\n";
+        #endif
         phrmCentre += phrm;
     }
 
@@ -209,13 +224,17 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                 {
                     m_state = FollowFoodPheromone;
                 }
+#ifdef _DEBUG
                 std::cout<<"Home to Food\n";
+#endif
             }
             break;
         case FollowFoodPheromone:
             {
 
+#ifdef _DEBUG
                 std::cout<<"Follow Food Pheromone \n";
+#endif
                 if( DetectPheromone(ToFood, _trail))
                 {
                     m_force = m_pheromone*2 + m_obstacles + m_wall*0.08;
@@ -241,13 +260,17 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
             break;
         case NearFood:
             {
+#ifdef _DEBUG
                 std::cout<<"Near Food\n";
+#endif
                 if( Arrive(_food) )
                 {
                     m_force = Vector(0,0,0)-m_vel.Normalise();
                     Move(_time);
                     m_state = FoodToHome;
+#ifdef _DEBUG
                     std::cout<<"using arrive\n";
+#endif
                 }
                 else
                 {
@@ -255,7 +278,9 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                     m_force = m_attraction *0.2+ m_obstacles *0.1+ m_wall*0.08;
                     Move(_time);
                     m_state = NearFood;
+#ifdef _DEBUG
                     std::cout<<"using attraction\n";
+#endif
                 }
             }
             break;
@@ -270,25 +295,35 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                     m_state = FollowHomePheromone;
 
                 }
+#ifdef _DEBUG
                 std::cout<<"FoodToHome!!!!!!!!!!!!!!!!!!!!\n";
+#endif
             }
             break;
         case FollowHomePheromone:
             {
+#ifdef _DEBUG
                 std::cout<<"Follow home pheromone\n";
+#endif
                 if(DetectPheromone(ToHome, _trail))
                 {
                     m_force = m_pheromone + m_wall +m_obstacles;
+#ifdef _DEBUG
                     std::cout<<m_pheromone<<"pheromone!!!!\n";
+#endif
                     Move(_time);
+#ifdef _DEBUG
                     std::cout<<"detected pheromone\n";
+#endif
                 }
                 else
                 {
                     RandomWalk();
                     m_force = m_rand + m_wall + m_obstacles;
+#ifdef _DEBUG
                     std::cout<<m_rand<<"random\n";
                     std::cout<<m_force<<"random\n";
+#endif
                 }
                 m_state = FoodToHome;
             }
@@ -307,11 +342,16 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                     Near(_home);
                     m_force = m_attraction*0.5 + m_obstacles + m_wall;
                 }
+#ifdef _DEBUG
                 std::cout<<"NearHome\n";
+#endif
             }
             break;
         default:
+#ifdef _DEBUG
             std::cout<<"no such state\n";
+#endif
+            break;
     }
     #endif
 }

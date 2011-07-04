@@ -16,6 +16,7 @@ class Ant:public SceneObject
         ~Ant();
         Ant(const Ant& _ant);
         Ant operator = (const Ant& _ant);
+        void Reset();
 
         void Update(uint32_t _time, const Trail& _trail,const std::vector<Ant*>& _antList,const SceneObject& _home, const SceneObject& _food);
 
