@@ -6,10 +6,10 @@ namespace QtGLWindow
 Ant::Ant()
      :m_hit(false)
 {
-    m_maxAngle =5*3.14/180;
+    m_maxAngle = 10*3.14/180;
     m_maxAccel = 9;
     m_vel = m_axisX * 0.7;
-    m_friction = 0.08;
+    m_friction = 0.09;
     m_walkCounter = rand();
     m_mass =0.1;
     m_type = kAnt;
@@ -20,32 +20,37 @@ Ant::Ant()
     m_trans.ApplyTransform();
     m_bound = 1;
     m_state = HomeToFood;
+    kPheromone = 0.3;
+    kWall = 0.08;
+    kAttract = 0.2;
+    kObstacle = 0.5;
+    kRand = 1;
 }
 //------------------------------------------------------------------------------------
 Ant::Ant(const Ant& _ant):SceneObject()
 {
-    this->m_maxAccel = _ant.m_maxAccel;
-    this->m_maxAngle = _ant.m_maxAngle;
-    this->m_friction = _ant.m_friction;
-    this->m_hit = _ant.m_hit;
-    this->m_walkCounter = _ant.m_walkCounter;
-    this->m_mass = _ant.m_mass;
-    this->m_type = _ant.m_type;
-    this->m_pheromone = _ant.m_pheromone;
-    this->m_node = _ant.m_node;
+    m_maxAccel = _ant.m_maxAccel;
+    m_maxAngle = _ant.m_maxAngle;
+    m_friction = _ant.m_friction;
+    m_hit = _ant.m_hit;
+    m_walkCounter = _ant.m_walkCounter;
+    m_mass = _ant.m_mass;
+    m_type = _ant.m_type;
+    m_pheromone = _ant.m_pheromone;
+    m_node = _ant.m_node;
 }
 //------------------------------------------------------------------------------------
 Ant Ant::operator = (const Ant& _ant)
 {
-    this->m_maxAccel = _ant.m_maxAccel;
-    this->m_maxAngle = _ant.m_maxAngle;
-    this->m_friction = _ant.m_friction;
-    this->m_hit = _ant.m_hit;
-    this->m_walkCounter = _ant.m_walkCounter;
-    this->m_mass = _ant.m_mass;
-    this->m_type = _ant.m_type;
-    this->m_pheromone = _ant.m_pheromone;
-    this->m_node = _ant.m_node;
+    m_maxAccel = _ant.m_maxAccel;
+    m_maxAngle = _ant.m_maxAngle;
+    m_friction = _ant.m_friction;
+    m_hit = _ant.m_hit;
+    m_walkCounter = _ant.m_walkCounter;
+    m_mass = _ant.m_mass;
+    m_type = _ant.m_type;
+    m_pheromone = _ant.m_pheromone;
+    m_node = _ant.m_node;
     return *this;
 }
 //------------------------------------------------------------------------------------
@@ -128,7 +133,7 @@ void Ant::DetectObstacle(const std::vector<Ant*>& _antList)
 //------------------------------------------------------------------------------------
 bool Ant::Near(const SceneObject& _obj)
 {
-    if( CheckNeighbor( _obj, 90,10) )
+    if( CheckNeighbor( _obj, 3,10) )
     {
         m_attraction = (_obj.m_pos - m_pos);
         return true;
@@ -203,15 +208,13 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
     m_force = Vector(0,0,0);
     DetectObstacle(_antList);
     Wall();
-    #if 0
+#if 0
     RandomWalk();
     m_force = m_rand + m_wall*0.08;
     Move(_time);
     std::cout<<m_friction<<"@@@@@@@friction\n";
-
-    #endif
-    #if 1
-
+#endif
+#if 1
     switch(m_state)
     {
         case HomeToFood:
@@ -224,63 +227,53 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                 {
                     m_state = FollowFoodPheromone;
                 }
-#ifdef _DEBUG
+                #ifdef _DEBUG
                 std::cout<<"Home to Food\n";
-#endif
+                #endif
             }
             break;
         case FollowFoodPheromone:
-            {
-
-#ifdef _DEBUG
+            { 
+                #ifdef _DEBUG
                 std::cout<<"Follow Food Pheromone \n";
-#endif
+                #endif
                 if( DetectPheromone(ToFood, _trail))
                 {
-                    m_force = m_pheromone*2 + m_obstacles + m_wall*0.08;
+                    m_force = m_pheromone * kPheromone + m_obstacles * kObstacle + m_wall* kWall;
                     Move(_time);
                 }
                 else
                 {
-                     #if 1
                     RandomWalk();
-                    if( m_wall == Vector(0,0,0) )
-                    {
-                        m_force = m_rand + m_obstacles;
-                    }
-                    else
-                    {
-                        m_force = m_wall + m_obstacles;
-                    }
+                    m_force = m_rand * kRand + m_wall * kWall + m_obstacles * kObstacle;
                     Move(_time);
-                    #endif
                 }
                 m_state = HomeToFood;
             }
             break;
         case NearFood:
             {
-#ifdef _DEBUG
+                #ifdef _DEBUG
                 std::cout<<"Near Food\n";
-#endif
+                #endif
                 if( Arrive(_food) )
                 {
-                    m_force = Vector(0,0,0)-m_vel.Normalise();
+                    m_force = Vector(0,0,0) - m_vel;
                     Move(_time);
                     m_state = FoodToHome;
-#ifdef _DEBUG
+                    #ifdef _DEBUG
                     std::cout<<"using arrive\n";
-#endif
+                    #endif
                 }
                 else
                 {
                     Near(_food);
-                    m_force = m_attraction *0.2+ m_obstacles *0.1+ m_wall*0.08;
+                    m_force = m_attraction * kAttract + m_obstacles * kObstacle + m_wall * kWall;
                     Move(_time);
                     m_state = NearFood;
-#ifdef _DEBUG
+                    #ifdef _DEBUG
                     std::cout<<"using attraction\n";
-#endif
+                    #endif
                 }
             }
             break;
@@ -295,35 +288,36 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                     m_state = FollowHomePheromone;
 
                 }
-#ifdef _DEBUG
+                #ifdef _DEBUG
                 std::cout<<"FoodToHome!!!!!!!!!!!!!!!!!!!!\n";
-#endif
+                #endif
             }
             break;
         case FollowHomePheromone:
             {
-#ifdef _DEBUG
+                #ifdef _DEBUG
                 std::cout<<"Follow home pheromone\n";
-#endif
+                #endif
                 if(DetectPheromone(ToHome, _trail))
                 {
-                    m_force = m_pheromone + m_wall +m_obstacles;
-#ifdef _DEBUG
+                    m_force = m_pheromone * kPheromone + m_wall * kWall + m_obstacles * kObstacle;
+                    #ifdef _DEBUG
                     std::cout<<m_pheromone<<"pheromone!!!!\n";
-#endif
+                    #endif
                     Move(_time);
-#ifdef _DEBUG
+                    #ifdef _DEBUG
                     std::cout<<"detected pheromone\n";
-#endif
+                    #endif
                 }
                 else
                 {
                     RandomWalk();
-                    m_force = m_rand + m_wall + m_obstacles;
-#ifdef _DEBUG
+                    m_force = m_rand * kRand+ m_wall * kWall + m_obstacles * kObstacle;
+                    Move(_time);
+                    #ifdef _DEBUG
                     std::cout<<m_rand<<"random\n";
                     std::cout<<m_force<<"random\n";
-#endif
+                    #endif
                 }
                 m_state = FoodToHome;
             }
@@ -332,7 +326,7 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
             {
                 if( Arrive(_home) )
                 {
-                    m_force = Vector(0,0,0)-m_vel*m_friction*30;
+                    m_force = Vector(0,0,0)-m_vel;
                     Move(_time);
                     m_state = HomeToFood;
                 }
@@ -340,17 +334,18 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                 {
                     m_state = NearHome;
                     Near(_home);
-                    m_force = m_attraction*0.5 + m_obstacles + m_wall;
+                    m_force = m_attraction * kAttract + m_obstacles * kObstacle + m_wall * kWall;
+                    Move(_time);
                 }
-#ifdef _DEBUG
+                #ifdef _DEBUG
                 std::cout<<"NearHome\n";
-#endif
+                #endif
             }
             break;
         default:
-#ifdef _DEBUG
+            #ifdef _DEBUG
             std::cout<<"no such state\n";
-#endif
+            #endif
             break;
     }
     #endif

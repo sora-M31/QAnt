@@ -41,6 +41,12 @@ class Ant:public SceneObject
         Vector m_obstacles;
         ///\force when random walking
         Vector m_rand;
+        float kPheromone;
+        float kWall;
+        float kAttract;
+        float kObstacle;
+        float kRand;
+
 };
 #endif
 }//end of namespace
