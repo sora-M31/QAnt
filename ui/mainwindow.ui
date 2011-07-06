@@ -309,7 +309,7 @@
             <string>Configuration</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_5">
-            <item row="0" column="2">
+            <item row="0" column="3">
              <widget class="QSlider" name="m_numSlider">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -330,8 +330,8 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="2">
-             <widget class="QSlider" name="m_angleSlider">
+            <item row="1" column="3">
+             <widget class="Ui::Qdslider" name="m_angleSlider">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -344,8 +344,8 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="2">
-             <widget class="QSlider" name="m_frictionSlider">
+            <item row="3" column="3">
+             <widget class="Ui::Qdslider" name="m_frictionSlider">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -358,7 +358,7 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="2">
+            <item row="2" column="3">
              <widget class="QSlider" name="m_accelSlider">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -368,16 +368,10 @@
             <item row="0" column="1">
              <widget class="QSpinBox" name="m_numBox"/>
             </item>
-            <item row="1" column="1">
-             <widget class="QSpinBox" name="m_angleBox"/>
-            </item>
             <item row="2" column="1">
              <widget class="QSpinBox" name="m_accelBox"/>
             </item>
-            <item row="3" column="1">
-             <widget class="QSpinBox" name="m_frictionBox"/>
-            </item>
-            <item row="6" column="0" colspan="3">
+            <item row="6" column="0" colspan="4">
              <spacer name="verticalSpacer">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -389,6 +383,12 @@
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="1" column="1">
+             <widget class="QDoubleSpinBox" name="m_angleBox"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QDoubleSpinBox" name="m_frictionBox"/>
             </item>
            </layout>
           </widget>
@@ -448,6 +448,17 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Ui::Qdslider</class>
+   <extends>QSlider</extends>
+   <header>Qdslider.h</header>
+   <slots>
+    <signal>valueChanged(double)</signal>
+    <slot>setValue(double)</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

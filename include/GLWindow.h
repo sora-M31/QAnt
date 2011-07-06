@@ -32,9 +32,9 @@ class GLWindow : public QGLWidget
         void setModel(int _index);
         void start();
         void restart();
-        void setAngle(const int _angle);
+        void setAngle(const double _angle);
         void setAccel(const int _accel);
-        void setFriction(const int _friction);
+        void setFriction(const double _friction);
     protected:
         void initializeGL();
         void resizeGL(

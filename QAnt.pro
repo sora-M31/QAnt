@@ -34,7 +34,8 @@ SOURCES += \
     src/ant.cpp \
     src/pheromone.cpp \
     src/trail.cpp \
-    src/colony.cpp
+    src/colony.cpp \
+    src/Qdslider.cpp
 
 HEADERS += \
     include/mainwindow.h \
@@ -55,7 +56,8 @@ HEADERS += \
     include/ant.h \
     include/pheromone.h \
     include/trail.h \
-    include/colony.h
+    include/colony.h \
+    include/Qdslider.h
 
 FORMS += \
     ui/mainwindow.ui

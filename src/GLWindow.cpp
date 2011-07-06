@@ -272,9 +272,10 @@ void GLWindow::restart()
     m_scene.ResetScene();
 }
 //------------------------------------------------------------------------------
-void GLWindow::setAngle(const int _angle)
+void GLWindow::setAngle(const double _angle)
 {
-    pSelected->SetMaxRotAngle(_angle);
+    std::cout<<"calling.....\n";
+    pSelected->SetMaxRotAngle((float)_angle);
 }
 //------------------------------------------------------------------------------
 void GLWindow::setAccel(const int _accel)
@@ -282,9 +283,9 @@ void GLWindow::setAccel(const int _accel)
     pSelected->SetMaxAccel(_accel);
 }
 //------------------------------------------------------------------------------
-void GLWindow::setFriction(const int _friction)
+void GLWindow::setFriction(const double _friction)
 {
-    pSelected->SetFriction(_friction);
+    pSelected->SetFriction((float)_friction);
 }
 //------------------------------------------------------------------------------
 }//end of namespace
