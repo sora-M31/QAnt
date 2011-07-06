@@ -7,11 +7,11 @@ Ant::Ant()
      :m_hit(false)
 {
     m_maxAngle = 10*3.14/180;
-    m_maxAccel = 9;
-    m_vel = m_axisX * 0.7;
+    m_maxAccel = 1;
+    m_vel = m_axisX * 0.5;
     m_friction = 0.09;
     m_walkCounter = rand();
-    m_mass =0.1;
+    m_mass =1;
     m_type = kAnt;
     m_force = Vector(0,0,0);
     srand ( time(NULL) );
@@ -20,9 +20,9 @@ Ant::Ant()
     m_trans.ApplyTransform();
     m_bound = 1;
     m_state = HomeToFood;
-    kPheromone = 0.3;
+    kPheromone = 1;
     kWall = 0.08;
-    kAttract = 0.2;
+    kAttract = 1;
     kObstacle = 0.5;
     kRand = 1;
 }
@@ -107,7 +107,7 @@ bool Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
     else
     {
         phrmCentre /= phrmNum;
-        m_pheromone = ( phrmCentre - m_pos);
+        m_pheromone = ( phrmCentre - m_pos).Normalise();
         return true;
     }
 }
@@ -135,7 +135,7 @@ bool Ant::Near(const SceneObject& _obj)
 {
     if( CheckNeighbor( _obj, 3,10) )
     {
-        m_attraction = (_obj.m_pos - m_pos);
+        m_attraction = (_obj.m_pos - m_pos).Normalise();
         return true;
     }
     else
