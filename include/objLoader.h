@@ -44,12 +44,15 @@ class ObjLoader
         // --------------------------------------------------------------------------
         /// \brief Load the parsed information in to array of vertex, uv and indices
         void Load();
+
+    protected:
         ///array of vertices from file
         std::vector<GLfloat> m_vertexBuffer;
         ///array of uv coords from file
         std::vector<GLfloat> m_textureBuffer;
         ///array of faces from file
-        std::vector<GLubyte> m_faceBuffer;
+        std::vector<GLuint> m_faceBuffer;
+    public:
         Mesh* m_pMesh;
 };//end of class
 }//end of namespace

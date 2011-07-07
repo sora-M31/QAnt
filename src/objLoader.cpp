@@ -1,4 +1,5 @@
 #include "objLoader.h"
+#include <assert.h>
 
 namespace QtGLWindow
 {
@@ -33,13 +34,12 @@ void ObjLoader::ParseFile(std::string _Filename)
             {
                 if( *it_first == "v")
                 {
-                   // parsevertex(atof push back)
                    ParseVertex( it_first );
-                   //std::cout<<"vertex"<<std::endl;
+                   std::cout<<"vertex"<<std::endl;
                 }
                 else if( *it_first == "#")
                 {
-                    //std::cout<<"comment"<<std::endl;
+                    std::cout<<"comment"<<std::endl;
                 }
                 else if( *it_first == "vt")
                 {
@@ -48,7 +48,7 @@ void ObjLoader::ParseFile(std::string _Filename)
                 }
                 else if( *it_first == "f")
                 {
-                    //std::cout<<"face"<<std::endl;
+                    std::cout<<"face"<<std::endl;
                     uint32_t numberOfVert = result.size()-1;
                     ParseFace( it_first,numberOfVert);
                     //std::cout<<"face vert number "<<numberOfVert<<std::endl;
@@ -101,10 +101,16 @@ void ObjLoader::ParseFace(std::vector<std::string>::iterator _begin, uint32_t _v
             //std::cout<<*_begin<<std::endl;
             std::string str(*_begin);
             Tokenize(str, r, "/");
-            m_faceBuffer.push_back(atof(r[0].c_str()));
+            int tmp = atoi(r[0].c_str());
+            m_faceBuffer.push_back(tmp);
+            assert(m_faceBuffer[m_faceBuffer.size() - 1] == tmp);
+
+            std::cout << r[0] << " => " << tmp << '|' <<
+                      (int)m_faceBuffer[m_faceBuffer.size() - 1] << '\n';
             ++_begin;
         }
     }
+    #if 1
     else if (_vertNum == 4)
     {
         std::vector<GLuint> temp;
@@ -124,6 +130,7 @@ void ObjLoader::ParseFace(std::vector<std::string>::iterator _begin, uint32_t _v
         m_faceBuffer.push_back(temp[3]);
         m_faceBuffer.push_back(temp[0]);
     }
+    #endif
 }
 //------------------------------------------------------------------------------
 void ObjLoader::Check()

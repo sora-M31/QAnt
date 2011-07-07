@@ -17,7 +17,7 @@ class Mesh
         // --------------------------------------------------------------------------
         /// \brief Destructor delete arrays allocated
         ~Mesh();
-        void CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vector<GLfloat>& _texture, const std::vector<GLubyte>& _face);
+        void CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vector<GLfloat>& _texture, const std::vector<GLuint>& _face);
         // --------------------------------------------------------------------------
         /// \brief Bind a buffer the size of vertex array with vbo
         void CreateVBO();
@@ -34,7 +34,7 @@ class Mesh
         GLfloat* m_texture;
         // --------------------------------------------------------------------------
         /// \brief indice array
-        GLubyte* m_face;
+        GLuint* m_face;
         // --------------------------------------------------------------------------
         /// \brief vbo pointer
         GLuint m_vboPointer;

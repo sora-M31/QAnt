@@ -31,7 +31,7 @@ Mesh::~Mesh()
     }
 }
 
-void Mesh::CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vector<GLfloat>& _texture, const std::vector<GLubyte>& _face)
+void Mesh::CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vector<GLfloat>& _texture, const std::vector<GLuint>& _face)
 {
     this->m_verSize = _vertex.size();
     this->m_vertex = new GLfloat[this->m_verSize];
@@ -48,12 +48,16 @@ void Mesh::CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vecto
     }
     //face
     this->m_faceSize = _face.size();
-    this->m_face = new GLubyte[this->m_faceSize];
+    this->m_face = new GLuint[this->m_faceSize];
     for (uint32_t i=0; i< this->m_faceSize; ++i)
     {
-        //in maya obj file, face start from 1 rather than 0!!!!!!!
+        //in obj file, face start from 1 rather than 0!!!!!!!
         m_face[i] = _face[i]-1;
+        std::cout << (int)(_face[i]) << ' ';
+        if (i%3 == 2)
+            std::cout << '\n';
     }
+    std::cout << std::endl;
 
 }
 //------------------------------------------------------------------------------
@@ -89,7 +93,7 @@ void Mesh::DrawVBO()
 
         glVertexPointer(3,GL_FLOAT,0,0);
 
-        glDrawElements(m_mode, m_faceSize, GL_UNSIGNED_BYTE, m_face);
+        glDrawElements(m_mode, m_faceSize, GL_UNSIGNED_INT, m_face);
 
         glBindBuffer(GL_ARRAY_BUFFER,0);
         glDisableClientState(GL_VERTEX_ARRAY);
