@@ -21,7 +21,7 @@ GLWindow::GLWindow(
     m_pitch = 0;
     m_yaw = 0;
     m_roll = 0;
-    connect( m_timer, SIGNAL(timeout()), this, SLOT(updateGL()));
+    connect( m_timer, SIGNAL(timeout()), this, SLOT(updateScene()));
 }
 //------------------------------------------------------------------------------
 GLWindow::~GLWindow()
@@ -40,6 +40,7 @@ void GLWindow::initializeGL()
 
     pSelected = m_scene.m_root.m_pNext->m_pNext->m_pNext->m_pNext->m_pObject;
 
+#if 1
     m_sphereObj.ParseFile("sphere.obj");
     m_sphereObj.Load();
     m_sphereObj.m_pMesh->CreateVBO();
@@ -51,8 +52,9 @@ void GLWindow::initializeGL()
     m_arrowObj.ParseFile("arrow.obj");
     m_arrowObj.Load();
     m_arrowObj.m_pMesh->CreateVBO();
+#endif
 
-    m_fishObj.ParseFile("fish.obj");
+    m_fishObj.ParseFile("ant.obj");
     m_fishObj.Load();
     m_fishObj.m_pMesh->CreateVBO();
 
@@ -78,9 +80,13 @@ void GLWindow::paintGL()
     {
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     }
-
-    m_scene.UpdateScene();
     RenderScene(m_scene);
+}
+//------------------------------------------------------------------------------
+void GLWindow::updateScene()
+{
+    m_scene.UpdateScene();
+    updateGL();
 }
 //------------------------------------------------------------------------------
 void GLWindow::RenderScene(const SceneManager& _scene)
@@ -136,7 +142,7 @@ void GLWindow::Draw(SceneObject* _obj)
                 }
                 glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
                 glScalef(0.1,0.1,0.1);
-                m_pBotObj->m_pMesh->DrawVBO();
+                m_sphereObj.m_pMesh->DrawVBO();
                 glPopAttrib();
             glPopMatrix();
         }
