@@ -63,6 +63,7 @@ class GLWindow : public QGLWidget
         float m_pitch;
         float m_yaw;
         float m_roll;
+        uint32_t m_counter;
 
 };//end of class
 }//end of namespace

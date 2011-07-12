@@ -21,6 +21,7 @@ GLWindow::GLWindow(
     m_pitch = 0;
     m_yaw = 0;
     m_roll = 0;
+    m_counter = 1;
     connect( m_timer, SIGNAL(timeout()), this, SLOT(updateScene()));
 }
 //------------------------------------------------------------------------------
@@ -32,7 +33,7 @@ GLWindow::~GLWindow()
 //------------------------------------------------------------------------------
 void GLWindow::initializeGL()
 {
-    glClearColor(0,0,0,1);
+    glClearColor(0.3,0.3,0.3,1);
 
     glEnable(GL_DEPTH_TEST);
     m_scene.InitScene();
@@ -162,7 +163,9 @@ void GLWindow::Draw(SceneObject* _obj)
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
                 glColor3f(0,1,0);
                 glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
-                m_sphereObj.m_pMesh->DrawVBO();
+                glRotatef(m_counter, 0,1,0);
+                m_counter++;
+                m_arrowObj.m_pMesh->DrawVBO();
                 glPopAttrib();
             glPopMatrix();
         }
