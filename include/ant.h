@@ -16,6 +16,7 @@ class Ant:public SceneObject
         ~Ant();
         Ant(const Ant& _ant);
         Ant operator = (const Ant& _ant);
+        void Move(uint32_t _timte);
         void Reset();
 
         void Update(uint32_t _time, const Trail& _trail,const std::vector<Ant*>& _antList,const SceneObject& _home, const SceneObject& _food);
@@ -41,12 +42,14 @@ class Ant:public SceneObject
         Vector m_obstacles;
         ///\force when random walking
         Vector m_rand;
+        float m_speed;
         float kPheromone;
         float kWall;
         float kAttract;
         float kObstacle;
         float kRand;
-
+        float kWalk;
+        float kBrake;
 };
 #endif
 }//end of namespace

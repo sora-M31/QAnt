@@ -7,31 +7,26 @@ Ant::Ant()
      :m_hit(false)
 {
     m_maxAngle = 10*3.14/180;
-    m_maxAccel = 1;
-    m_vel = m_axisX * 0.5;
-    m_friction = 0.09;
+    srand ( time(NULL) );
     m_walkCounter = rand();
-    m_mass =1;
     m_type = kAnt;
     m_force = Vector(0,0,0);
-    srand ( time(NULL) );
     m_pheromone = Vector(0,0,0);
     m_trans.SetTranslate(m_pos);
     m_trans.ApplyTransform();
-    m_bound = 1;
+    m_bound = 0.1;
     m_state = HomeToFood;
-    kPheromone = 1;
-    kWall = 0.08;
-    kAttract = 1;
-    kObstacle = 0.5;
-    kRand = 1;
+    kPheromone = 6;
+    m_speed = 0;
+    m_mass = 10000000;
+    kWall = 5;
+    kAttract =5;
+    kObstacle = 4;
+    kRand = 5;
 }
 //------------------------------------------------------------------------------------
 Ant::Ant(const Ant& _ant):SceneObject()
 {
-    m_maxAccel = _ant.m_maxAccel;
-    m_maxAngle = _ant.m_maxAngle;
-    m_friction = _ant.m_friction;
     m_hit = _ant.m_hit;
     m_walkCounter = _ant.m_walkCounter;
     m_mass = _ant.m_mass;
@@ -64,11 +59,22 @@ void Ant::Reset()
     std::cout<<"reset called...................\n";
 #endif
     m_pos = Vector(0,0,0);
-    m_vel = m_axisX * 0.7;
     m_force = Vector(0,0,0);
     m_trans.Reset();
     m_trans.ApplyTransform();
     m_state = HomeToFood;
+}
+//------------------------------------------------------------------------------------
+void Ant::Move(uint32_t _time)
+{
+    Rotate();
+   // m_speed += (m_force.Length()/m_mass *_time);
+    m_speed = 0.001;
+    Vector pos;
+    pos = m_axisX *m_speed *_time;
+    m_pos += pos;
+    m_trans.SetTranslate(pos);
+    m_trans.ApplyTransform();
 }
 //------------------------------------------------------------------------------------
 bool Ant::Arrive(const SceneObject& _obj)
@@ -89,7 +95,7 @@ bool Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
     for( uint32_t i=0; i< num; ++i)
     {
         Vector phrm;
-        if( CheckNeighbor(*_trail.m_phrmTrail[i], 3.0, 7) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
+        if( CheckNeighbor(*_trail.m_phrmTrail[i],3,2.5) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
         {
             phrm = _trail.m_phrmTrail[i]->m_pos;// * ( _trail.m_phrmTrail[i]->m_maxAge - _trail.m_phrmTrail[i]->m_age );
             phrmNum++;
@@ -118,7 +124,7 @@ void Ant::DetectObstacle(const std::vector<Ant*>& _antList)
     m_obstacles = Vector(0,0,0);
     for( uint32_t i=0; i<num; ++i )
     {
-        if( (_antList[i]!=this) && (CheckNeighbor(*_antList[i],60*3.14/180,3)))//&& ( m_vel.AngleBetween(_antList[i]->m_vel) <0) )
+        if( (_antList[i]!=this) && (CheckNeighbor(*_antList[i],90*3.14/180,1)))//&& ( m_vel.AngleBetween(_antList[i]->m_vel) <0) )
         {
             Vector dis = m_pos - _antList[i]->m_pos;
             float disquare = dis.LengthSquare();
@@ -133,7 +139,7 @@ void Ant::DetectObstacle(const std::vector<Ant*>& _antList)
 //------------------------------------------------------------------------------------
 bool Ant::Near(const SceneObject& _obj)
 {
-    if( CheckNeighbor( _obj, 3,10) )
+    if( CheckNeighbor( _obj, 3,12) )
     {
         m_attraction = (_obj.m_pos - m_pos).Normalise();
         return true;
@@ -146,16 +152,16 @@ bool Ant::Near(const SceneObject& _obj)
 //------------------------------------------------------------------------------------
 void Ant::RandomWalk()
 {
-    const uint32_t frequency = 100;
+    const uint32_t frequency = 30;
 
     if(m_walkCounter%frequency==0)
     {
-        m_rand = Vector( ((float)rand() / (float)RAND_MAX -0.5),  0, ((float)rand() / (float)RAND_MAX-0.5) ) *20;
+        m_rand = Vector( ((float)rand() / (float)RAND_MAX -0.5),  0, ((float)rand() / (float)RAND_MAX-0.5) );
         m_walkCounter++;
     }
     else
     {
-        m_rand = m_axisX*m_maxAccel*m_mass;
+        m_rand = m_axisX;
         m_walkCounter++;
     }
 }
@@ -258,7 +264,7 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                 #endif
                 if( Arrive(_food) )
                 {
-                    m_force = Vector(0,0,0) - m_vel;
+                    m_force = Vector(0,0,0) - m_vel*kBrake;
                     Move(_time);
                     m_state = FoodToHome;
                     #ifdef _DEBUG
@@ -326,8 +332,8 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
             {
                 if( Arrive(_home) )
                 {
-                    m_force = Vector(0,0,0)-m_vel;
-                    Move(_time);
+                    //m_force = Vector(0,0,0)-m_vel*kBrake;
+                    //Move(_time);
                     m_state = HomeToFood;
                 }
                 else
