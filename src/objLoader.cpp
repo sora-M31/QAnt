@@ -103,10 +103,11 @@ void ObjLoader::ParseFace(std::vector<std::string>::iterator _begin, uint32_t _v
             Tokenize(str, r, "/");
             int tmp = atoi(r[0].c_str());
             m_faceBuffer.push_back(tmp);
+            #ifdef _DEBUG
             assert(m_faceBuffer[m_faceBuffer.size() - 1] == tmp);
-
-            std::cout << r[0] << " => " << tmp << '|' <<
+                std::cout << r[0] << " => " << tmp << '|' <<
                       (int)m_faceBuffer[m_faceBuffer.size() - 1] << '\n';
+            #endif
             ++_begin;
         }
     }
