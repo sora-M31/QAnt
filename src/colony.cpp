@@ -5,7 +5,8 @@ namespace QtGLWindow
 //----------------------------------------------------------------------------------------------------------------------
 Colony::Colony()
 {
-    m_num=3;
+    m_num =50;
+    m_activeNum = 1;
     m_counter =0;
     for(uint32_t i=0;i<m_num; ++i)
     {
@@ -17,6 +18,14 @@ Colony::~Colony()
 {
 }
 //----------------------------------------------------------------------------------------------------------------------
+void Colony::Emit(uint32_t _interval)
+{
+   if (m_counter%_interval == 0)
+   {
+        m_activeNum +=1;
+   }
+}
+//----------------------------------------------------------------------------------------------------------------------
 void Colony::Reset()
 {
     for( uint32_t i =0; i<m_num; ++i)
@@ -24,13 +33,14 @@ void Colony::Reset()
         m_antList[i]->Reset();
     }
     m_trail.Reset();
+    m_activeNum = 1;
 }
 //----------------------------------------------------------------------------------------------------------------------
 void Colony::UpdateTrail()
 {
     if( m_counter%5 == 0)
     {
-        for( uint32_t i=0;i<m_num;++i )
+        for( uint32_t i=0;i<m_activeNum;++i )
         {
             if ( (m_antList[i]->m_state == FoodToHome) || (m_antList[i]->m_state == NearHome) )
             {
@@ -48,7 +58,8 @@ void Colony::UpdateTrail()
 //-----------------------------------------------------------------------------
 void Colony::Update(const SceneObject& _home, const SceneObject& _food)
 {
-    for( uint32_t i=0; i<m_num; ++i)
+    if (m_activeNum < m_num) Emit(30);
+    for( uint32_t i=0; i<m_activeNum; ++i)
     {
         m_antList[i]->Update(50,m_trail,m_antList,_home, _food);
     }

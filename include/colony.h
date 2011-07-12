@@ -12,6 +12,7 @@ class Colony
         Colony();
         ~Colony();
         void Reset();
+        void Emit(uint32_t _interval);
         void Update(const SceneObject& _home, const SceneObject& _food);
         void ApplyRule();
 
@@ -21,6 +22,7 @@ class Colony
 
         /// number of ant in a colony
         uint32_t m_num;
+        uint32_t m_activeNum;
         /// the list to store ants
         std::vector<Ant*> m_antList;
         /// trail create by ants in the list
