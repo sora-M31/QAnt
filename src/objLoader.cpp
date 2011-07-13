@@ -35,11 +35,11 @@ void ObjLoader::ParseFile(std::string _Filename)
                 if( *it_first == "v")
                 {
                    ParseVertex( it_first );
-                   std::cout<<"vertex"<<std::endl;
+                   //std::cout<<"vertex"<<std::endl;
                 }
                 else if( *it_first == "#")
                 {
-                    std::cout<<"comment"<<std::endl;
+                    //std::cout<<"comment"<<std::endl;
                 }
                 else if( *it_first == "vt")
                 {
@@ -48,7 +48,7 @@ void ObjLoader::ParseFile(std::string _Filename)
                 }
                 else if( *it_first == "f")
                 {
-                    std::cout<<"face"<<std::endl;
+                    //std::cout<<"face"<<std::endl;
                     uint32_t numberOfVert = result.size()-1;
                     ParseFace( it_first,numberOfVert);
                     //std::cout<<"face vert number "<<numberOfVert<<std::endl;

@@ -53,9 +53,9 @@ void Mesh::CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vecto
     {
         //in obj file, face start from 1 rather than 0!!!!!!!
         m_face[i] = _face[i]-1;
-        std::cout << (int)(_face[i]) << ' ';
-        if (i%3 == 2)
-            std::cout << '\n';
+        //std::cout << (int)(_face[i]) << ' ';
+       // if (i%3 == 2)
+         //   std::cout << '\n';
     }
     std::cout << std::endl;
 
