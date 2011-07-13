@@ -3,8 +3,10 @@
 
 #include <vector>
 #include <string>
+#include "vector.h"
 namespace QtGLWindow
 {
+class Vector;
 // --------------------------------------------------------------------------
 /// \brief simulation status
 enum SimState{ OFF=0, ON };
@@ -20,5 +22,6 @@ enum AntState{HomeToFood, FollowFoodPheromone, FollowHomePheromone, FoodToHome, 
 /// \param delimiters where to split
 void Tokenize( const std::string& str, std::vector<std::string>& tokens,const std::string& delimiters) ;
 bool RealCompare(const float _x, float _y);
+uint32_t Hash(Vector _pos, float _cellSize, float _worldSize);
 }
 #endif
