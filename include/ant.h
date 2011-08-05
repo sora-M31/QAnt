@@ -1,25 +1,27 @@
 #ifndef __ANT_H__
 #define __ANT_H__
 #include <stdint.h>
-
+#include <list>
 #include "sceneObject.h"
 #include "trail.h"
-
+#include "colony.h"
 namespace QtGLWindow
 {
+class Colony;
 class Ant:public SceneObject
 {
     public:
 
         ///\brief default constructor
-        Ant();
+        Ant(Colony* _mycolony);
         ~Ant();
         Ant(const Ant& _ant);
         Ant operator = (const Ant& _ant);
         void Move(uint32_t _timte);
         void Reset();
-
-        void Update(uint32_t _time, const Trail& _trail,const std::vector<Ant*>& _antList,const SceneObject& _home, const SceneObject& _food);
+        void SetID(uint32_t _id);
+        uint32_t GetID();
+        void Update(uint32_t _time);//, const Trail& _trail,std::list<Ant*> _antList,const SceneObject& _home, const SceneObject& _food);
 
         AntState m_state;
 
@@ -27,9 +29,10 @@ class Ant:public SceneObject
         void SetHeight();
         bool Arrive(const SceneObject& _obj);
         bool Near(const SceneObject& _obj);
-        bool DetectPheromone(PhrmType _type, const Trail& _trail);
+        bool DetectPheromone(PhrmType _type);//, const Trail& _trail);
 
-        void DetectObstacle(const std::vector<Ant*>& _antList);
+        //void DetectObstacle(const std::vector<Ant*>& _antList);
+        void DetectObstacle();//const std::list<Ant*>& _antList);
         void RandomWalk();
         void Wall();
         
@@ -50,6 +53,10 @@ class Ant:public SceneObject
         float kRand;
         float kWalk;
         float kBrake;
+        uint32_t m_ID;
+        Colony* m_pColony;
+    private:
+        Ant();
 };
-#endif
 }//end of namespace
+#endif

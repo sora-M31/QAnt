@@ -3,9 +3,10 @@
 namespace QtGLWindow
 {
 //------------------------------------------------------------------------------------
-Ant::Ant()
+Ant::Ant(Colony* _myColony)
      :m_hit(false)
 {
+
     m_maxAngle = 10*3.14/180;
     srand ( time(NULL) );
     m_walkCounter = rand();
@@ -18,11 +19,13 @@ Ant::Ant()
     m_state = HomeToFood;
     kPheromone = 6;
     m_speed = 0;
-    m_mass = 10000000;
+    m_mass = 1;
     kWall = 5;
     kAttract =5;
     kObstacle = 4;
     kRand = 5;
+    m_pColony = _myColony;
+    m_ID = 0;
 }
 //------------------------------------------------------------------------------------
 Ant::Ant(const Ant& _ant):SceneObject()
@@ -68,7 +71,6 @@ void Ant::Reset()
 void Ant::Move(uint32_t _time)
 {
     Rotate();
-   // m_speed += (m_force.Length()/m_mass *_time);
     m_speed = 0.001;
     Vector pos;
     pos = m_axisX *m_speed *_time;
@@ -87,8 +89,9 @@ bool Ant::Arrive(const SceneObject& _obj)
     else return false;
 }
 //------------------------------------------------------------------------------------
-bool Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
+bool Ant::DetectPheromone(PhrmType _type)//, const Trail& _trail)
 {
+    const Trail _trail = m_pColony->GetTrail();
     Vector phrmCentre(0,0,0);
     uint32_t phrmNum(0);
     uint32_t num =_trail.m_phrmTrail.size();
@@ -118,10 +121,10 @@ bool Ant::DetectPheromone(PhrmType _type, const Trail& _trail)
     }
 }
 //------------------------------------------------------------------------------------
-void Ant::DetectObstacle(const std::vector<Ant*>& _antList)
+void Ant::DetectObstacle()//const std::list<Ant*>& _antList)
 {
-    size_t num = _antList.size();
     m_obstacles = Vector(0,0,0);
+#if 0
     for( uint32_t i=0; i<num; ++i )
     {
         if( (_antList[i]!=this) && (CheckNeighbor(*_antList[i],90*3.14/180,1)))//&& ( m_vel.AngleBetween(_antList[i]->m_vel) <0) )
@@ -134,6 +137,24 @@ void Ant::DetectObstacle(const std::vector<Ant*>& _antList)
             }
         }
     }
+#endif
+    std::list<Ant*>::iterator it;
+    std::list<Ant*> localList = m_pColony->GetLocalList(this);
+#if 1
+    for(it = localList.begin(); it != localList.end(); ++it)
+    {
+        if( (*it != this) && (CheckNeighbor(**it,90*3.14/180,1)))
+        {
+            Vector dis = m_pos - (*it)->m_pos;
+            float disquare = dis.LengthSquare();
+            if (disquare !=0)
+            {
+                m_obstacles +=  dis/disquare;
+            }
+        }
+    }
+#endif
+
     m_obstacles = m_obstacles.Normalise();
 }
 //------------------------------------------------------------------------------------
@@ -209,23 +230,17 @@ void Ant::Wall()
     m_wall = m_wall.Normalise();
 }
 //------------------------------------------------------------------------------------
-void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _antList,const SceneObject& _home, const SceneObject& _food)
+void Ant::Update(uint32_t _time)//, const Trail& _trail, const std::list<Ant*> _antList,const SceneObject& _home, const SceneObject& _food)
 {
     m_force = Vector(0,0,0);
-    DetectObstacle(_antList);
+    DetectObstacle();//_antList);
     Wall();
-#if 0
-    RandomWalk();
-    m_force = m_rand + m_wall*0.08;
-    Move(_time);
-    std::cout<<m_friction<<"@@@@@@@friction\n";
-#endif
 #if 1
     switch(m_state)
     {
         case HomeToFood:
             {
-                if( Near(_food) )
+                if( Near(m_pColony->GetFood()) )
                 {
                     m_state = NearFood;
                 }
@@ -243,7 +258,7 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                 #ifdef _DEBUG
                 std::cout<<"Follow Food Pheromone \n";
                 #endif
-                if( DetectPheromone(ToFood, _trail))
+                if( DetectPheromone(ToFood))//, _trail))
                 {
                     m_force = m_pheromone * kPheromone + m_obstacles * kObstacle + m_wall* kWall;
                     Move(_time);
@@ -262,7 +277,7 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                 #ifdef _DEBUG
                 std::cout<<"Near Food\n";
                 #endif
-                if( Arrive(_food) )
+                if( Arrive(m_pColony->GetFood()) )
                 {
                     m_force = Vector(0,0,0) - m_vel*kBrake;
                     Move(_time);
@@ -273,7 +288,8 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                 }
                 else
                 {
-                    Near(_food);
+                    //recalc new force
+                    Near(m_pColony->GetFood());
                     m_force = m_attraction * kAttract + m_obstacles * kObstacle + m_wall * kWall;
                     Move(_time);
                     m_state = NearFood;
@@ -285,7 +301,7 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
             break;
         case FoodToHome:
             {
-                if( Near(_home) )
+                if( Near(m_pColony->GetHome()) )
                 {
                     m_state = NearHome;
                 }
@@ -304,7 +320,7 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                 #ifdef _DEBUG
                 std::cout<<"Follow home pheromone\n";
                 #endif
-                if(DetectPheromone(ToHome, _trail))
+                if(DetectPheromone(ToHome))//, _trail))
                 {
                     m_force = m_pheromone * kPheromone + m_wall * kWall + m_obstacles * kObstacle;
                     #ifdef _DEBUG
@@ -330,7 +346,7 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
             break;
         case NearHome:
             {
-                if( Arrive(_home) )
+                if( Arrive(m_pColony->GetHome()) )
                 {
                     //m_force = Vector(0,0,0)-m_vel*kBrake;
                     //Move(_time);
@@ -339,7 +355,7 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
                 else
                 {
                     m_state = NearHome;
-                    Near(_home);
+                    Near(m_pColony->GetHome());
                     m_force = m_attraction * kAttract + m_obstacles * kObstacle + m_wall * kWall;
                     Move(_time);
                 }
@@ -355,5 +371,15 @@ void Ant::Update(uint32_t _time, const Trail& _trail, const std::vector<Ant*>& _
             break;
     }
     #endif
+}
+//------------------------------------------------------------------------------------
+void Ant::SetID(uint32_t _id)
+{
+    m_ID =_id;
+}
+//------------------------------------------------------------------------------------
+uint32_t Ant::GetID()
+{
+    return m_ID;
 }
 }//end of namespace
