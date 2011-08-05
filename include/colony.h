@@ -8,6 +8,7 @@
 
 namespace QtGLWindow
 {
+class Ant;
 typedef std::list<Ant*> Antlist;
 class Colony
 {
@@ -16,11 +17,15 @@ class Colony
         ~Colony();
         void Reset();
         void Emit(uint32_t _interval);
-        void Update(const SceneObject& _home, const SceneObject& _food);
+        void Update();//const SceneObject& _home, const SceneObject& _food);
         void ApplyRule();
         void UpdateTrail(); 
         void Move();
         void UpdateID();
+        std::list<Ant*> GetLocalList(Ant* _pAnt);
+        const Trail& GetTrail();
+        const SceneObject& GetFood();
+        const SceneObject& GetHome();
 
         /// number of ant in a colony
         uint32_t m_num;
@@ -33,6 +38,8 @@ class Colony
         std::vector<Antlist> Cell;
         float const cellSize;
         float const worldSize;
+        SceneObject* m_pFood;
+        SceneObject* m_pHome;
     private:
         inline uint32_t GetCellCount();
 };//end of class
