@@ -7,13 +7,33 @@ namespace QtGLWindow
 class Matrix
 {
     public:
+        // --------------------------------------------------------------------------
+        /// \brief Constructor
         Matrix();
+        // --------------------------------------------------------------------------
+        /// \brief Destructor
         ~Matrix();
+        // --------------------------------------------------------------------------
+        /// \brief Set matrix to identity matrix
         void AsIdentity();
+        // --------------------------------------------------------------------------
+        /// \brief operator * overload, get product of two matrix
+        /// \param _param parameter matrix
+        /// \return result matrixc
         Matrix operator * ( const Matrix& _param ) const;
+        // --------------------------------------------------------------------------
+        /// \brief Operator * overload, get product of a matrix and a vector
+        /// \param _param parameter vector
+        /// \return result vector
         Vector operator * ( const Vector& _param ) const;
+        // --------------------------------------------------------------------------
+        /// \brief Operator = overload, set parameter matrix value to this matrix
+        /// \param _param
+        /// \return 
         void operator = ( const Matrix& _param );
 
+        // --------------------------------------------------------------------------
+        /// \4*4 matrix members, array share same space with 16 floats for easy access
         union
         {
             struct

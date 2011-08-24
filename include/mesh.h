@@ -7,7 +7,7 @@
 namespace QtGLWindow
 {
 // --------------------------------------------------------------------------
-/// \brief class mesh use vbo to draw mesh in mode, currently triangle. 
+/// \brief class mesh use vbo to draw mesh.
 class Mesh
 {
     public:
@@ -17,15 +17,21 @@ class Mesh
         // --------------------------------------------------------------------------
         /// \brief Destructor delete arrays allocated
         ~Mesh();
+        // --------------------------------------------------------------------------
+        /// \brief Initialize the array using the value of paseed in vertex, texture, face
+        /// \param _vertex
+        /// \param _texture
+        /// \param _face
         void CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vector<GLfloat>& _texture, const std::vector<GLuint>& _face);
         // --------------------------------------------------------------------------
         /// \brief Bind a buffer the size of vertex array with vbo
         void CreateVBO();
+        // --------------------------------------------------------------------------
+        /// \brief Update the vbo butter
         void UpdateVBO();
         // --------------------------------------------------------------------------
-        /// \brief Draw the vbo using indices got from face information
+        /// \brief Draw vbo using indices
         void DrawVBO();
-
         // --------------------------------------------------------------------------
         /// \brief vertex array
         GLfloat* m_vertex;

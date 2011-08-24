@@ -5,7 +5,7 @@ namespace QtGLWindow
 Pheromone::Pheromone(Vector _pos, PhrmType _type)
     :m_age(0),
     m_phrmType(_type),
-    m_maxAge(900)
+    m_maxAge(500)
 {
     m_pos = _pos;
     m_type = kPhe;

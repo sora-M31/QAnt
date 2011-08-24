@@ -8,13 +8,27 @@ class Qdslider:public QSlider
 {
     Q_OBJECT
     public:
-        Qdslider(QWidget* parent);
+        // --------------------------------------------------------------------------
+        /// \brief Constructor
+        /// \param parent
+        Qdslider( QWidget* parent );
+        // --------------------------------------------------------------------------
+        /// \brief Destructor
         ~Qdslider();
     signals:
-        void valueChanged( double _value);
+        // --------------------------------------------------------------------------
+        /// \brief Signal when value is changed
+        /// \param _value New value
+        void valueChanged( double _value );
     private slots:
-        void setValue( double _value);
-        void toDouble( int _value);
+        // --------------------------------------------------------------------------
+        /// \brief slot, set the value to new value
+        /// \param _value
+        void setValue( double _value );
+        // --------------------------------------------------------------------------
+        /// \brief slot, cast int to double
+        /// \param _value value to change to double
+        void toDouble( int _value );
     private:
         ///\double version of m_value;
         double m_dvalue;

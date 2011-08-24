@@ -29,8 +29,6 @@ SOURCES += \
     src/mesh.cpp \
     src/objLoader.cpp \
     src/camera.cpp \
-    src/flock.cpp \
-    src/boid.cpp \
     src/ant.cpp \
     src/pheromone.cpp \
     src/trail.cpp \
@@ -51,8 +49,6 @@ HEADERS += \
     include/mesh.h \
     include/objLoader.h \
     include/camera.h \
-    include/flock.h \
-    include/boid.h \
     include/ant.h \
     include/pheromone.h \
     include/trail.h \

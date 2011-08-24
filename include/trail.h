@@ -9,18 +9,20 @@ namespace QtGLWindow
 class Trail
 {
     public:
-      /// an array to store the pheromone laid by all the numbers of the colony
+      ///An array to store the pheromone laid by all the members of the colony
       std::vector<Pheromone*> m_phrmTrail;
-      
       ///\brief default constructor
       Trail();
       ///\brief default destructor
       ~Trail();
+      // --------------------------------------------------------------------------
+      /// \brief Clear trail array, used for resetting the program
       void Reset();
-      ///\brief push the given pheromone in to the array.
-      ///@param[in] _phe pheromone to be added to the trail
+      // --------------------------------------------------------------------------
+      /// \brief Add given pheromone to the trail
+      /// \param _phe Pheormone to be added
       void AddPherom(Pheromone* _phe);
-      ///\brief go through the trail and evaporate pheromone, if any pheromone's lifespam is not positive any morje ,it is deleted from the array.
+      ///\brief Go through the trail add age to pheromone and deleted pheromone when it gets to max age
       void DeleteEveporatedPherom();
 };
 }//end of namespace

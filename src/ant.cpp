@@ -98,9 +98,9 @@ bool Ant::DetectPheromone(PhrmType _type)//, const Trail& _trail)
     for( uint32_t i=0; i< num; ++i)
     {
         Vector phrm;
-        if( CheckNeighbor(*_trail.m_phrmTrail[i],3,2.5) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
+        if( CheckNeighbor(*_trail.m_phrmTrail[i],3,1) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
         {
-            phrm = _trail.m_phrmTrail[i]->m_pos;// * ( _trail.m_phrmTrail[i]->m_maxAge - _trail.m_phrmTrail[i]->m_age );
+            phrm = _trail.m_phrmTrail[i]->m_pos;//*_trail.m_phrmTrail[i]->m_age/_trail.m_phrmTrail[i]->m_maxAge;
             phrmNum++;
         }
         #ifdef _DEBUG
@@ -160,7 +160,7 @@ void Ant::DetectObstacle()//const std::list<Ant*>& _antList)
 //------------------------------------------------------------------------------------
 bool Ant::Near(const SceneObject& _obj)
 {
-    if( CheckNeighbor( _obj, 3,12) )
+    if( CheckNeighbor( _obj, 3,10) )
     {
         m_attraction = (_obj.m_pos - m_pos).Normalise();
         return true;
@@ -230,7 +230,7 @@ void Ant::Wall()
     m_wall = m_wall.Normalise();
 }
 //------------------------------------------------------------------------------------
-void Ant::Update(uint32_t _time)//, const Trail& _trail, const std::list<Ant*> _antList,const SceneObject& _home, const SceneObject& _food)
+void Ant::Update(uint32_t _time)
 {
     m_force = Vector(0,0,0);
     DetectObstacle();//_antList);

@@ -39,12 +39,11 @@ class ObjLoader
         /// \param _vertNum number of vertice in a face
         void ParseFace(std::vector<std::string>::iterator _begin,uint32_t _vertNum);
         // --------------------------------------------------------------------------
-        /// \brief Check the information loaded
+        /// \brief Print out vertex and face value
         void Check();
         // --------------------------------------------------------------------------
         /// \brief Load the parsed information in to array of vertex, uv and indices
         void Load();
-
     protected:
         ///array of vertices from file
         std::vector<GLfloat> m_vertexBuffer;
@@ -53,6 +52,8 @@ class ObjLoader
         ///array of faces from file
         std::vector<GLuint> m_faceBuffer;
     public:
+        // --------------------------------------------------------------------------
+        /// \brief Pointer to mesh
         Mesh* m_pMesh;
 };//end of class
 }//end of namespace

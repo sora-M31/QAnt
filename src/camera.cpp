@@ -39,7 +39,8 @@ void Camera::SetupCam()
 }
 //------------------------------------------------------------------------------
 void Camera::Zoom(const float _length)//track
-{ 	Vector direction = (m_eye-m_centre).Normalise();
+{
+    Vector direction = (m_eye-m_centre).Normalise();
     m_eye += direction*_length;
     ResetView();
 }
