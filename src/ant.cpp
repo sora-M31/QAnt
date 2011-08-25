@@ -22,8 +22,9 @@ Ant::Ant(Colony* _myColony)
     m_mass = 1;
     kWall = 5;
     kAttract =5;
-    kObstacle = 4;
+    kObstacle = 3;
     kRand = 5;
+    kBrake = 1;
     m_pColony = _myColony;
     m_ID = 0;
 }
@@ -98,7 +99,7 @@ bool Ant::DetectPheromone(PhrmType _type)//, const Trail& _trail)
     for( uint32_t i=0; i< num; ++i)
     {
         Vector phrm;
-        if( CheckNeighbor(*_trail.m_phrmTrail[i],3,1) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
+        if( CheckNeighbor(*_trail.m_phrmTrail[i],2,3) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
         {
             phrm = _trail.m_phrmTrail[i]->m_pos;//*_trail.m_phrmTrail[i]->m_age/_trail.m_phrmTrail[i]->m_maxAge;
             phrmNum++;
@@ -288,7 +289,7 @@ void Ant::Update(uint32_t _time)
                 }
                 else
                 {
-                    //recalc new force
+                    //recalculate force
                     Near(m_pColony->GetFood());
                     m_force = m_attraction * kAttract + m_obstacles * kObstacle + m_wall * kWall;
                     Move(_time);
@@ -350,7 +351,7 @@ void Ant::Update(uint32_t _time)
                 {
                     //m_force = Vector(0,0,0)-m_vel*kBrake;
                     //Move(_time);
-                    m_state = HomeToFood;
+                    Reset();
                 }
                 else
                 {
