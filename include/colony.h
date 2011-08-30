@@ -20,6 +20,14 @@ class Colony
         /// \brief Destructor
         ~Colony();
         // --------------------------------------------------------------------------
+        /// \brief Initalize ants, and put them into cells 
+        /// \param _numb number of ants
+        /// \param _phe pheromone coefficient
+        /// \param _obs obstacle coefficient
+        /// \param _wall wall coefficient 
+        /// \param _rand rand coefficient
+        void Init(uint32_t _numb, float _phe, float _obs, float _wall, float _rand);
+        // --------------------------------------------------------------------------
         /// \brief Reset all ants status
         void Reset();
         // --------------------------------------------------------------------------
@@ -55,6 +63,10 @@ class Colony
         /// \brief Get access to home of colony
         /// \return Refernce of home
         const SceneObject& GetHome();
+        void SetPheromone(float _phe);
+        void SetObstacle(float _obs);
+        void SetWall(float _wall);
+        void SetRand(float _rand);
         ///\number of ant in a colony
         uint32_t m_num;
         ///\ number of ants that is active(alive)

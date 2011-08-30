@@ -21,6 +21,11 @@ GLWindow::GLWindow(
     m_pitch = 0;
     m_yaw = 0;
     m_roll = 0;
+    m_num = 10;
+    m_phe = 1;
+    m_obs = 1;
+    m_wall = 5;
+    m_rand = 5;
     m_counter = 1;
     connect( m_timer, SIGNAL(timeout()), this, SLOT(updateScene()));
 }
@@ -36,30 +41,29 @@ void GLWindow::initializeGL()
     glClearColor(0.3,0.3,0.3,1);
 
     glEnable(GL_DEPTH_TEST);
-    m_scene.InitScene();
     m_pCam->SetupCam();
 
-    pSelected = m_scene.m_root.m_pNext->m_pNext->m_pNext->m_pNext->m_pObject;
+    //pSelected = m_scene.m_root.m_pNext->m_pNext->m_pNext->m_pNext->m_pObject;
 
 #if 1
-    m_sphereObj.ParseFile("sphere.obj");
+    m_sphereObj.ParseFile("resources/sphere.obj");
     m_sphereObj.Load();
     m_sphereObj.m_pMesh->CreateVBO();
 
-    m_envObj.ParseFile("plane.obj");
+    m_envObj.ParseFile("resources/plane.obj");
     m_envObj.Load();
     m_envObj.m_pMesh->CreateVBO();
 
-    m_arrowObj.ParseFile("arrow.obj");
+    m_arrowObj.ParseFile("resources/arrow.obj");
     m_arrowObj.Load();
     m_arrowObj.m_pMesh->CreateVBO();
 #endif
 
-    m_fishObj.ParseFile("ant.obj");
-    m_fishObj.Load();
-    m_fishObj.m_pMesh->CreateVBO();
+    m_antObj.ParseFile("resources/ant.obj");
+    m_antObj.Load();
+    m_antObj.m_pMesh->CreateVBO();
 
-    m_pBotObj = & m_fishObj;
+    m_pBotObj = & m_antObj;
 }
 //------------------------------------------------------------------------------
 void GLWindow::resizeGL(
@@ -235,7 +239,7 @@ void GLWindow::setModel(int _index)
     switch(_index)
     {
         case 0:
-            m_pBotObj = &m_fishObj;
+            m_pBotObj = &m_antObj;
             break;
         case 1:
             m_pBotObj = &m_arrowObj;
@@ -250,27 +254,64 @@ void GLWindow::setModel(int _index)
 void  GLWindow::start()
 {
     m_timer->start(m_framerate);
+    m_scene.InitScene(m_num, m_phe, m_obs, m_wall, m_rand);
 }
 //------------------------------------------------------------------------------
-void GLWindow::restart()
+void GLWindow::stop()
 {
-    m_scene.ResetScene();
+    m_timer->stop();
 }
 //------------------------------------------------------------------------------
-void GLWindow::setAngle(const double _angle)
+void GLWindow::setNumber(int _num)
 {
-    std::cout<<"calling.....\n";
-    pSelected->SetMaxRotAngle((float)_angle);
+    m_num = _num;
 }
 //------------------------------------------------------------------------------
-void GLWindow::setAccel(const int _accel)
+void GLWindow::setPheromone(int _phe)
 {
-    pSelected->SetMaxAccel(_accel);
+    if(m_scene.m_pColony==0)
+    {
+        m_phe = (float) _phe;
+    }
+    else
+    {
+        m_scene.m_pColony->SetPheromone(_phe);
+    }
 }
 //------------------------------------------------------------------------------
-void GLWindow::setFriction(const double _friction)
+void GLWindow::setObstacle(int _obs)
 {
-    pSelected->SetFriction((float)_friction);
+    if(m_scene.m_pColony==0)
+    {
+        m_obs = (float) _obs;
+    }
+    else
+    {
+        m_scene.m_pColony->SetObstacle(_obs);
+    }
 }
 //------------------------------------------------------------------------------
+void GLWindow::setWall(int _wall)
+{
+    if(m_scene.m_pColony==0)
+    {
+        m_wall = (float) _wall;
+    }
+    else
+    {
+        m_scene.m_pColony->SetWall(_wall);
+    }
+}
+//------------------------------------------------------------------------------
+void GLWindow::setRand(int _rand)
+{
+    if(m_scene.m_pColony==0)
+    {
+        m_rand = (float) _rand;
+    }
+    else
+    {
+        m_scene.m_pColony->SetRand(_rand);
+    }
+}
 }//end of namespace

@@ -55,22 +55,15 @@ class GLWindow : public QGLWidget
         void start();
         // --------------------------------------------------------------------------
         /// \brief Restart simulation
-        void restart();
-        // --------------------------------------------------------------------------
-        /// \brief Set maximum angle
-        /// \param _angle angle
-        void setAngle(const double _angle);
-        // --------------------------------------------------------------------------
-        /// \brief Set maximum acceleration
-        /// \param _accel acceleration
-        void setAccel(const int _accel);
-        // --------------------------------------------------------------------------
-        /// \brief Set maximum friction 
-        /// \param _friction
-        void setFriction(const double _friction);
+        void stop();
         // --------------------------------------------------------------------------
         /// \brief Update properties and redraw
         void updateScene();
+        void setNumber(int _num);
+        void setPheromone(int _phe);
+        void setObstacle(int _obs);
+        void setWall(int _wall);
+        void setRand(int _rand);
     protected:
         // --------------------------------------------------------------------------
         /// \brief Initlize open gl
@@ -103,7 +96,7 @@ class GLWindow : public QGLWidget
         ///\ environment model
         ObjLoader m_envObj;
         ///\ fish model
-        ObjLoader m_fishObj;
+        ObjLoader m_antObj;
         ///\ arrow model
         ObjLoader m_arrowObj;
         ///\ POinter to camera
@@ -121,6 +114,11 @@ class GLWindow : public QGLWidget
         float m_pitch;
         float m_yaw;
         float m_roll;
+        float m_num;
+        float m_phe;
+        float m_obs;
+        float m_wall;
+        float m_rand;
         uint32_t m_counter;
 
 };//end of class

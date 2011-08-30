@@ -4,17 +4,19 @@ namespace QtGLWindow
 {
 //----------------------------------------------------------------------------------------------------------------------
 Colony::Colony()
-    :cellSize(12.0),worldSize(60.0)
+    :cellSize(12.0),worldSize(60.0),m_pFood(0), m_pHome(0)
 {
-    m_num =50;
     m_activeNum = 0;
     m_counter =0;
-    #if 1
+}
+//----------------------------------------------------------------------------------------------------------------------
+void Colony::Init(uint32_t _num, float _phe, float _obs, float _wall, float _rand)
+{
+    m_num =_num;
     for(uint32_t i=0;i<m_num; ++i)
     {
-        m_antList.push_back(new Ant(this));
+        m_antList.push_back(new Ant(this,_phe, _obs, _wall, _rand));
     }
-   #endif
     uint32_t cellNum = GetCellCount()*GetCellCount();
     for(uint32_t i =0; i< cellNum; ++i)
     {
@@ -22,6 +24,7 @@ Colony::Colony()
     }
     m_pFood = new SceneObject(Vector(20,0,10),0.5,kFood);
     m_pHome = new SceneObject(Vector(0,0,0),0.5,kHome);
+
 }
 //----------------------------------------------------------------------------------------------------------------------
 void Colony::UpdateID()
@@ -47,7 +50,18 @@ void Colony::UpdateID()
 //----------------------------------------------------------------------------------------------------------------------
 Colony::~Colony()
 {
-    //delete new
+    size_t num = m_antList.size();
+    if (num !=0)
+    {
+        for(uint32_t i; i< num;++i)
+        {
+            delete m_antList[i];
+        }
+    }
+    if(m_pFood!=0)
+        delete m_pFood;
+    if(m_pHome!=0)
+        delete m_pHome;
 }
 //----------------------------------------------------------------------------------------------------------------------
 void Colony::Emit(uint32_t _interval)
@@ -247,5 +261,34 @@ const SceneObject& Colony::GetFood()
 const SceneObject& Colony::GetHome()
 {
     return *m_pHome;
+}
+//-----------------------------------------------------------------------------
+void Colony::SetPheromone(float _phe)
+{
+    for( uint32_t i=0; i<m_num; ++i )
+    {
+        m_antList[i]->SetkPheromone(_phe);
+    }
+}
+void Colony::SetObstacle(float _obs)
+{
+    for( uint32_t i=0; i<m_num; ++i )
+    {
+        m_antList[i]->SetkObstacle(_obs);
+    }
+}
+void Colony::SetWall(float _wall)
+{
+    for( uint32_t i=0; i<m_num; ++i )
+    {
+        m_antList[i]->SetkWall(_wall);
+    }
+}
+void Colony::SetRand(float _rand)
+{
+    for( uint32_t i=0; i<m_num; ++i )
+    {
+        m_antList[i]->SetkRand(_rand);
+    }
 }
 }//end of namespace

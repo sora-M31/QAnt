@@ -17,14 +17,19 @@ class SceneManager
         ~SceneManager();
         // --------------------------------------------------------------------------
         /// \brief Initialize scene
-        void InitScene();
+        void InitScene(uint32_t _num, float _phe, float _obs, float _wall, float _rand);
+        //void InitScene();
         // --------------------------------------------------------------------------
         /// \brief Reset scene to be ready to restart the simulation
         void ResetScene();
         // --------------------------------------------------------------------------
         /// \brief Update scene
         void UpdateScene();
-        /// \m_root 
+        void SetPheromone(float _phe);
+        void SetObstacle(float _obs);
+        void SetWall(float _wall);
+        void SetRand(float _rand);
+        /// \m_root
         SceneNode m_root;
         // --------------------------------------------------------------------------
         /// \brief Pointer to colony

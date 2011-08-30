@@ -3,30 +3,34 @@
 namespace QtGLWindow
 {
 //------------------------------------------------------------------------------------
-Ant::Ant(Colony* _myColony)
+Ant::Ant( Colony* _myColony,
+          float _phe,
+          float _obs,
+          float _wall,
+          float _rand )
      :m_hit(false)
 {
-
-    m_maxAngle = 10*3.14/180;
     srand ( time(NULL) );
     m_walkCounter = rand();
     m_type = kAnt;
-    m_force = Vector(0,0,0);
-    m_pheromone = Vector(0,0,0);
+    m_state = HomeToFood;
     m_trans.SetTranslate(m_pos);
     m_trans.ApplyTransform();
+    m_pColony = _myColony;
+    m_force = Vector(0,0,0);
+    m_ID = 0;
+
+    m_maxAngle = 10*3.14/180;
     m_bound = 0.1;
-    m_state = HomeToFood;
-    kPheromone = 6;
     m_speed = 0;
     m_mass = 1;
-    kWall = 5;
     kAttract =5;
-    kObstacle = 3;
-    kRand = 5;
-    kBrake = 1;
-    m_pColony = _myColony;
-    m_ID = 0;
+    kBrake = 3;
+
+    kPheromone = _phe;//6;
+    kWall = _wall;//5;
+    kObstacle = _obs;// 3;
+    kRand = _rand;//5;
 }
 //------------------------------------------------------------------------------------
 Ant::Ant(const Ant& _ant):SceneObject()
@@ -92,6 +96,7 @@ bool Ant::Arrive(const SceneObject& _obj)
 //------------------------------------------------------------------------------------
 bool Ant::DetectPheromone(PhrmType _type)//, const Trail& _trail)
 {
+    m_pheromone = Vector(0,0,0);
     const Trail _trail = m_pColony->GetTrail();
     Vector phrmCentre(0,0,0);
     uint32_t phrmNum(0);
@@ -101,7 +106,7 @@ bool Ant::DetectPheromone(PhrmType _type)//, const Trail& _trail)
         Vector phrm;
         if( CheckNeighbor(*_trail.m_phrmTrail[i],2,3) && (_trail.m_phrmTrail[i]->m_phrmType == _type) )
         {
-            phrm = _trail.m_phrmTrail[i]->m_pos;//*_trail.m_phrmTrail[i]->m_age/_trail.m_phrmTrail[i]->m_maxAge;
+            phrm = _trail.m_phrmTrail[i]->m_pos;//*(float)(_trail.m_phrmTrail[i]->m_age/_trail.m_phrmTrail[i]->m_maxAge);
             phrmNum++;
         }
         #ifdef _DEBUG
@@ -289,7 +294,7 @@ void Ant::Update(uint32_t _time)
                 }
                 else
                 {
-                    //recalculate force
+                    //recalculate attraction
                     Near(m_pColony->GetFood());
                     m_force = m_attraction * kAttract + m_obstacles * kObstacle + m_wall * kWall;
                     Move(_time);
@@ -349,8 +354,6 @@ void Ant::Update(uint32_t _time)
             {
                 if( Arrive(m_pColony->GetHome()) )
                 {
-                    //m_force = Vector(0,0,0)-m_vel*kBrake;
-                    //Move(_time);
                     Reset();
                 }
                 else
@@ -377,6 +380,26 @@ void Ant::Update(uint32_t _time)
 void Ant::SetID(uint32_t _id)
 {
     m_ID =_id;
+}
+//------------------------------------------------------------------------------------
+void Ant::SetkPheromone(float _phe)
+{
+    kPheromone = _phe;
+}
+//------------------------------------------------------------------------------------
+void Ant::SetkObstacle(float _obs)
+{
+    kObstacle = _obs;
+}
+//------------------------------------------------------------------------------------
+void Ant::SetkWall(float _wall)
+{
+    kWall = _wall;
+}
+//------------------------------------------------------------------------------------
+void Ant::SetkRand(float _rand)
+{
+    kRand = _rand;
 }
 //------------------------------------------------------------------------------------
 uint32_t Ant::GetID()

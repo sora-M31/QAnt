@@ -33,7 +33,8 @@ SOURCES += \
     src/pheromone.cpp \
     src/trail.cpp \
     src/colony.cpp \
-    src/Qdslider.cpp
+    src/Qdslider.cpp \
+    src/QtextPushButton.cpp
 
 HEADERS += \
     include/mainwindow.h \
@@ -53,7 +54,8 @@ HEADERS += \
     include/pheromone.h \
     include/trail.h \
     include/colony.h \
-    include/Qdslider.h
+    include/Qdslider.h \
+    include/QtextPushButton.h
 
 FORMS += \
     ui/mainwindow.ui

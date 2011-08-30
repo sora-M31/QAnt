@@ -3,23 +3,64 @@ namespace QtGLWindow
 {
 //------------------------------------------------------------------------------
 SceneManager::SceneManager()
-    :m_root(0)
+    :m_root(0),m_pColony(0)
 {
 #ifdef _DEBUG
     std::cout<<"initializing sceneManager\n";
 #endif
-    m_pColony = new Colony;
+    //m_pColony = new Colony;
     m_pEnv = new SceneObject;
 }
 //------------------------------------------------------------------------------
 SceneManager::~SceneManager()
 {
-    delete m_pColony;
-    delete m_pEnv;
+    if (m_pColony!=0)
+        delete m_pColony;
+    if (m_pEnv !=0)
+        delete m_pEnv;
 }
 //------------------------------------------------------------------------------
-void SceneManager::InitScene()
+void SceneManager::SetPheromone(float _phe)
 {
+    for( uint32_t i; i< m_pColony->m_num; ++i)
+    {
+        m_pColony->m_antList[i]->SetkPheromone(_phe);
+    }
+
+}
+//------------------------------------------------------------------------------
+void SceneManager::SetObstacle(float _obs)
+{
+    for( uint32_t i; i< m_pColony->m_num; ++i)
+    {
+        m_pColony->m_antList[i]->SetkObstacle(_obs);
+    }
+
+}
+//------------------------------------------------------------------------------
+void SceneManager::SetWall(float _wall)
+{
+    for( uint32_t i; i< m_pColony->m_num;++i)
+    {
+        m_pColony->m_antList[i]->SetkWall(_wall);
+    }
+
+}
+//------------------------------------------------------------------------------
+void SceneManager::SetRand(float _rand)
+{
+    for( uint32_t i; i< m_pColony->m_num; ++i)
+    {
+        m_pColony->m_antList[i]->SetkRand(_rand);
+    }
+
+}
+//------------------------------------------------------------------------------
+void SceneManager::InitScene(uint32_t _num, float _phe, float _obs, float _wall, float _rand)
+{
+    m_pColony = new Colony();
+    m_pColony->Init(_num, _phe, _obs, _wall, _rand);
+    //connect nodes
     m_root.AddNext(m_pEnv->m_node);
     m_pEnv->m_node.AddNext(m_pColony->m_pFood->m_node);
     m_pColony->m_pFood->m_node.AddNext(m_pColony->m_pHome->m_node);
@@ -37,7 +78,7 @@ void SceneManager::ResetScene()
 {
     m_pColony->Reset();
 }
-//------------------------------------------------------------------------------
+//-----------------------------------------------------------------:wq-------------
 void SceneManager::UpdateScene()
 {
 

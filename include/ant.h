@@ -14,7 +14,11 @@ class Ant:public SceneObject
         // --------------------------------------------------------------------------
         ///\brief Constructor
         /// \param _mycolony Pointer to the colony this ants belongs to
-        Ant(Colony* _mycolony);
+        Ant( Colony* _mycolony,
+             float _phe,
+             float _obs,
+             float _wall,
+             float _rand );
         // --------------------------------------------------------------------------
         /// \brief Destructor
         ~Ant();
@@ -34,6 +38,22 @@ class Ant:public SceneObject
         // --------------------------------------------------------------------------
         /// \brief Reset all properties of ant class
         void Reset();
+        // --------------------------------------------------------------------------
+        /// \brief Set value for kPheromone
+        /// \param _phe
+        void SetkPheromone(float _phe); 
+        // --------------------------------------------------------------------------
+        /// \brief Set value for kObstacle
+        /// \param _obs
+        void SetkObstacle(float _obs); 
+        // --------------------------------------------------------------------------
+        /// \brief Set value for kWall
+        /// \param _wall
+        void SetkWall(float _wall); 
+        // --------------------------------------------------------------------------
+        /// \brief Set value for kRand
+        /// \param _rand
+        void SetkRand(float _rand); 
         // --------------------------------------------------------------------------
         /// \brief Set id
         /// \param _id id
