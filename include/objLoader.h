@@ -29,6 +29,7 @@ class ObjLoader
         /// \brief Get vertices from the tokens
         /// \param _begin iterator pointing to the beginning of the line to be parsed
         void ParseVertex(std::vector<std::string>::iterator _begin);
+        void ParseNormal(std::vector<std::string>::iterator _begin);
         // --------------------------------------------------------------------------
         /// \brief Get uv coordinate from the tokens
         /// \param _begin iterator pointing to the beginning of the line to be parsed
@@ -41,16 +42,19 @@ class ObjLoader
         // --------------------------------------------------------------------------
         /// \brief Print out vertex and face value
         void Check();
+        void CalculatVertexNormal();
         // --------------------------------------------------------------------------
         /// \brief Load the parsed information in to array of vertex, uv and indices
         void Load();
     protected:
         ///array of vertices from file
         std::vector<GLfloat> m_vertexBuffer;
+        std::vector<GLfloat> m_normalBuffer;
+        std::vector<GLfloat> m_normalInOrderBuffer;
         ///array of uv coords from file
         std::vector<GLfloat> m_textureBuffer;
         ///array of faces from file
-        std::vector<GLuint> m_faceBuffer;
+        std::vector<GLuint> m_face;
     public:
         // --------------------------------------------------------------------------
         /// \brief Pointer to mesh

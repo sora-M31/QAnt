@@ -22,7 +22,7 @@ class Mesh
         /// \param _vertex
         /// \param _texture
         /// \param _face
-        void CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vector<GLfloat>& _texture, const std::vector<GLuint>& _face);
+        void CreateDataArray(const std::vector<GLfloat>& _vertex, const std::vector<GLfloat>& _normal,const std::vector<GLfloat>& _texture, const std::vector<GLuint>& _face);
         // --------------------------------------------------------------------------
         /// \brief Bind a buffer the size of vertex array with vbo
         void CreateVBO();
@@ -35,6 +35,7 @@ class Mesh
         // --------------------------------------------------------------------------
         /// \brief vertex array
         GLfloat* m_vertex;
+        GLfloat* m_normal;
         // --------------------------------------------------------------------------
         /// \brief uv array
         GLfloat* m_texture;
@@ -50,9 +51,10 @@ class Mesh
         // --------------------------------------------------------------------------
         /// \brief size of vertex array
         uint32_t m_verSize;
+        uint32_t m_normalSize;
         // --------------------------------------------------------------------------
         /// \brief size of uv array
-        uint32_t m_uvSize;
+        uint32_t m_textureSize;
         // --------------------------------------------------------------------------
         /// \brief size of indice array
         uint32_t m_faceSize;
