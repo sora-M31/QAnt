@@ -1,3 +1,4 @@
+*.mtl
 obj
 bin
 Makefile
