@@ -2,8 +2,7 @@
 namespace QtGLWindow{
 const static float PI  = 3.1415926;
 //------------------------------------------------------------------------------
-GLWindow::GLWindow(
-                        QWidget *_parent
+GLWindow::GLWindow(QWidget *_parent
                   )
                    :QGLWidget( _parent ),
                      m_pBotObj(0),
@@ -14,7 +13,6 @@ GLWindow::GLWindow(
 
     m_framerate = 50;
     m_wireframe = true;
-    m_timer = new QTimer(this);
     m_pCam = new Camera;
     m_spin = 0.0;
     m_zoom =0;
@@ -27,6 +25,7 @@ GLWindow::GLWindow(
     m_wall = 5;
     m_rand = 5;
     m_counter = 1;
+    m_timer = new QTimer(this);
     connect( m_timer, SIGNAL(timeout()), this, SLOT(updateScene()));
 }
 //------------------------------------------------------------------------------
@@ -40,12 +39,28 @@ void GLWindow::initializeGL()
 {
     glClearColor(0.3,0.3,0.3,1);
 
+    glClearDepth(1);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_NORMALIZE);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_COLOR_MATERIAL);
+
+    GLfloat DiffuseLight[] = {0.8,0.5,0.5};
+    GLfloat AmbientLight[] = {0.1,0.1,0.1};
+    GLfloat LightPosition[] = {0,5,5,0};
+
+
+    glLightfv(GL_LIGHT0,GL_DIFFUSE,DiffuseLight);
+    glLightfv(GL_LIGHT1,GL_AMBIENT,AmbientLight);
+    glLightfv(GL_LIGHT0,GL_POSITION,LightPosition);
+    glShadeModel (GL_SMOOTH);
     m_pCam->SetupCam();
 
     //pSelected = m_scene.m_root.m_pNext->m_pNext->m_pNext->m_pNext->m_pObject;
 
-#if 1
+#if 0
     m_sphereObj.ParseFile("resources/sphere.obj");
     m_sphereObj.Load();
     m_sphereObj.m_pMesh->CreateVBO();
@@ -54,12 +69,13 @@ void GLWindow::initializeGL()
     m_envObj.Load();
     m_envObj.m_pMesh->CreateVBO();
 
-    m_arrowObj.ParseFile("resources/arrow.obj");
+    m_arrowObj.ParseFile("resources/test.obj");
     m_arrowObj.Load();
     m_arrowObj.m_pMesh->CreateVBO();
 #endif
 
     m_antObj.ParseFile("resources/ant.obj");
+    m_antObj.Check();
     m_antObj.Load();
     m_antObj.m_pMesh->CreateVBO();
 
