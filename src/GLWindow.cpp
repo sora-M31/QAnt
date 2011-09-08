@@ -60,19 +60,19 @@ void GLWindow::initializeGL()
 
     //pSelected = m_scene.m_root.m_pNext->m_pNext->m_pNext->m_pNext->m_pObject;
 
-#if 0
+#if 1
     m_sphereObj.ParseFile("resources/sphere.obj");
     m_sphereObj.Load();
     m_sphereObj.m_pMesh->CreateVBO();
-
+#endif
     m_envObj.ParseFile("resources/plane.obj");
     m_envObj.Load();
     m_envObj.m_pMesh->CreateVBO();
 
-    m_arrowObj.ParseFile("resources/test.obj");
+    m_arrowObj.ParseFile("resources/arrow.obj");
     m_arrowObj.Load();
     m_arrowObj.m_pMesh->CreateVBO();
-#endif
+
 
     m_antObj.ParseFile("resources/ant.obj");
     m_antObj.Check();
@@ -132,7 +132,7 @@ void GLWindow::Draw(SceneObject* _obj)
         {
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
-                glColor3f(1,1,1);
+                glColor3f(0.1,0.5,0.2);
                 glScalef(60,1,60);
                 glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
                 m_envObj.m_pMesh->DrawVBO();
@@ -143,7 +143,7 @@ void GLWindow::Draw(SceneObject* _obj)
         {
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
-                glColor3f(1,0,0);
+                glColor3f(0.2,0.2,0.2);
                 glMultMatrixf( _obj->GetTransformation().m_transform.m_mat);
                 m_pBotObj->m_pMesh->DrawVBO();
                 glPopAttrib();
@@ -181,7 +181,7 @@ void GLWindow::Draw(SceneObject* _obj)
         {
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
-                glColor3f(0,1,0);
+                glColor3f(1,0,0);
                 glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
                 glRotatef(m_counter, 0,1,0);
                 m_counter++;

@@ -109,6 +109,10 @@ void ObjLoader::ParseFace(std::vector<std::string>::iterator _begin, uint32_t _v
             ++_begin;
         }
     }
+    else
+    {
+        std::cout<<"only supporting triangle now...........\n";
+    }
     #if 0
     else if (_vertNum == 4)
     {
@@ -175,9 +179,10 @@ void ObjLoader::Load()
 
     CalculatVertexNormal();
     m_pMesh->CreateDataArray( m_vertexBuffer, m_normalInOrderBuffer, m_textureBuffer, m_face);
-#if 0
+#if 1
     m_vertexBuffer.erase(m_vertexBuffer.begin(),m_vertexBuffer.end());
     m_normalBuffer.erase(m_normalBuffer.begin(),m_normalBuffer.end());
+    m_normalInOrderBuffer.erase(m_normalInOrderBuffer.begin(),m_normalInOrderBuffer.end());
     m_textureBuffer.erase(m_textureBuffer.begin(),m_textureBuffer.end());
     m_face.erase(m_face.begin(),m_face.end());
 #endif
