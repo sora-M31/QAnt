@@ -32,6 +32,7 @@ class Mesh
         // --------------------------------------------------------------------------
         /// \brief Draw vbo using indices
         void DrawVBO();
+        void DrawNormal();
         // --------------------------------------------------------------------------
         /// \brief vertex array
         GLfloat* m_vertex;

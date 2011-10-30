@@ -1,4 +1,5 @@
 #include "objLoader.h"
+#include "util.h"
 #include <assert.h>
 
 namespace QtGLWindow
@@ -11,7 +12,8 @@ ObjLoader::ObjLoader()
 //------------------------------------------------------------------------------
 ObjLoader::~ObjLoader()
 {
-    delete m_pMesh;
+    if( m_pMesh)
+        delete m_pMesh;
 }
 //------------------------------------------------------------------------------
 void ObjLoader::ParseFile(std::string _Filename)
@@ -103,10 +105,32 @@ void ObjLoader::ParseFace(std::vector<std::string>::iterator _begin, uint32_t _v
             std::vector<std::string> r;
             std::string str(*_begin);
             Tokenize(str, r, "/");
-            m_face.push_back( atoi( r[0].c_str() ) );
-            m_face.push_back( atoi( r[1].c_str() ) );
-            m_face.push_back( atoi( r[2].c_str() ) );
-            ++_begin;
+
+            //assert( r.size() == 3 );
+            if (r.size() == 3 )
+            {
+                m_face.push_back( atoi( r[0].c_str() ) );
+                m_face.push_back( atoi( r[1].c_str() ) );
+                m_face.push_back( atoi( r[2].c_str() ) );
+                ++_begin;
+            }
+            else if(r.size() ==2)
+            {
+                m_face.push_back( atoi( r[0].c_str() ) );
+                m_face.push_back( 0 );
+                m_face.push_back( atoi( r[1].c_str() ) );
+                ++_begin;
+            }
+            else
+            {
+                std::cout<<r.size()<<" element\n";
+            }
+#if 0
+            else
+            {
+                log( "Bad number of face parts %d", r.size() );
+            }
+#endif
         }
     }
     else
@@ -129,11 +153,11 @@ void ObjLoader::ParseFace(std::vector<std::string>::iterator _begin, uint32_t _v
         //transfer quad to triangle
     }
     #endif
-    std::cout<<"\n";
 }
 //------------------------------------------------------------------------------
 void ObjLoader::Check()
 {
+    std::cout<<"from obj loader\n";
     std::cout<<m_vertexBuffer.size()<<" vertex111111111111111111\n";
     for(uint32_t i=0;i<m_vertexBuffer.size();++i)
     {
@@ -176,43 +200,36 @@ void ObjLoader::Check()
 //------------------------------------------------------------------------------
 void ObjLoader::Load()
 {
-
-    CalculatVertexNormal();
-    m_pMesh->CreateDataArray( m_vertexBuffer, m_normalInOrderBuffer, m_textureBuffer, m_face);
-#if 1
-    m_vertexBuffer.erase(m_vertexBuffer.begin(),m_vertexBuffer.end());
-    m_normalBuffer.erase(m_normalBuffer.begin(),m_normalBuffer.end());
-    m_normalInOrderBuffer.erase(m_normalInOrderBuffer.begin(),m_normalInOrderBuffer.end());
-    m_textureBuffer.erase(m_textureBuffer.begin(),m_textureBuffer.end());
-    m_face.erase(m_face.begin(),m_face.end());
-#endif
+    if(m_pMesh)
+    {
+        Check();
+        //CalculatVertexNormal();
+       // m_pMesh->CreateDataArray( m_vertexBuffer, m_normalInOrderBuffer, m_textureBuffer, m_face);
+        m_pMesh->CreateDataArray( m_vertexBuffer, m_normalBuffer, m_textureBuffer, m_face);
+        m_vertexBuffer.erase(m_vertexBuffer.begin(),m_vertexBuffer.end());
+        m_normalBuffer.erase(m_normalBuffer.begin(),m_normalBuffer.end());
+        //m_normalInOrderBuffer.erase(m_normalInOrderBuffer.begin(),m_normalInOrderBuffer.end());
+        m_textureBuffer.erase(m_textureBuffer.begin(),m_textureBuffer.end());
+        m_face.erase(m_face.begin(),m_face.end());
+}
 }
 //------------------------------------------------------------------------------
 void ObjLoader::CalculatVertexNormal()
 {
 
-    m_normalInOrderBuffer.resize(m_normalBuffer.size()/3,0);
-    std::cout<<m_normalInOrderBuffer.size()<<" SIZE\n";
-    for( uint32_t i = 0; i< m_normalInOrderBuffer.size(); ++i )
-    {
-        std::cout<<m_normalInOrderBuffer[i]<<"\n";
-    }
+    //average normals at a vertex
+    m_normalInOrderBuffer.resize(m_vertexBuffer.size(),0);
+    //for every 3 sets of data(a vertex) in face
+    // add the normal value to the normal[(face[i]-1)]
     uint32_t faceSize = m_face.size();
     for ( uint32_t i=0; i< faceSize; i+=3 )
     {
-        uint32_t vertexNumber = (m_face[i]-1)*3;
-        uint32_t normalNumber = (m_face[i+2])*3;
-        std::cout<< vertexNumber<< " + "<<normalNumber<<"'\n";
-        m_normalInOrderBuffer[vertexNumber] += m_normalBuffer[normalNumber];
-        m_normalInOrderBuffer[vertexNumber+1] += m_normalBuffer[normalNumber+1];
-        m_normalInOrderBuffer[vertexNumber+2] += m_normalBuffer[normalNumber+2];
+        //
+        uint32_t vertexID = (m_face[i]-1)*3;
+        uint32_t normalID = (m_face[i+2]-1)*3;
+        m_normalInOrderBuffer[vertexID] += m_normalBuffer[normalID];
+        m_normalInOrderBuffer[vertexID+1] += m_normalBuffer[normalID+1];
+        m_normalInOrderBuffer[vertexID+2] += m_normalBuffer[normalID+2];
     }
-    std::cout<<m_normalInOrderBuffer.size()<<" SIZE\n";
-#if 1
-    for( uint32_t i = 0; i< m_normalInOrderBuffer.size(); ++i )
-    {
-        std::cout<<m_normalInOrderBuffer[i]<<"\n";
-    }
-#endif
 }
 }//end of namespace

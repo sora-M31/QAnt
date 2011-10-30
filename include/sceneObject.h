@@ -75,7 +75,6 @@ class SceneObject
         Vector m_pos;
         ///\ m_node, Node this object attached to
         SceneNode m_node;
-
     protected:
         // --------------------------------------------------------------------------
         /// \brief Check whether an object is neighbor of this object
