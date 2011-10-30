@@ -26,6 +26,7 @@ class GLWindow : public QGLWidget
         /// \brief Reset wireframe to mode
         /// \param _mode wireframe mode
         void toggleWireframe( bool _mode );
+        void drawPheromone( bool _mode );
         // --------------------------------------------------------------------------
         /// \brief Set the length camera move along the direction
         /// \param _dis length
@@ -105,6 +106,7 @@ class GLWindow : public QGLWidget
         uint32_t m_framerate;
         QTimer* m_timer;
         bool m_wireframe;
+        bool m_drawPheromone;
         ///\ Transformation
         Transform m_trans;
         ///\ pointer to selected object

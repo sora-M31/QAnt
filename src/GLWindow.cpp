@@ -149,7 +149,7 @@ void GLWindow::Draw(SceneObject* _obj)
                 glPopAttrib();
             glPopMatrix();
         }
-        else if( _obj->GetType() == kPhe)
+        else if( _obj->GetType() == kPhe && m_drawPheromone == true)
         {
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
@@ -196,6 +196,12 @@ void GLWindow::Draw(SceneObject* _obj)
 void GLWindow::toggleWireframe(bool _mode)
 {
     m_wireframe = _mode;
+    updateGL();
+}
+//------------------------------------------------------------------------------
+void GLWindow::drawPheromone(bool _mode)
+{
+    m_drawPheromone = _mode;
     updateGL();
 }
 //------------------------------------------------------------------------------

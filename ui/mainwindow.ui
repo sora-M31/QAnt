@@ -160,6 +160,13 @@
                  </property>
                 </widget>
                </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="m_drawPheromoneCheck">
+                 <property name="text">
+                  <string>DrawPheromone</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>

@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_gl = new QtGLWindow::GLWindow(this);
     m_ui->s_mainLayout->addWidget(m_gl,0,0,3,1);
     connect( m_ui->m_wireframeCheck,SIGNAL(toggled(bool)), m_gl,SLOT(toggleWireframe(bool)) );
+    connect( m_ui->m_drawPheromoneCheck,SIGNAL(toggled(bool)), m_gl,SLOT(drawPheromone(bool)) );
     connect( m_ui->m_model,SIGNAL(currentIndexChanged(int)),m_gl,SLOT(setModel(int)));
     connect( m_ui->m_pitchSlider, SIGNAL(valueChanged(int)),m_ui->m_pitchBox,SLOT(setValue(int)));
     connect( m_ui->m_pitchBox, SIGNAL(valueChanged(int)),m_ui->m_pitchSlider,SLOT(setValue(int)));
