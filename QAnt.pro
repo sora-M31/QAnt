@@ -2,8 +2,10 @@ QT += opengl \
        gui \
        core
 QMAKE_CXX_FLAGS_WARN_ON += -Wextra
-INCLUDEPATH += include/
-        += ui
+INCLUDEPATH += include \
+         ui \
+        /opt/local/include/ImageMagick
+LIBS += -lMagick++
 OBJECTS_DIR = obj/
 MOC_DIR = moc/
 UI_HEADERS_DIR = ui/
@@ -27,6 +29,7 @@ SOURCES += \
     src/matrix.cpp \
     src/sceneManager.cpp \
     src/mesh.cpp \
+    src/texture.cpp \
     src/objLoader.cpp \
     src/camera.cpp \
     src/ant.cpp \
@@ -48,6 +51,7 @@ HEADERS += \
     include/matrix.h \
     include/sceneManager.h \
     include/mesh.h \
+    include/texture.h \
     include/objLoader.h \
     include/camera.h \
     include/ant.h \
