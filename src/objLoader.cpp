@@ -8,12 +8,15 @@ namespace QtGLWindow
 ObjLoader::ObjLoader()
 {
     m_pMesh = new Mesh();
+    m_pTexture = new Texture();
 }
 //------------------------------------------------------------------------------
 ObjLoader::~ObjLoader()
 {
     if( m_pMesh)
         delete m_pMesh;
+    if( m_pTexture)
+        delete m_pTexture;
 }
 //------------------------------------------------------------------------------
 void ObjLoader::ParseFile(std::string _Filename)

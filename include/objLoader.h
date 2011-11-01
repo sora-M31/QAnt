@@ -9,6 +9,7 @@
 #include <assert.h>
 
 #include "mesh.h"
+#include "texture.h"
 #include "util.h"
 
 namespace QtGLWindow
@@ -33,6 +34,7 @@ class ObjLoader
         /// \brief Load the parsed information in to array of vertex, uv and indices
         void Load();
         Mesh* m_pMesh;
+        Texture* m_pTexture;
     protected:
         // --------------------------------------------------------------------------
         /// \brief Get vertices from the tokens

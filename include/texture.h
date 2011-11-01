@@ -12,7 +12,8 @@ class Texture
     public:
         Texture();
         ~Texture();
-        void LoadPng(const std::string& _filename);
+        void LoadImage(const std::string& _filename);
+        void MakeChecker();
         void LoadTexture();
         void BindTexture();
         GLuint GetTextureID();

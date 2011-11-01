@@ -167,12 +167,12 @@ void Mesh::CreateVBO()
     //target,buffer name
     glBindBuffer(GL_ARRAY_BUFFER,m_vboPointer);
     //specify buffer data
-    //glBufferData( GL_ARRAY_BUFFER, m_verSize*sizeof(GL_FLOAT) + m_normalSize * sizeof(GL_FLOAT) + m_textureSize*sizeof(GL_FLOAT), 0, GL_STATIC_DRAW );
-    glBufferData( GL_ARRAY_BUFFER, m_verSize*sizeof(GL_FLOAT) + m_normalSize * sizeof(GL_FLOAT), 0, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, m_verSize*sizeof(GL_FLOAT) + m_normalSize * sizeof(GL_FLOAT) + m_textureSize*sizeof(GL_FLOAT), 0, GL_STATIC_DRAW );
+    //glBufferData( GL_ARRAY_BUFFER, m_verSize*sizeof(GL_FLOAT) + m_normalSize * sizeof(GL_FLOAT), 0, GL_STATIC_DRAW );
 
     glBufferSubData(GL_ARRAY_BUFFER, 0, m_verSize*sizeof(GL_FLOAT) , m_vertex);
     glBufferSubData(GL_ARRAY_BUFFER, m_verSize*sizeof(GL_FLOAT), m_normalSize * sizeof(GL_FLOAT), m_normal);
-    //glBufferSubData(GL_ARRAY_BUFFER, (m_verSize+m_normalSize)*sizeof(GL_FLOAT), m_textureSize * sizeof(GL_FLOAT), m_texture);
+    glBufferSubData(GL_ARRAY_BUFFER, (m_verSize+m_normalSize)*sizeof(GL_FLOAT), m_textureSize * sizeof(GL_FLOAT), m_texture);
     //clear the buffer
     glBindBuffer(GL_ARRAY_BUFFER,0);
 }
@@ -184,7 +184,7 @@ void Mesh::UpdateVBO()
     glBufferData( GL_ARRAY_BUFFER, m_verSize*sizeof(GL_FLOAT), 0, GL_STATIC_DRAW );
     glBufferSubData(GL_ARRAY_BUFFER, 0, m_verSize*sizeof(GL_FLOAT), m_vertex);
     glBufferSubData(GL_ARRAY_BUFFER, m_verSize*sizeof(GL_FLOAT), m_normalSize * sizeof(GL_FLOAT), m_normal);
-    //glBufferSubData(GL_ARRAY_BUFFER, (m_verSize+m_normalSize)*sizeof(GL_FLOAT), m_textureSize * sizeof(GL_FLOAT), m_texture);
+    glBufferSubData(GL_ARRAY_BUFFER, (m_verSize+m_normalSize)*sizeof(GL_FLOAT), m_textureSize * sizeof(GL_FLOAT), m_texture);
     //clear the buffer
     glBindBuffer(GL_ARRAY_BUFFER,0);
 }
@@ -197,14 +197,14 @@ void Mesh::DrawVBO()
         glBindBuffer(GL_ARRAY_BUFFER,m_vboPointer);
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
-        //glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glVertexPointer(3,GL_FLOAT,0,0);
         glNormalPointer(GL_FLOAT,0,BUFFER_OFFSET(m_verSize));
-        //glTexCoordPointer(2,GL_FLOAT,0,BUFFER_OFFSET(m_verSize+m_normalSize));
+        glTexCoordPointer(2,GL_FLOAT,0,BUFFER_OFFSET(m_verSize+m_normalSize));
         glDrawElements(m_mode, m_faceSize, GL_UNSIGNED_INT, m_face);
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_NORMAL_ARRAY);
-        //glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
         glBindBuffer(GL_ARRAY_BUFFER,0);
     }

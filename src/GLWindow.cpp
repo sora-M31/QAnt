@@ -68,6 +68,9 @@ void GLWindow::initializeGL()
     m_envObj.ParseFile("resources/plane.obj");
     m_envObj.Load();
     m_envObj.m_pMesh->CreateVBO();
+    //m_envObj.m_pTexture->LoadImage("resources/checker.gif");
+    m_envObj.m_pTexture->MakeChecker();
+    m_envObj.m_pTexture->LoadTexture();
 
     m_arrowObj.ParseFile("resources/arrow.obj");
     m_arrowObj.Load();
@@ -135,6 +138,7 @@ void GLWindow::Draw(SceneObject* _obj)
                 glColor3f(0.1,0.5,0.2);
                 glScalef(60,1,60);
                 glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
+                m_envObj.m_pTexture->BindTexture();
                 m_envObj.m_pMesh->DrawVBO();
                 glPopAttrib();
             glPopMatrix();
@@ -171,8 +175,8 @@ void GLWindow::Draw(SceneObject* _obj)
         {
             glPushMatrix();
                 glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_CURRENT_BIT);
-                glColor3f(1,0,0);
-                glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY(),_obj->m_pos.GetZ());
+                glColor3f(0,0,0);
+                glTranslatef(_obj->m_pos.GetX(),_obj->m_pos.GetY()+0.01,_obj->m_pos.GetZ());
                 m_sphereObj.m_pMesh->DrawVBO();
                 glPopAttrib();
             glPopMatrix();
