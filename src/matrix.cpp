@@ -56,4 +56,12 @@ Matrix Matrix::operator * ( const Matrix& _param ) const
     mat.m33 = m30*_param.m03 + m31 *_param.m13 + m32 *_param.m23 + m33*_param.m33;
     return mat;
 }
+float Matrix::Get(uint8_t _id) const
+{
+    return m_mat[_id];
+}
+void Matrix::Set(uint8_t _id, float _value)
+{
+    m_mat[_id]=_value;
+}
 }//end of namespace

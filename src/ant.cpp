@@ -14,6 +14,7 @@ Ant::Ant( Colony* _myColony,
     m_walkCounter = rand();
     m_type = kAnt;
     m_state = HomeToFood;
+    m_gotFood = false;
     m_trans.SetTranslate(m_pos);
     m_trans.ApplyTransform();
     m_pColony = _myColony;
@@ -35,6 +36,7 @@ Ant::Ant( Colony* _myColony,
 //------------------------------------------------------------------------------------
 Ant::Ant(const Ant& _ant):SceneObject()
 {
+    m_gotFood = false;
     m_hit = _ant.m_hit;
     m_walkCounter = _ant.m_walkCounter;
     m_mass = _ant.m_mass;
@@ -45,6 +47,7 @@ Ant::Ant(const Ant& _ant):SceneObject()
 //------------------------------------------------------------------------------------
 Ant Ant::operator = (const Ant& _ant)
 {
+    m_gotFood = false;
     m_maxAccel = _ant.m_maxAccel;
     m_maxAngle = _ant.m_maxAngle;
     m_friction = _ant.m_friction;
@@ -71,6 +74,7 @@ void Ant::Reset()
     m_trans.Reset();
     m_trans.ApplyTransform();
     m_state = HomeToFood;
+    m_gotFood = false;
 }
 //------------------------------------------------------------------------------------
 void Ant::Move(uint32_t _time)
@@ -288,6 +292,7 @@ void Ant::Update(uint32_t _time)
                     m_force = Vector(0,0,0) - m_vel*kBrake;
                     Move(_time);
                     m_state = FoodToHome;
+                    m_gotFood = true;
                     #ifdef _DEBUG
                     std::cout<<"using arrive\n";
                     #endif

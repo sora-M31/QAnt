@@ -94,6 +94,7 @@ class GLWindow : public QGLWidget
         ObjLoader* m_pBotObj;
         ///\ sphere model
         ObjLoader m_sphereObj;
+        ObjLoader m_circleObj;
         ///\ environment model
         ObjLoader m_envObj;
         ///\ fish model

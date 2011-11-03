@@ -6,7 +6,7 @@ namespace QtGLWindow
 Camera::Camera()
     :m_centre(0,0,0)
 {
-    this->Rotate(-30,'Z');
+    this->Rotate(-60,'Z');
     m_eye = m_centre - m_axisX * 10;
     m_up = m_axisY;
     m_pos = m_eye;

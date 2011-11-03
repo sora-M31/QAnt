@@ -1,4 +1,4 @@
-This is a programme simulating ants foraging behaviour based on pheromone model. The programme was written in C++ with OpenGL, QT creator under MacOS x86-64(Darwin). If you can't run the programme, there's a video demonstration here.
+This is a programme simulating ants foraging behaviour based on pheromone model. The programme was written in C++ with OpenGL, ImageMagick, QT creator under MacOS (Darwin). There's also a video demonstration here(http://vimeo.com/31545697).
 
 =Configuration=
 Pheromone: attract to pheromone.
@@ -6,4 +6,4 @@ Attract: move towards food/home when close to food/home.
 Avoid: avoid colliding with other ants.
 Wall: make sure ants do not move outside of the world plane.
 
-*It is suggested using a low pheromone rate to avoid forming a circle.Also There should be enought ants(like more than20) to achieve the "walking in a line" result.
+*It is suggested using a low pheromone rate to avoid forming a circle.Also There should be enought ants to achieve the "walking in a line" result.

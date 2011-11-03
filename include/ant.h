@@ -68,6 +68,7 @@ class Ant:public SceneObject
         void Update(uint32_t _time); 
         ///\ Status of ant
         AntState m_state;
+        bool m_gotFood;
 
     protected:
         // --------------------------------------------------------------------------

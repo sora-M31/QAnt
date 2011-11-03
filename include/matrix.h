@@ -31,7 +31,11 @@ class Matrix
         /// \param _param
         /// \return 
         void operator = ( const Matrix& _param );
+        // --------------------------------------------------------------------------
+float Get(uint8_t _id) const;
+        // --------------------------------------------------------------------------
 
+void Set(uint8_t _id, float _value);
         // --------------------------------------------------------------------------
         /// \4*4 matrix members, array share same space with 16 floats for easy access
         union
